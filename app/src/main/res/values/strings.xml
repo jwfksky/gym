@@ -20,4 +20,9 @@
     <string name="HttpResult_OK">0</string>
     <string name="HttpResult_NO">-1</string>
     <string name="load_error">加载异常，请重试</string>
+    <string name="login_user">个人</string>
+    <string name="login_coach">教练</string>
+    <string name="login_otherway">其他账户登录</string>
+    <string name="login_forgetPwd">忘记密码</string>
+    <string name="login_register">快速注册</string>
 </resources>

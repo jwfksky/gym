@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="bg_page">#FFFFFFFF</color>
+    <color name="white">#ffffffff</color>
+    <color name="light_grey">#a3a3a3</color>
+    <color name="lighter_grey">#dfdfdf</color>
 </resources>

@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">gym</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <!-- Http协议请求状态码返回对应的JSON数据 -->
+    <string name="HTTP_STATUSCODE_400_JSON">400表示调用发生错误。返回的Http消息中会包含详细的错误提示。</string>
+    <string name="HTTP_STATUSCODE_401_JSON">请先登录，谢谢。</string>
+    <string name="HTTP_STATUSCODE_500_JSON">服务器异常，请联系客服人员。</string>
+    <string name="HTTP_STATUSCODE_2000_JSON">您不是激活用户，请先激活，谢谢。</string>
+    <string name="HTTP_STATUSCODE_2001_JSON">登录成功，您访问此功能的权限不足，谢谢。</string>
+    <string name="HTTP_STATUSCODE_2002_JSON">您的APP没通过验证，请先验证或者更新最新版本，谢谢。</string>
+    <string name="HTTP_NoNetwork">无网络连接，请打开手机的网络。</string>
+    <string name="network_error">对不起，网络访问出错！</string>
+    <string name="check_params_error">输入为空或格式不正确</string>
+    <string name="load">loading...</string>
+    <!-- 网络请求返回配置 -->
+    <string name="HttpResult">result</string>
+    <string name="HttpResult_msg">msg</string>
+    <string name="HttpResult_OK">0</string>
+    <string name="HttpResult_NO">-1</string>
+    <string name="load_error">加载异常，请重试</string>
+</resources>

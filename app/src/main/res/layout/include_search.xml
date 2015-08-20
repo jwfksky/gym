@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:background="@drawable/cellbg2"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/nearby"
+        android:textSize="@dimen/text_16"
+        android:textColor="@color/black"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="附近" />
+
+    <View style="@style/horizontalLine" />
+
+    <TextView
+        android:id="@+id/category"
+        android:textSize="@dimen/text_16"
+        android:textColor="@color/black"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="类别" />
+    <View style="@style/horizontalLine" />
+    <TextView
+        android:id="@+id/order"
+        android:textSize="@dimen/text_16"
+        android:textColor="@color/black"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="排序" />
+</LinearLayout>

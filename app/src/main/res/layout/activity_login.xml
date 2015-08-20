@@ -71,6 +71,7 @@
         >
 
         <Button
+            android:id="@+id/login_person"
             android:layout_width="0dp"
             android:text="@string/login_user"
             style="@style/LoginButton"
@@ -78,6 +79,7 @@
             android:layout_weight="1"
             android:layout_height="wrap_content" />
         <Button
+            android:id="@+id/login_coach"
             style="@style/LoginButton"
             android:layout_marginLeft="@dimen/margin_1"
             android:layout_width="0dp"
@@ -92,6 +94,7 @@
         style="@style/LoginWidget"
         >
         <TextView
+            android:id="@+id/register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/login_register"
@@ -100,6 +103,7 @@
             android:textStyle="bold"
             android:gravity="start"/>
         <TextView
+            android:id="@+id/forgetPwd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/login_forgetPwd"

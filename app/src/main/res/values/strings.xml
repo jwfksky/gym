@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">gym</string>
+    <string name="app_name">汇健身</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
@@ -25,4 +25,10 @@
     <string name="login_otherway">其他账户登录</string>
     <string name="login_forgetPwd">忘记密码</string>
     <string name="login_register">快速注册</string>
+    <string name="register_submit">加入</string>
+    <string name="register">注册</string>
+    <string name="back">返回</string>
+    <string name="cancel">取消</string>
+    <string name="home">首页</string>
+    <string name="defaultArea">上海</string>
 </resources>

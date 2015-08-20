@@ -1,8 +1,12 @@
 package com.gym;
 
+import android.graphics.Color;
 import android.os.*;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+
 
 import java.util.LinkedList;
 import java.util.List;
@@ -27,6 +31,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         initData();
         initActionbar();
     }
+
 
     @Override
     protected void onResume() {
@@ -121,4 +126,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         android.os.Process.killProcess(android.os.Process.myPid());
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 }

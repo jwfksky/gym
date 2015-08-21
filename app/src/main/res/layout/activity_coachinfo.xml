@@ -1,0 +1,201 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/cellbg2"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_toolbar" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_10"
+        android:scaleType="fitXY"
+        android:src="@drawable/mileage" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/margin_20">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/detail_title"
+                android:text="基础信息" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_7">
+
+                <TextView
+                    style="@style/textDefault_space1"
+                    android:text="性别" />
+
+                <TextView
+                    android:id="@+id/ren"
+                    style="@style/textDefault_space2"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/gender_tv"
+                    style="@style/textDefault_space1"
+                    android:layout_toLeftOf="@id/ren"
+                    android:text="男" />
+            </RelativeLayout> <View style="@style/verticalLine" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_7">
+
+                <TextView
+                    style="@style/textDefault_space1"
+                    android:text="身高" />
+
+                <TextView
+                    android:id="@+id/height"
+                    style="@style/textDefault_space2"
+                    android:layout_marginLeft="@dimen/margin_10"
+                    android:text="cm" />
+
+                <TextView
+                    android:id="@+id/height_tv"
+                    style="@style/textDefault_space1"
+                    android:layout_toLeftOf="@id/height"
+                    android:text="170" />
+            </RelativeLayout> <View style="@style/verticalLine" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_7">
+
+                <TextView
+                    style="@style/textDefault_space1"
+                    android:text="体重" />
+
+                <TextView
+                    android:layout_marginLeft="@dimen/margin_10"
+                    android:id="@+id/weight"
+                    style="@style/textDefault_space2"
+                    android:text="kg" />
+
+                <TextView
+                    android:id="@+id/weight_tv"
+                    style="@style/textDefault_space1"
+                    android:layout_toLeftOf="@id/weight"
+                    android:text="170" />
+            </RelativeLayout>
+
+            <TextView
+                style="@style/detail_title"
+                android:text="专长" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_7">
+
+                <TextView
+                    style="@style/textDefault_space1"
+                    android:text="专长" />
+
+                <TextView
+                    android:id="@+id/expertise"
+                    style="@style/textDefault_space2"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/expertise_tv"
+                    style="@style/textDefault_space1"
+                    android:layout_toLeftOf="@id/expertise"
+                    android:text="拳击、格斗" />
+
+            </RelativeLayout>
+
+
+            <TextView
+                style="@style/detail_title"
+                android:text="形体" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_7">
+
+                <TextView
+                    style="@style/textDefault_space1"
+                    android:text="形体" />
+
+                <TextView
+                    android:id="@+id/body"
+                    style="@style/textDefault_space2"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/applianceType_tv"
+                    style="@style/textDefault_space1"
+                    android:layout_toLeftOf="@id/body"
+                    android:text="强壮" />
+            </RelativeLayout>
+
+
+            <TextView
+                style="@style/detail_title"
+                android:text="任教时间" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_7">
+
+                <TextView
+                    style="@style/textDefault_space1"
+                    android:text="任教时间" />
+
+                <TextView
+                    android:id="@+id/coachNum"
+                    style="@style/textDefault_space2"
+                    android:text="年" />
+
+                <TextView
+                    android:id="@+id/coachNum_tv"
+                    style="@style/textDefault_space1"
+                    android:layout_toLeftOf="@id/coachNum"
+                    android:text="30" />
+
+            </RelativeLayout>
+
+            <TextView
+                style="@style/detail_title"
+                android:text="获得证书" />
+
+            <GridView
+                android:id="@+id/cert_photos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:numColumns="4"/>
+
+
+            <TextView
+                style="@style/detail_title"
+                android:text="获得奖励" />
+
+            <GridView
+                android:id="@+id/ward_photos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:numColumns="4"/>
+
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>

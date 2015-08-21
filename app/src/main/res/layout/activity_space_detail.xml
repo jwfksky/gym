@@ -1,0 +1,410 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/cellbg2"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_toolbar" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_10"
+        android:scaleType="fitXY"
+        android:src="@drawable/temp_1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/lighter_grey"
+        android:orientation="horizontal"
+        android:padding="@dimen/padding_7">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:text="评分："
+            android:textColor="@color/light_grey"
+            android:textSize="@dimen/text_18" />
+
+        <RatingBar
+            android:id="@+id/item_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:isIndicator="true"
+            android:progressDrawable="@drawable/ratingbar_small"
+            android:rating="2.5" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/margin_20">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/detail_title"
+                android:text="场地规模" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_7">
+
+                <TextView
+                    style="@style/textDefault_space1"
+                    android:text="容纳人数(个)" />
+
+                <TextView
+                    android:id="@+id/ren"
+                    style="@style/textDefault_space2"
+                    android:text="人" />
+
+                <TextView
+                    android:id="@+id/persons_tv"
+                    style="@style/textDefault_space1"
+                    android:layout_toLeftOf="@id/ren"
+                    android:text="300" />
+            </RelativeLayout>
+
+            <View style="@style/verticalLine" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_7">
+
+                <TextView
+                    style="@style/textDefault_space1"
+                    android:text="占地面积(平方)" />
+
+                <TextView
+                    android:id="@+id/squres"
+                    style="@style/textDefault_space2"
+                    android:text="平方" />
+
+                <TextView
+                    android:id="@+id/squres_tv"
+                    style="@style/textDefault_space1"
+                    android:layout_toLeftOf="@id/squres"
+                    android:text="300" />
+            </RelativeLayout>
+
+
+            <TextView
+                style="@style/detail_title"
+                android:text="器械状况" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_7">
+
+                <TextView
+                    style="@style/textDefault_space1"
+                    android:text="新旧程度" />
+
+                <TextView
+                    android:id="@+id/appliance"
+                    style="@style/textDefault_space2"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/appliance_tv"
+                    style="@style/textDefault_space1"
+                    android:layout_toLeftOf="@id/appliance"
+                    android:text="九成新" />
+
+            </RelativeLayout>
+
+
+            <TextView
+                style="@style/detail_title"
+                android:text="器械种类" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_7">
+
+                <TextView
+                    style="@style/textDefault_space1"
+                    android:text="器械类型" />
+
+                <TextView
+                    android:id="@+id/applianceType"
+                    style="@style/textDefault_space2"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/applianceType_tv"
+                    style="@style/textDefault_space1"
+                    android:layout_toLeftOf="@id/applianceType"
+                    android:text="杠铃" />
+            </RelativeLayout>
+
+            <View style="@style/verticalLine" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_7">
+
+                <TextView
+                    style="@style/textDefault_space1"
+                    android:text="器械数量" />
+
+                <TextView
+                    android:id="@+id/applianceNum"
+                    style="@style/textDefault_space2"
+                    android:text="个" />
+
+                <TextView
+                    android:id="@+id/applianceNum_tv"
+                    style="@style/textDefault_space1"
+                    android:layout_toLeftOf="@id/applianceNum"
+                    android:text="230" />
+            </RelativeLayout>
+
+            <TextView
+                style="@style/detail_title"
+                android:text="教练" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_7">
+
+                <TextView
+                    style="@style/textDefault_space1"
+                    android:text="教练数量" />
+
+                <TextView
+                    android:id="@+id/coachNum"
+                    style="@style/textDefault_space2"
+                    android:text="人" />
+
+                <TextView
+                    android:id="@+id/coachNum_tv"
+                    style="@style/textDefault_space1"
+                    android:layout_toLeftOf="@id/coachNum"
+                    android:text="30" />
+
+            </RelativeLayout>
+
+            <TextView
+                style="@style/detail_title"
+                android:text="返场" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_7">
+
+                <TextView
+                    style="@style/textDefault_space1"
+                    android:text="返场数量" />
+
+                <TextView
+                    android:id="@+id/rebackNum"
+                    style="@style/textDefault_space2"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/rebackNum_tv"
+                    style="@style/textDefault_space1"
+                    android:layout_toLeftOf="@id/rebackNum"
+                    android:text="30" />
+
+            </RelativeLayout>
+
+
+            <TextView
+                style="@style/detail_title"
+                android:text="更衣室" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_7">
+
+                <TextView
+                    style="@style/textDefault_space1"
+                    android:text="衣柜数量(个)" />
+
+                <TextView
+                    android:id="@+id/closet"
+                    style="@style/textDefault_space2"
+                    android:text="个" />
+
+                <TextView
+                    android:id="@+id/closet_tv"
+                    style="@style/textDefault_space1"
+                    android:layout_toLeftOf="@id/closet"
+                    android:text="30" />
+
+            </RelativeLayout>
+
+            <View style="@style/verticalLine" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_7">
+
+                <TextView
+                    style="@style/textDefault_space1"
+                    android:text="冲淋房" />
+
+                <TextView
+                    android:id="@+id/bath"
+                    style="@style/textDefault_space2"
+                    android:text="个" />
+
+                <TextView
+                    android:id="@+id/bath_tv"
+                    style="@style/textDefault_space1"
+                    android:layout_toLeftOf="@id/bath"
+                    android:text="30" />
+
+            </RelativeLayout>
+
+            <View style="@style/verticalLine" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_7">
+
+                <TextView
+                    style="@style/textDefault_space1"
+                    android:text="喷头数量(个)" />
+
+                <TextView
+                    android:id="@+id/shower"
+                    style="@style/textDefault_space2"
+                    android:text="个" />
+
+                <TextView
+                    android:id="@+id/shower_tv"
+                    style="@style/textDefault_space1"
+                    android:layout_toLeftOf="@id/shower"
+                    android:text="30" />
+
+            </RelativeLayout>
+
+            <View style="@style/verticalLine" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_7">
+
+                <TextView
+                    style="@style/textDefault_space1"
+                    android:text="桑拿房" />
+
+                <TextView
+                    android:id="@+id/sauna"
+                    style="@style/textDefault_space2"
+                    android:text="个" />
+
+                <TextView
+                    android:id="@+id/sauna_tv"
+                    style="@style/textDefault_space1"
+                    android:layout_toLeftOf="@id/sauna"
+                    android:text="0" />
+
+            </RelativeLayout>
+
+            <View style="@style/verticalLine" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_7">
+
+                <TextView
+                    style="@style/textDefault_space1"
+                    android:text="新旧程度" />
+
+                <TextView
+                    android:id="@+id/bathDep"
+                    style="@style/textDefault_space2"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/bathDep_tv"
+                    style="@style/textDefault_space1"
+                    android:layout_toLeftOf="@id/bathDep"
+                    android:text="九成新" />
+
+            </RelativeLayout>
+
+            <TextView
+                style="@style/detail_title"
+                android:text="团课设备" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_7">
+
+                <TextView
+                    style="@style/textDefault_space1"
+                    android:text="独立课房间" />
+
+                <TextView
+                    android:id="@+id/aloneRoom"
+                    style="@style/textDefault_space2"
+                    android:text="个" />
+
+                <TextView
+                    android:id="@+id/aloneRoom_tv"
+                    style="@style/textDefault_space1"
+                    android:layout_toLeftOf="@id/aloneRoom"
+                    android:text="0" />
+
+            </RelativeLayout>
+
+            <TextView
+                style="@style/detail_title"
+                android:text="其他设备" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_7">
+
+                <TextView
+                    style="@style/textDefault_space1"
+                    android:text="其他设备" />
+
+                <TextView
+                    android:id="@+id/others"
+                    style="@style/textDefault_space2"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/others_tv"
+                    style="@style/textDefault_space1"
+                    android:layout_toLeftOf="@id/others"
+                    android:text="游泳馆" />
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>

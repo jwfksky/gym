@@ -5,4 +5,7 @@
     <color name="light_grey">#a3a3a3</color>
     <color name="lighter_grey">#dfdfdf</color>
     <color name="black">#000000</color>
+    <color name="yellow">#ffffeb25</color>
+    <color name="blue">#ff39acff</color>
+    <color name="green">#ff3f53ff</color>
 </resources>

@@ -5,8 +5,10 @@ import android.os.Parcelable;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.PopupMenu;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -20,7 +22,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 
-public class MainActivity extends BaseActivity implements IFragment {
+public class MainActivity extends BaseActivity implements IFragment,View.OnClickListener {
 
     @InjectView(R.id.back_tb)
     TextView backTb;
@@ -57,6 +59,7 @@ public class MainActivity extends BaseActivity implements IFragment {
 
     @Override
     public void initData() {
+        menuCenter.setOnClickListener(this);
         BaseFragment bf= (BaseFragment) fm.findFragmentById(R.id.main_fl);
         if(bf==null){
             fm.beginTransaction().replace(R.id.main_fl,new MainFragment()).commit();
@@ -86,6 +89,22 @@ public class MainActivity extends BaseActivity implements IFragment {
             } else {
                 fm.beginTransaction().add(R.id.main_fl, bf).addToBackStack(null).commit();
             }
+
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v==menuCenter){
+            PopupMenu popupMenu=new PopupMenu(this,menuCenter);
+            getMenuInflater().inflate(R.menu.menu_popup,popupMenu.getMenu());
+            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    return false;
+                }
+            });
+            popupMenu.show();
 
         }
     }

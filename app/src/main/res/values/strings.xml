@@ -31,4 +31,6 @@
     <string name="cancel">取消</string>
     <string name="home">首页</string>
     <string name="defaultArea">上海</string>
+    <string name="editInfo">编辑信息</string>
+    <string name="pointsDetail">积分详情</string>
 </resources>

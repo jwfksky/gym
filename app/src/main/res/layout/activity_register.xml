@@ -1,88 +1,99 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
-    <include layout="@layout/include_toolbar"/>
+    android:orientation="vertical">
+
+    <include layout="@layout/include_toolbar" />
+
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_margin="@dimen/margin_30"
-        android:orientation="vertical"
-        android:layout_height="match_parent">
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-    >
-    <ImageView
-        android:id="@+id/user_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/btn_addimage"/>
-    <EditText
-        android:background="@drawable/shape_login"
-        android:layout_toRightOf="@id/user_image"
-        android:layout_marginLeft="@dimen/margin_20"
-        android:id="@+id/name"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:textColorHint="@color/lighter_grey"
-        android:hint="Name"/>
-    <RadioGroup
-        android:layout_marginLeft="@dimen/margin_20"
-        android:layout_marginTop="@dimen/margin_10"
-        android:layout_below="@id/name"
-        android:layout_toRightOf="@id/user_image"
-        android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_height="wrap_content">
-        <RadioButton
-            android:text="Male"
-            android:gravity="left"
-            android:layout_gravity="left"
-            android:button="@null"
-            android:background="@null"
-            android:textSize="@dimen/text_18"
-            android:textColor="@color/lighter_grey"
-            android:drawableRight="@drawable/selector_radiobtn"
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            >
+
+            <ImageView
+                android:id="@+id/user_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/btn_addimage" />
+
+            <EditText
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="@dimen/margin_20"
+                android:layout_toRightOf="@id/user_image"
+                android:background="@drawable/shape_login"
+                android:hint="Name"
+                android:textColorHint="@color/lighter_grey" />
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/name"
+                android:layout_marginLeft="@dimen/margin_20"
+                android:layout_marginTop="@dimen/margin_10"
+                android:layout_toRightOf="@id/user_image"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:background="@null"
+                    android:button="@null"
+                    android:drawableRight="@drawable/selector_radiobtn"
+                    android:gravity="left"
+                    android:text="Male"
+                    android:textColor="@color/lighter_grey"
+                    android:textSize="@dimen/text_18" />
+
+                <RadioButton
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:background="@null"
+                    android:button="@null"
+                    android:drawableRight="@drawable/selector_radiobtn"
+                    android:gravity="right"
+                    android:text="Female"
+                    android:textColor="@color/lighter_grey"
+                    android:textSize="@dimen/text_18" />
+            </RadioGroup>
+        </RelativeLayout>
+
+        <EditText
+            android:id="@+id/phone"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="@dimen/margin_20"
+            android:background="@drawable/shape_login"
+            android:hint="Phone number"
+            android:textColorHint="@color/lighter_grey" />
+
+        <EditText
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="@dimen/margin_5"
+            android:background="@drawable/shape_login"
+            android:hint="Email Address"
+            android:textColorHint="@color/lighter_grey" />
+
+        <Button
+            style="@style/LoginButton"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <RadioButton
-            android:text="Female"
-            android:layout_gravity="right"
-            android:gravity="right"
-            android:button="@null"
-            android:background="@null"
-            android:textSize="@dimen/text_18"
-            android:textColor="@color/lighter_grey"
-            android:layout_width="fill_parent"
-            android:drawableRight="@drawable/selector_radiobtn"
-            android:layout_height="wrap_content" />
-    </RadioGroup>
-</RelativeLayout>
-    <EditText
-        android:background="@drawable/shape_login"
-        android:id="@+id/phone"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginTop="@dimen/margin_20"
-        android:textColorHint="@color/lighter_grey"
-        android:hint="Phone number"/>
-    <EditText
-        android:layout_marginTop="@dimen/margin_5"
-        android:background="@drawable/shape_login"
-        android:id="@+id/email"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:textColorHint="@color/lighter_grey"
-        android:hint="Email Address"/>
-    <Button
-        android:layout_marginTop="@dimen/margin_20"
-        android:layout_width="wrap_content"
-        android:text="@string/register_submit"
-        style="@style/LoginButton"
-        android:layout_gravity="center"
-        android:layout_marginRight="@dimen/margin_1"
-        android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="@dimen/margin_1"
+            android:layout_marginTop="@dimen/margin_20"
+            android:text="@string/register_submit" />
     </LinearLayout>
 </LinearLayout>

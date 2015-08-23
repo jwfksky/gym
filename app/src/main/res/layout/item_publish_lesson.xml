@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/margin_10"
+    android:background="@drawable/cellbg2"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/item_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/photo_buy" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_20"
+        android:layout_toRightOf="@id/item_image">
+
+        <TextView
+            android:id="@+id/lesson_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="瑜伽课"
+            style="@style/textDefault"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_13" />
+
+
+        <TextView
+            android:layout_marginTop="@dimen/margin_5"
+            android:gravity="center"
+            android:textColor="@color/blue"
+            android:textSize="@dimen/text_10"
+            android:id="@+id/lesson_time"
+            android:drawableLeft="@drawable/pic_16"
+            android:drawablePadding="@dimen/padding_7"
+            android:text="02：00-03：00"
+            android:layout_below="@id/lesson_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_marginTop="@dimen/margin_5"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_10"
+            android:id="@+id/lesson_addr"
+            android:drawableLeft="@drawable/dizhi_bug"
+            android:drawablePadding="@dimen/padding_5"
+            android:text="世界大厦101室"
+            android:layout_below="@id/lesson_time"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/delete"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/lesson_time"
+            android:src="@drawable/lajixiang"
+            android:layout_marginRight="@dimen/margin_20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/edit"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/lesson_time"
+            android:src="@drawable/lajixiang"
+            android:layout_marginRight="@dimen/margin_50"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

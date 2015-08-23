@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/padding_7"
+    android:background="@drawable/cellbg2">
+
+    <TextView
+        android:id="@+id/name"
+        style="@style/edittext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="小苹果"
+        android:textColor="@color/black" />
+
+    <TextView
+        android:id="@+id/time"
+        style="@style/edittext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_5"
+        android:layout_toRightOf="@id/name"
+        android:text="2012-05-18"
+        android:textColor="@color/light_grey" />
+    <TextView
+        android:layout_marginTop="@dimen/margin_10"
+        android:id="@+id/content"
+        style="@style/edittext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/name"
+        android:text="很不错噢"
+        android:textColor="@color/light_grey" />
+</RelativeLayout>

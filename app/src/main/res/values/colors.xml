@@ -8,4 +8,10 @@
     <color name="yellow">#ffffeb25</color>
     <color name="blue">#ff39acff</color>
     <color name="green">#ff3f53ff</color>
+    <color name="dark_grey">#29211d</color>
+    <color name="light_green">#ccfff1</color>
+    <color name="lighter_blue">#ccfcff</color>
+    <color name="red">#ff0000</color>
+    <color name="light_yellow">#ffbf30</color>
+    <color name="bg_tab_pressed">#6633b5e5</color>
 </resources>

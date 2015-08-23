@@ -1,0 +1,275 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/cellbg2"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <include layout="@layout/include_toolbar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/margin_30"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/name_tv"
+                    style="@style/edittext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_2"
+                    android:text="课程名称" />
+
+                <TextView
+                    style="@style/edittext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_2"
+                    android:layout_toRightOf="@id/name_tv"
+                    android:text="最多2~10个字符"
+                    android:textColor="@color/light_grey"
+                    android:textSize="@dimen/text_13" />
+
+                <EditText
+                    android:id="@+id/name"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_below="@id/name_tv"
+                    android:background="@drawable/shape_login"
+                    android:hint="Name"
+                    android:textColorHint="@color/lighter_grey" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/name"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/gender_tv"
+                        style="@style/edittext"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginBottom="@dimen/margin_2"
+                        android:layout_marginRight="@dimen/margin_20"
+                        android:gravity="left|center_vertical"
+                        android:text="图片" />
+
+                    <ImageView
+                        android:id="@+id/addImage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/btn_addimage" />
+
+
+                </LinearLayout>
+            </RelativeLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/margin_10"
+                android:orientation="vertical">
+                <TextView
+
+                    style="@style/edittext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_2"
+                    android:text="课程介绍" />
+                <MultiAutoCompleteTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape_login"
+                    android:lines="3"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/margin_10"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/height_tv"
+                        style="@style/edittext"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/margin_2"
+                        android:text="课程人数" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_below="@id/height_tv"
+                        android:background="@drawable/shape_login"
+                        android:layout_marginRight="@dimen/margin_10"
+                        android:layout_height="40dp">
+                    <EditText
+                        android:id="@+id/lesson_people"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:textColorHint="@color/lighter_grey" />
+
+                    <TextView
+                        style="@style/edittext"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:textColor="@color/black"
+                        android:layout_alignParentRight="true"
+                        android:text="人" />
+                    </RelativeLayout>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/period_tv"
+                        style="@style/edittext"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/margin_2"
+                        android:text="课程周期" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_below="@id/period_tv"
+                        android:background="@drawable/shape_login"
+                        android:layout_marginRight="@dimen/margin_10"
+                        android:layout_height="40dp">
+                        <TextView
+                            android:id="@+id/lesson_period"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:background="@null"
+                            android:textColorHint="@color/lighter_grey" />
+
+                        <ImageView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/right_arrow"
+                            android:layout_alignParentRight="true"
+
+                             />
+                    </RelativeLayout>
+                </RelativeLayout>
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/margin_10"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/time_tv"
+                        style="@style/edittext"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/margin_2"
+                        android:text="课程时间" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_below="@id/time_tv"
+                        android:background="@drawable/shape_login"
+                        android:layout_marginRight="@dimen/margin_10"
+                        android:layout_height="40dp">
+                        <TextView
+                            android:id="@+id/lesson_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:background="@null"
+                            android:textColorHint="@color/lighter_grey" />
+
+                        <ImageView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/right_arrow"
+                            android:layout_alignParentRight="true"
+
+                            />
+                    </RelativeLayout>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/during_tv"
+                        style="@style/edittext"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/margin_2"
+                        android:text="维持周期" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_below="@id/during_tv"
+                        android:background="@drawable/shape_login"
+                        android:layout_marginRight="@dimen/margin_10"
+                        android:layout_height="40dp">
+
+                        <EditText
+                            android:id="@+id/lesson_during"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:background="@null"
+                            android:textColorHint="@color/lighter_grey" />
+
+                        <TextView
+                            style="@style/edittext"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                           android:layout_centerVertical="true"
+                            android:textColor="@color/black"
+                            android:layout_alignParentRight="true"
+                            android:text="个月" />
+                    </RelativeLayout>
+                </RelativeLayout>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+</LinearLayout>

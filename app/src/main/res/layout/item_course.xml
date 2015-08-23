@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/cellbg2"
+    android:padding="@dimen/padding_7">
+
+    <TextView
+        android:id="@+id/time"
+        style="@style/edittext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/margin_10"
+        android:text="3月18日"
+        android:textColor="@color/black" />
+
+    <ImageView
+        android:id="@+id/miline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/time"
+        android:src="@drawable/miline" />
+
+    <ImageView
+        android:id="@+id/course_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/margin_10"
+        android:layout_toRightOf="@id/miline"
+        android:src="@drawable/photo_buy" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/margin_20"
+        android:layout_marginRight="@dimen/margin_20"
+        android:layout_toRightOf="@id/course_img"
+        android:background="@color/light_grey"
+        android:orientation="vertical">
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/shape_course"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/textDefault"
+                    android:layout_gravity="center"
+                    android:textColor="@color/blue"
+                    android:textSize="@dimen/text_10"
+                    android:text="体重" />
+                <TextView
+                    android:id="@+id/weight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/edittext"
+                    android:layout_gravity="center"
+                    android:textColor="@color/blue"
+                    android:textSize="@dimen/text_10"
+                    android:text="50kg" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+
+                android:layout_weight="1"
+                android:background="@drawable/shape_course"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/textDefault"
+                    android:layout_gravity="center"
+                    android:textColor="@color/blue"
+                    android:textSize="@dimen/text_10"
+                    android:text="运动时长" />
+                <TextView
+                    android:id="@+id/sports_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/edittext"
+                    android:layout_gravity="center"
+                    android:textColor="@color/blue"
+                    android:textSize="@dimen/text_10"
+                    android:text="6:00" />
+
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+
+                android:layout_weight="1"
+                android:background="@drawable/shape_course"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/textDefault"
+                    android:layout_gravity="center"
+                    android:textColor="@color/blue"
+                    android:textSize="@dimen/text_10"
+                    android:text="卡路里" />
+                <TextView
+                    android:id="@+id/calorie"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/edittext"
+                    android:layout_gravity="center"
+                    android:textColor="@color/blue"
+                    android:textSize="@dimen/text_10"
+                    android:text="500k" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/shape_course"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/textDefault"
+                    android:layout_gravity="center"
+                    android:textColor="@color/blue"
+                    android:textSize="@dimen/text_10"
+                    android:text="IBM" />
+                <TextView
+                    android:id="@+id/ibm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/edittext"
+                    android:layout_gravity="center"
+                    android:textColor="@color/blue"
+                    android:textSize="@dimen/text_10"
+                    android:text="24.1" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

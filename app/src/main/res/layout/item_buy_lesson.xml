@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/margin_10"
+    android:background="@drawable/cellbg2"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/item_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_10"
+        android:src="@drawable/photo_buy" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_20"
+        android:layout_toRightOf="@id/item_image">
+
+        <TextView
+            android:id="@+id/lesson_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="瑜伽课"
+            style="@style/textDefault"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_13" />
+
+
+        <TextView
+            android:layout_marginTop="@dimen/margin_5"
+            android:gravity="center"
+            android:textColor="@color/blue"
+            android:textSize="@dimen/text_10"
+            android:id="@+id/lesson_time"
+            android:drawableLeft="@drawable/pic_16"
+            android:drawablePadding="@dimen/padding_7"
+            android:text="02：00-03：00"
+            android:layout_below="@id/lesson_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_marginTop="@dimen/margin_5"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_10"
+            android:id="@+id/lesson_addr"
+            android:drawableLeft="@drawable/dizhi_bug"
+            android:drawablePadding="@dimen/padding_5"
+            android:text="世界大厦101室"
+            android:layout_below="@id/lesson_time"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/delete"
+            android:layout_alignParentRight="true"
+
+            android:src="@drawable/lajixiang"
+            android:layout_marginRight="@dimen/margin_20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/payState"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/lesson_time"
+           android:text="已退款"
+            android:textSize="@dimen/text_10"
+            android:textColor="@color/light_grey"
+            android:layout_marginRight="@dimen/margin_20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+<View
+    android:id="@+id/line"
+    android:layout_marginTop="@dimen/margin_10"
+    android:layout_below="@id/item_image"
+   style="@style/verticalLine"/>
+    <RelativeLayout
+        android:layout_below="@id/line"
+        android:layout_width="match_parent"
+        android:layout_margin="@dimen/margin_5"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/agreeRefund"
+            style="@style/textDefault"
+            android:background="@drawable/shape_order_button"
+            android:layout_width="@dimen/width_50"
+            android:layout_height="wrap_content"
+            android:textColor="@color/light_grey"
+            android:padding="@dimen/padding_5"
+            android:layout_marginLeft="@dimen/margin_5"
+            android:textSize="@dimen/text_10"
+            android:layout_alignParentRight="true"
+            android:text="同意退款"/>
+        <TextView
+            android:id="@+id/course"
+            style="@style/textDefault"
+            android:background="@drawable/shape_order_button"
+            android:layout_width="@dimen/width_50"
+            android:layout_height="wrap_content"
+            android:textColor="@color/light_grey"
+            android:padding="@dimen/padding_5"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="@dimen/margin_5"
+            android:textSize="@dimen/text_10"
+            android:text="评价"/>
+        <TextView
+            android:id="@+id/pay"
+            style="@style/textDefault"
+            android:background="@drawable/shape_order_button_y"
+            android:layout_width="@dimen/width_50"
+            android:layout_height="wrap_content"
+            android:textColor="@color/light_yellow"
+            android:padding="@dimen/padding_5"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="@dimen/margin_5"
+            android:textSize="@dimen/text_10"
+            android:text="付款"/>
+        <TextView
+            android:layout_toLeftOf="@id/course"
+            android:id="@+id/refund"
+            style="@style/textDefault"
+            android:background="@drawable/shape_order_button"
+            android:layout_width="@dimen/width_50"
+            android:layout_height="wrap_content"
+            android:textColor="@color/light_grey"
+            android:padding="@dimen/padding_5"
+            android:textSize="@dimen/text_10"
+            android:text="退款"/>
+        <TextView
+            android:layout_toLeftOf="@id/pay"
+            android:id="@+id/cancel"
+            style="@style/textDefault"
+            android:background="@drawable/shape_order_button"
+            android:layout_width="@dimen/width_50"
+            android:layout_height="wrap_content"
+            android:textColor="@color/light_grey"
+            android:padding="@dimen/padding_5"
+            android:textSize="@dimen/text_10"
+            android:text="取消"/>
+
+    </RelativeLayout>
+</RelativeLayout>

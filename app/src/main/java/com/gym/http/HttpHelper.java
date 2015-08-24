@@ -50,6 +50,8 @@ public class HttpHelper {
     private static final int mTimeoutConnection = 10 * 1000;// 设置连接超时时间
     private static final int mTimeoutSocket = 15 * 1000;
 
+    private static final String UTF8="utf-8";
+    private static final String GBK="gbk";
     /**
      * get请求，获取返回字符串内容
      */
@@ -64,8 +66,8 @@ public class HttpHelper {
     public static HttpResult post(String url, String value) {
         HttpPost httpPost = new HttpPost(url);
         try {
-            StringEntity stringEntity = new StringEntity(value, "utf-8");
-            stringEntity.setContentEncoding("utf-8");
+            StringEntity stringEntity = new StringEntity(value, GBK);
+            stringEntity.setContentEncoding(GBK);
             stringEntity.setContentType("application/json");
             httpPost.setEntity(stringEntity);
 
@@ -176,7 +178,7 @@ public class HttpHelper {
                         out.write(buffer, 0, len);
                     }
                     byte[] data = out.toByteArray();
-                    mStr = new String(data, "utf-8");
+                    mStr = new String(data, GBK);
                 } catch (Exception e) {
                     LogUtils.e(e);
                 } finally {

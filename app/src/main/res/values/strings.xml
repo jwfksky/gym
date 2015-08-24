@@ -33,4 +33,5 @@
     <string name="defaultArea">上海</string>
     <string name="editInfo">编辑信息</string>
     <string name="pointsDetail">积分详情</string>
+    <string name="login_error">对不起登陆异常</string>
 </resources>

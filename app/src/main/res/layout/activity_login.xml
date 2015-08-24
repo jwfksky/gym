@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<me.dreamheart.autoscalinglayout.ASRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<me.dreamheart.autoscalinglayout.ASFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,7 +10,9 @@
     custom:designHeight="615dp"
     custom:designWidth="384dp"
    >
-
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <ImageView
         android:id="@+id/icon"
         android:layout_width="wrap_content"
@@ -35,6 +37,7 @@
             android:layout_margin="@dimen/margin_10"
             android:src="@drawable/pic_3"/>
         <EditText
+            android:id="@+id/user_et"
             android:layout_width="match_parent"
             android:background="@null"
             android:gravity="left|center_vertical"
@@ -56,10 +59,12 @@
             android:layout_margin="@dimen/margin_10"
             android:src="@drawable/pic_4"/>
         <EditText
+            android:id="@+id/pwd_et"
             android:layout_width="match_parent"
             android:background="@null"
             android:gravity="left|center_vertical"
             android:hint="Password"
+            android:inputType="textPassword"
             android:textColorHint="@color/lighter_grey"
             android:layout_height="match_parent" />
     </LinearLayout>
@@ -153,5 +158,12 @@
 
             android:src="@drawable/pic_7"/>
 
-    </LinearLayout>
-</me.dreamheart.autoscalinglayout.ASRelativeLayout>
+    </LinearLayout></RelativeLayout>
+    <ProgressBar
+        android:id="@+id/login_loading"
+        style="@style/ProgressBarBig"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"/>
+</me.dreamheart.autoscalinglayout.ASFrameLayout>

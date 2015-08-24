@@ -1,6 +1,7 @@
 package com.gym.app;
 
 
+import com.gym.bean.UserBean;
 import com.gym.utils.SpeechSynthesisUtil;
 
 /**
@@ -26,4 +27,5 @@ public class Constants {
     public static final Integer HTTP_STATUSCODE_2001 = 2001;
     public static final Integer HTTP_STATUSCODE_2002 = 2002;
     public static final Integer HTTP_STATUSCODE_500 = 500;
+    public static UserBean user;
 }

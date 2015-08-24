@@ -1,0 +1,6 @@
+<resources>
+   <!-- 登陆 -->
+   <string name="Login_URL">http://211.149.244.163:8090/LoginService.asmx/Login</string>
+   <!-- 注册 -->
+   <string name="Register_URL">http://211.149.244.163:8090/apphtml/register.html</string>
+</resources>

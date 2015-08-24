@@ -5,10 +5,13 @@ import android.os.Parcelable;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.PopupMenu;
+import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -97,7 +100,8 @@ public class MainActivity extends BaseActivity implements IFragment,View.OnClick
     public void onClick(View v) {
         if(v==menuCenter){
             PopupMenu popupMenu=new PopupMenu(this,menuCenter);
-            getMenuInflater().inflate(R.menu.menu_popup,popupMenu.getMenu());
+            MenuInflater inflater=popupMenu.getMenuInflater();
+            inflater.inflate(R.menu.menu_popup,popupMenu.getMenu());
             popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {

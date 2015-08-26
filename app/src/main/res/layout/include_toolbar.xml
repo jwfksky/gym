@@ -6,38 +6,58 @@
     android:background="@drawable/line"
     android:minHeight="?attr/actionBarSize"
     android:theme="@style/ThemeOverlay.AppCompat.ActionBar">
-    <TextView
-        android:id="@+id/back_tb"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:gravity="left|center_vertical"
-        android:layout_centerInParent="true"
-        android:textColor="@color/bg_page"
-        android:textSize="@dimen/text_16"
-        android:layout_marginTop="@dimen/margin_20"
-        android:text="@string/cancel"/>
-    <TextView
-        android:id="@+id/area_tb"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:gravity="left|center_vertical"
-        android:layout_centerInParent="true"
-        android:textColor="@color/bg_page"
-        android:textSize="@dimen/text_16"
-        android:layout_marginTop="@dimen/margin_20"
-        android:visibility="gone"
-        android:text="@string/defaultArea"/>
-    <TextView
-        android:layout_marginTop="@dimen/margin_20"
-        android:id="@+id/title_tb"
+
+    <RelativeLayout
         android:layout_width="match_parent"
+
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:layout_centerInParent="true"
-        android:textColor="@color/bg_page"
-        android:textSize="@dimen/text_20"
-        android:text="@string/register"
-        />
+        android:layout_marginTop="@dimen/margin_20">
+
+        <TextView
+            android:id="@+id/title_tb"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="@string/register"
+            android:textColor="@color/bg_page"
+            android:textSize="@dimen/text_20" />
+
+        <TextView
+            android:id="@+id/back_tb"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="@string/cancel"
+            android:textColor="@color/bg_page"
+            android:textSize="@dimen/text_16" />
+
+        <TextView
+            android:id="@+id/area_tb"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:gravity="center"
+            android:text="@string/defaultArea"
+            android:textColor="@color/bg_page"
+            android:textSize="@dimen/text_16"
+            android:visibility="gone" />
 
 
+        <TextView
+
+            android:id="@+id/right_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/margin_10"
+            android:gravity="center"
+            android:text="@string/submit"
+            android:textColor="@color/bg_page"
+            android:textSize="@dimen/text_16"
+            android:visibility="gone" />
+    </RelativeLayout>
 </android.support.v7.widget.Toolbar>

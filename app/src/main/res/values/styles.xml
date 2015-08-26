@@ -98,4 +98,8 @@
         <item name="android:textColor">@color/light_grey</item>
         <item name="android:textSize">@dimen/text_18</item>
     </style>
+    <style name="operatPopMenu_animstyle">
+        <item name="android:windowEnterAnimation">@anim/photo_dialog_in_anim</item>
+        <item name="android:windowExitAnimation">@anim/photo_dialog_out_anim</item>
+    </style>
 </resources>

@@ -10,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Toast;
 
-import com.gym.BaseActivity;
+import com.gym.ui.activity.BaseActivity;
 import com.gym.R;
 import com.gym.app.BaseApplication;
 import com.gym.app.Constants;

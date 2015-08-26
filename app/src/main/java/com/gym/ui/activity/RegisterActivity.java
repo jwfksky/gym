@@ -1,21 +1,17 @@
-package com.gym;
+package com.gym.ui.activity;
 
 import android.net.http.SslError;
-import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.gym.R;
 import com.gym.utils.UIUtils;
 
 import butterknife.ButterKnife;

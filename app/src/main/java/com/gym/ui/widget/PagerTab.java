@@ -15,7 +15,7 @@ import android.view.*;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.gym.BaseActivity;
+import com.gym.ui.activity.BaseActivity;
 import com.gym.R;
 import com.gym.utils.UIUtils;
 

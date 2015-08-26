@@ -1,4 +1,4 @@
-package com.gym;
+package com.gym.ui.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.gym.R;
 import com.gym.app.Constants;
 import com.gym.bean.UserBean;
 import com.gym.http.protocol.BaseProtocol;

@@ -16,6 +16,7 @@ public class Constants {
     public static final int RESPONSE_CODE = 200;
     public static final String BILL_UNCHECK = "0";
     public static final String BILL_CHECKED = "1";
+    public static final String TOOLBAR_ITEM = "toolbarItem";
 
     public static String VOICER = "xiaoyan";
     public static SpeechSynthesisUtil speechUtil;

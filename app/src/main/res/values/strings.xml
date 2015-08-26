@@ -34,4 +34,7 @@
     <string name="editInfo">编辑信息</string>
     <string name="pointsDetail">积分详情</string>
     <string name="login_error">对不起登陆异常</string>
+    <string name="submit">提交</string>
+    <string name="addCourse">添加里程</string>
+    <string name="text_Cancel">取消</string>
 </resources>

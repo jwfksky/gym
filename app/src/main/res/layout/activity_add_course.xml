@@ -1,0 +1,202 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/cellbg2"
+    android:orientation="vertical"
+
+    tools:context=".MainActivity">
+
+    <include layout="@layout/include_toolbar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/margin_30"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/gender_tv"
+                    style="@style/edittext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginBottom="@dimen/margin_2"
+                    android:layout_marginRight="@dimen/margin_20"
+                    android:layout_marginTop="@dimen/margin_20"
+                    android:text="图片" />
+
+                <ImageView
+                    android:id="@+id/addImage1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/gender_tv"
+                    android:src="@drawable/btn_addimage" />
+
+                <ImageView
+                    android:id="@+id/addImage2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_30"
+                    android:layout_toRightOf="@id/addImage1"
+                    android:src="@drawable/btn_addimage" />
+
+
+                <ImageView
+                    android:id="@+id/addImage3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/addImage1"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:layout_toRightOf="@id/gender_tv"
+                    android:src="@drawable/btn_addimage" />
+
+                <ImageView
+                    android:id="@+id/addImage4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/addImage2"
+                    android:layout_marginLeft="@dimen/margin_30"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:layout_toRightOf="@id/addImage1"
+                    android:src="@drawable/btn_addimage" />
+
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/margin_10"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:focusable="true"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/height_tv"
+                        style="@style/edittext"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/margin_2"
+                        android:text="体重" />
+
+
+                    <EditText
+                        android:id="@+id/course_weight"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_below="@id/height_tv"
+                        android:layout_marginRight="@dimen/margin_10"
+                        android:background="@drawable/shape_login"
+                        android:textColorHint="@color/lighter_grey" />
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:focusable="true"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/period_tv"
+                        style="@style/edittext"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/margin_2"
+                        android:text="身高" />
+
+                    <EditText
+                        android:id="@+id/course_height"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_below="@id/period_tv"
+                        android:layout_marginRight="@dimen/margin_10"
+                        android:background="@drawable/shape_login"
+                        android:inputType="number"
+                        android:textColorHint="@color/lighter_grey" />
+                </RelativeLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/margin_30"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:focusable="true"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/time_tv"
+                        style="@style/edittext"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/margin_2"
+                        android:text="卡路里" />
+
+                    <EditText
+                        android:id="@+id/course_calorie"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_below="@id/time_tv"
+                        android:layout_marginRight="@dimen/margin_10"
+                        android:background="@drawable/shape_login"
+                        android:inputType="number"
+
+                        android:textColorHint="@color/lighter_grey" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+android:focusable="true"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/during_tv"
+                        style="@style/edittext"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/margin_2"
+                        android:inputType="number"
+                        android:text="IBM" />
+
+                    <EditText
+                        android:id="@+id/course_ibm"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_below="@id/during_tv"
+                        android:layout_marginRight="@dimen/margin_10"
+                        android:background="@drawable/shape_login"
+                        android:inputType="number"
+
+                        android:textColorHint="@color/lighter_grey" />
+                </RelativeLayout>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+</LinearLayout>

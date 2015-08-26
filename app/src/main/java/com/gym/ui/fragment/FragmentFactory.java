@@ -12,6 +12,7 @@ public class FragmentFactory {
     public static final int MENU_FIT=2;
     public static final int MENU_BOX=3;
     public static final int MENU_FIGHT=4;
+    public static final int CENTER_COURSE=5;
     private static HashMap<Integer,BaseFragment> map=new HashMap<>();
 
     public static BaseFragment createFragment(int position){
@@ -32,6 +33,9 @@ public class FragmentFactory {
                     break;
                 case MENU_FIGHT:
                     fragment=new FightFragment();
+                    break;
+                case CENTER_COURSE:
+                    fragment=new CourseFragment();
                     break;
             }
         }

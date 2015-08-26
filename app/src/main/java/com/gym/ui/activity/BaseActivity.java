@@ -1,12 +1,12 @@
-package com.gym;
+package com.gym.ui.activity;
 
-import android.graphics.Color;
 import android.os.*;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 
+
+import com.gym.R;
 
 import java.util.LinkedList;
 import java.util.List;

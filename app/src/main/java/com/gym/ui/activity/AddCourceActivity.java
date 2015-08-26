@@ -1,9 +1,20 @@
 package com.gym.ui.activity;
 
 import android.app.Dialog;
+import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -14,7 +25,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gym.R;
+import com.gym.app.Constants;
+import com.gym.utils.ImageUtils;
+import com.gym.utils.StringUtils;
+import com.gym.utils.Tool;
 import com.gym.utils.UIUtils;
+
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -59,9 +79,26 @@ public class AddCourceActivity extends BaseActivity implements View.OnClickListe
     TextView duringTv;
     @InjectView(R.id.course_ibm)
     EditText courseIbm;
+    @InjectView(R.id.takingPictures)
+    Button takingPictures;
+    @InjectView(R.id.selectPphotoAlbum)
+    Button selectPphotoAlbum;
+    @InjectView(R.id.btnClose)
+    Button btnClose;
     private ActionBar mActionBar;
     private Dialog dialog;
     private View dialogView;
+    private int TAKE_PICTURE = 100, PHOTO_ALBUM = 200;
+    private int takeType = 1;
+    private String imgPath1, imgPath2, imgPath3, imgPath4;
+    private static final int CROP_PICTURE = 0;
+    private String protraitPath1;
+    private String protraitPath2;
+    private String protraitPath3;
+    private String protraitPath4;
+    String filePath = Environment.getExternalStorageDirectory()
+            .getAbsolutePath() + Constants.APP_TMEP_FILE_PATH + "/";
+
     @Override
     public void init() {
         super.init();
@@ -78,8 +115,9 @@ public class AddCourceActivity extends BaseActivity implements View.OnClickListe
         addImage4.setOnClickListener(this);
         initOperationDialog();
     }
+
     private void initOperationDialog() {
-       /* dialogView = this.getLayoutInflater().inflate(
+        dialogView = this.getLayoutInflater().inflate(
                 R.layout.activity_edituserinfo_popuoperat, null);
         dialog = new Dialog(this, R.style.transparentFrameWindowStyle);
 
@@ -88,18 +126,8 @@ public class AddCourceActivity extends BaseActivity implements View.OnClickListe
         selectPphotoAlbum.setOnClickListener(this);
 
         btnClose.setOnClickListener(this);
-
-        postTitle.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                postTitle.setCursorVisible(true);
-                postTitle.requestFocus(); // 请求获取焦点
-                // postTitle.clearFocus(); //清除焦点
-            }
-        });*/
     }
+
     @Override
     public void initActionbar() {
         setSupportActionBar(toolbar);
@@ -119,15 +147,52 @@ public class AddCourceActivity extends BaseActivity implements View.OnClickListe
                 onBackPressed();
             }
         });
-
+rightTv.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-        if(v==addImage1||v==addImage2||v==addImage3||v==addImage4){
+        if (v == addImage1) {
             showDialog();
+            takeType = 1;
+        } else if (v == addImage2) {
+            showDialog();
+            takeType = 2;
+        } else if (v == addImage3) {
+            showDialog();
+            takeType = 3;
+        } else if (v == addImage4) {
+            showDialog();
+            takeType = 4;
+        } else if (v == selectPphotoAlbum) {// 从相册取
+            openAlbum();
+            dialog.dismiss();// 操作框 取消
+        } else if (v == takingPictures) {// 拍照
+            takePicture();
+            dialog.dismiss();// 操作框 取消
+        } else if (v == btnClose) {
+            dialog.dismiss();// 操作框 取消s
+        }else if(v==rightTv){
+            initUploadData();
         }
     }
+
+    private void initUploadData() {
+        String topicContent1 = " ";
+        String topicContent2 = " ";
+        String topicContent3 = " ";
+        if (!TextUtils.isEmpty(protraitPath1)) {
+            Tool.getSmallBitmap(protraitPath1);
+            topicContent1 = Tool.getImgeHexBase64String(protraitPath1);
+        }
+        if (!TextUtils.isEmpty(protraitPath2)) {
+            topicContent2 = Tool.getImgeHexBase64String(protraitPath2);
+        }
+        if (!TextUtils.isEmpty(protraitPath3)) {
+            topicContent3 = Tool.getImgeHexBase64String(protraitPath3);
+        }
+    }
+
     private void showDialog() {
 
         dialog.setContentView(dialogView, new ViewGroup.LayoutParams(
@@ -143,5 +208,282 @@ public class AddCourceActivity extends BaseActivity implements View.OnClickListe
         dialog.onWindowAttributesChanged(wl);
         dialog.setCanceledOnTouchOutside(true);
         dialog.show();
+    }
+
+    // 打开本地相册
+    public void openAlbum() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        this.startActivityForResult(intent, PHOTO_ALBUM);
+    }
+
+    // 拍照
+    public void takePicture() {
+
+        String state = Environment.getExternalStorageState();
+        if (state.equals(Environment.MEDIA_MOUNTED)) {
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            File outDir = Environment
+                    .getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+            if (!outDir.exists()) {
+                outDir.mkdirs();
+            }
+            File outFile = new File(outDir, System.currentTimeMillis() + ".jpg");
+            if (takeType == 1) {
+                imgPath1 = outFile.getAbsolutePath();
+            } else if (takeType == 2) {
+                imgPath2 = outFile.getAbsolutePath();
+            } else if (takeType == 3) {
+                imgPath3 = outFile.getAbsolutePath();
+            } else if (takeType == 4) {
+                imgPath4 = outFile.getAbsolutePath();
+            }
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(outFile));
+            intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
+            startActivityForResult(intent, TAKE_PICTURE);
+        } else {
+            UIUtils.showToastSafe(this, "手机设备无存储SDCard,请确认已经插入SD卡.");
+        }
+    }
+
+    private void startPhotoZoom(Uri data, int takeType) {
+        WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+        Intent intent = new Intent("com.android.camera.action.CROP");
+        intent.setDataAndType(data, "image/*");
+        intent.putExtra("output", this.getUploadTempFile(data, takeType));
+        intent.putExtra("crop", "true");
+        intent.putExtra("aspectX", 1);// 裁剪框比例
+        intent.putExtra("aspectY", 1);
+        intent.putExtra("outputX", 600);// 输出图片大小
+        intent.putExtra("outputY", 600);
+
+        intent.putExtra("scale", true);// 去黑边
+        intent.putExtra("scaleUpIfNeeded", true);// 去黑边
+        startActivityForResult(intent, this.CROP_PICTURE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == TAKE_PICTURE) {
+            if (resultCode == RESULT_OK) {
+                if (takeType == 1) {
+                    //setImageView(imgPath1);
+                    File file = new File(imgPath1);
+                    startPhotoZoom(Uri.fromFile(file), 1);
+                } else if (takeType == 2) {
+                    //setImageView(imgPath2);
+                    File file = new File(imgPath2);
+                    startPhotoZoom(Uri.fromFile(file), 2);
+                } else if (takeType == 3) {
+                    File file = new File(imgPath3);
+                    startPhotoZoom(Uri.fromFile(file), 3);
+                    //setImageView(imgPath3);
+                } else if (takeType == 4) {
+                    File file = new File(imgPath4);
+                    startPhotoZoom(Uri.fromFile(file), 4);
+                    //setImageView(imgPath3);
+                }
+            } else if (resultCode == RESULT_CANCELED) {
+                // 用户取消了图像捕获
+            } else {
+                // 图像捕获失败，提示用户
+                UIUtils.showToastSafe(this, "拍照失败");
+            }
+        } else if (requestCode == PHOTO_ALBUM) {
+            if (resultCode == RESULT_OK) {
+                Uri uri = data.getData();
+                if (uri != null) {
+                    String realPath = getRealPathFromURI(uri);
+                    //setImageView(realPath);
+                    startPhotoZoom(uri, takeType);
+                    if (takeType == 1) {
+                        imgPath1 = realPath;
+                    } else if (takeType == 2) {
+                        imgPath2 = realPath;
+                    } else if (takeType == 3) {
+                        imgPath3 = realPath;
+                    } else if (takeType == 4) {
+                        imgPath4 = realPath;
+                    }
+                } else {
+                    UIUtils.showToastSafe(this, "从相册获取图片失败");
+                }
+            }
+        } else if (requestCode == CROP_PICTURE) {
+            if (resultCode == RESULT_OK) {
+                // uploadNewPhoto();// 上传新照片
+                String realPath = null;
+                if (takeType == 1) {
+                    realPath = protraitPath1;
+                } else if (takeType == 2) {
+                    realPath = protraitPath2;
+                } else if (takeType == 3) {
+                    realPath = protraitPath3;
+                } else if (takeType == 4) {
+                    realPath = protraitPath4;
+                }
+                setImageView(realPath);
+            }
+        }
+    }    // 裁剪头像的绝对路径
+
+    private Uri getUploadTempFile(Uri uri, int takeType) {
+        String storageState = Environment.getExternalStorageState();
+        if (storageState.equals(Environment.MEDIA_MOUNTED)) {
+            File savedir = new File(filePath);
+            if (!savedir.exists()) {
+                savedir.mkdirs();
+            }
+        } else {
+
+            return null;
+        }
+        String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss")
+                .format(new Date());
+        String thePath = ImageUtils.getAbsolutePathFromNoStandardUri(uri);
+
+        // 如果是标准Uri
+        if (StringUtils.isEmpty(thePath)) {
+            thePath = ImageUtils.getAbsoluteImagePath(this, uri);
+        }
+        String ext = "jpg";
+        ext = StringUtils.isEmpty(ext) ? "jpg" : ext;
+        // 照片命名
+        String cropFileName = "super_crop_" + timeStamp + "." + ext;
+        // 裁剪头像的绝对路径
+        File protraitFile = null;
+        if (takeType == 1) {
+            protraitPath1 = filePath + cropFileName;
+            protraitFile = new File(protraitPath1);
+
+            Uri cropUri = Uri.fromFile(protraitFile);
+        } else if (takeType == 2) {
+            protraitPath2 = filePath + cropFileName;
+            protraitFile = new File(protraitPath2);
+
+
+        } else if (takeType == 3) {
+            protraitPath3 = filePath + cropFileName;
+            protraitFile = new File(protraitPath3);
+        } else if (takeType == 4) {
+            protraitPath3 = filePath + cropFileName;
+            protraitFile = new File(protraitPath4);
+        }
+        Uri cropUri = Uri.fromFile(protraitFile);
+        return cropUri;
+    }
+
+    /**
+     * This method is used to get real path of file from from uri<br/>
+     * captured-from-camera
+     *
+     * @param contentUri
+     * @return String
+     */
+    public String getRealPathFromURI(Uri contentUri) {
+        try {
+            String[] proj = {MediaStore.Images.Media.DATA};
+            Cursor cursor = this.managedQuery(contentUri, proj, null, null,
+                    null);
+            int column_index = cursor
+                    .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            return cursor.getString(column_index);
+        } catch (Exception e) {
+            return contentUri.getPath();
+        }
+    }
+
+    private void setImageView(final String realPath) {
+
+        Bitmap bmp = BitmapFactory.decodeFile(realPath);
+        int degree = readPictureDegree(realPath);
+        if (takeType == 1) {
+            if (degree <= 0) {
+                addImage1.setImageBitmap(bmp);
+            } else {
+                Matrix matrix = new Matrix();
+                // 旋转图片动作
+                matrix.postRotate(degree);
+                // 创建新图片
+                Bitmap resizedBitmap = Bitmap.createBitmap(bmp, 0, 0,
+                        bmp.getWidth(), bmp.getHeight(), matrix, true);
+
+                addImage1.setImageBitmap(resizedBitmap);
+            }
+        } else if (takeType == 2) {
+            if (degree <= 0) {
+                addImage2.setImageBitmap(bmp);
+            } else {
+                Matrix matrix = new Matrix();
+                // 旋转图片动作
+                matrix.postRotate(degree);
+                // 创建新图片
+                Bitmap resizedBitmap = Bitmap.createBitmap(bmp, 0, 0,
+                        bmp.getWidth(), bmp.getHeight(), matrix, true);
+
+                addImage2.setImageBitmap(resizedBitmap);
+            }
+        } else if (takeType == 3) {
+            if (degree <= 0) {
+                addImage3.setImageBitmap(bmp);
+            } else {
+                Matrix matrix = new Matrix();
+                // 旋转图片动作
+                matrix.postRotate(degree);
+                // 创建新图片
+                Bitmap resizedBitmap = Bitmap.createBitmap(bmp, 0, 0,
+                        bmp.getWidth(), bmp.getHeight(), matrix, true);
+
+                addImage3.setImageBitmap(resizedBitmap);
+            }
+        } else if (takeType == 4) {
+            if (degree <= 0) {
+                addImage4.setImageBitmap(bmp);
+            } else {
+                Matrix matrix = new Matrix();
+                // 旋转图片动作
+                matrix.postRotate(degree);
+                // 创建新图片
+                Bitmap resizedBitmap = Bitmap.createBitmap(bmp, 0, 0,
+                        bmp.getWidth(), bmp.getHeight(), matrix, true);
+
+                addImage4.setImageBitmap(resizedBitmap);
+            }
+        }
+
+
+    }
+
+    /**
+     * 读取照片exif信息中的旋转角度<br/>
+     *
+     * @param path 照片路径
+     * @return角度
+     */
+    public static int readPictureDegree(String path) {
+        int degree = 0;
+        try {
+            ExifInterface exifInterface = new ExifInterface(path);
+            int orientation = exifInterface.getAttributeInt(
+                    ExifInterface.TAG_ORIENTATION,
+                    ExifInterface.ORIENTATION_NORMAL);
+            switch (orientation) {
+                case ExifInterface.ORIENTATION_ROTATE_90:
+                    degree = 90;
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_180:
+                    degree = 180;
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_270:
+                    degree = 270;
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return degree;
     }
 }

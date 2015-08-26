@@ -17,6 +17,7 @@ public class Constants {
     public static final String BILL_UNCHECK = "0";
     public static final String BILL_CHECKED = "1";
     public static final String TOOLBAR_ITEM = "toolbarItem";
+    public static final String APP_TMEP_FILE_PATH = "/gym/temp";
 
     public static String VOICER = "xiaoyan";
     public static SpeechSynthesisUtil speechUtil;

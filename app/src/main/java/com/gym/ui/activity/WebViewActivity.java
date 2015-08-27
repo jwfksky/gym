@@ -18,7 +18,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 
-public class RegisterActivity extends BaseActivity {
+public class WebViewActivity extends BaseActivity {
 
     @InjectView(R.id.title_tb)
     TextView title_tb;
@@ -29,18 +29,19 @@ public class RegisterActivity extends BaseActivity {
     @InjectView(R.id.register_wv)
     WebView registWebView;
     private ActionBar mActionbar;
+    private String url;
 
     @Override
     public void init() {
         setContentView(R.layout.activity_register_new);
         ButterKnife.inject(this);
-
+        url = getIntent().getStringExtra("url");
     }
 
     @Override
     public void initData() {
         super.initData();
-        addWebViewEvent(UIUtils.getString(R.string.Register_URL));
+        addWebViewEvent(url);
 
     }
 

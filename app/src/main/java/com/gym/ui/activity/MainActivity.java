@@ -115,7 +115,7 @@ public class MainActivity extends BaseActivity implements IFragment, View.OnClic
         }
         if (v == edit) {
             popup.dismiss();
-            Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
+            Intent intent = new Intent(MainActivity.this, WebViewActivity.class);
             startActivity(intent);
         }
         if (v == collect) {

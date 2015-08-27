@@ -5,4 +5,6 @@
    <string name="Register_URL">http://211.149.244.163:8090/apphtml/register.html</string>
    <!-- 注册 -->
    <string name="ShowAllExerciseRecord_URL">http://211.149.244.163:8090/UserAccount.asmx/ShowAllExerciseRecord</string>
+   <!-- 忘记密码 -->
+   <string name="GetPassword_URL">http://211.149.244.163:8090/apphtml/getpassword.html</string>
 </resources>

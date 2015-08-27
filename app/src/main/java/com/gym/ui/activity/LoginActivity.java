@@ -76,8 +76,13 @@ public class LoginActivity extends BaseActivity {
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-                startActivity(intent);
+                showWebView(UIUtils.getString(R.string.Register_URL));
+            }
+        });
+        forgetPwd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showWebView(UIUtils.getString(R.string.GetPassword_URL));
             }
         });
         loginPerson.setOnClickListener(new View.OnClickListener() {
@@ -92,6 +97,12 @@ public class LoginActivity extends BaseActivity {
                 login("1");//1为教练用户
             }
         });
+    }
+
+    private void showWebView(String url) {
+        Intent intent = new Intent(LoginActivity.this, WebViewActivity.class);
+        intent.putExtra("url", url);
+        startActivity(intent);
     }
 
     /**

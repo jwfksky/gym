@@ -79,12 +79,7 @@ public class AddCourceActivity extends BaseActivity implements View.OnClickListe
     TextView duringTv;
     @InjectView(R.id.course_ibm)
     EditText courseIbm;
-    @InjectView(R.id.takingPictures)
-    Button takingPictures;
-    @InjectView(R.id.selectPphotoAlbum)
-    Button selectPphotoAlbum;
-    @InjectView(R.id.btnClose)
-    Button btnClose;
+
     private ActionBar mActionBar;
     private Dialog dialog;
     private View dialogView;
@@ -98,6 +93,9 @@ public class AddCourceActivity extends BaseActivity implements View.OnClickListe
     private String protraitPath4;
     String filePath = Environment.getExternalStorageDirectory()
             .getAbsolutePath() + Constants.APP_TMEP_FILE_PATH + "/";
+    private Button takingPictures;
+    private Button selectPphotoAlbum;
+    private Button btnClose;
 
     @Override
     public void init() {
@@ -120,11 +118,11 @@ public class AddCourceActivity extends BaseActivity implements View.OnClickListe
         dialogView = this.getLayoutInflater().inflate(
                 R.layout.activity_edituserinfo_popuoperat, null);
         dialog = new Dialog(this, R.style.transparentFrameWindowStyle);
-
+        takingPictures = (Button) dialogView.findViewById(R.id.takingPictures);
+        selectPphotoAlbum = (Button) dialogView.findViewById(R.id.selectPphotoAlbum);
+        btnClose = (Button) dialogView.findViewById(R.id.btnClose);
         takingPictures.setOnClickListener(this);
-
         selectPphotoAlbum.setOnClickListener(this);
-
         btnClose.setOnClickListener(this);
     }
 

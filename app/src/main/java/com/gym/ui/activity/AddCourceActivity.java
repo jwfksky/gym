@@ -9,12 +9,14 @@ import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -26,15 +28,21 @@ import android.widget.TextView;
 
 import com.gym.R;
 import com.gym.app.Constants;
+import com.gym.http.protocol.AddCourceProtocol;
+import com.gym.http.protocol.BaseProtocol;
 import com.gym.utils.ImageUtils;
+import com.gym.utils.LogUtils;
+import com.gym.utils.ProgressUtil;
 import com.gym.utils.StringUtils;
 import com.gym.utils.Tool;
 import com.gym.utils.UIUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -145,7 +153,7 @@ public class AddCourceActivity extends BaseActivity implements View.OnClickListe
                 onBackPressed();
             }
         });
-rightTv.setOnClickListener(this);
+        rightTv.setOnClickListener(this);
     }
 
     @Override
@@ -170,25 +178,13 @@ rightTv.setOnClickListener(this);
             dialog.dismiss();// 操作框 取消
         } else if (v == btnClose) {
             dialog.dismiss();// 操作框 取消s
-        }else if(v==rightTv){
+        } else if (v == rightTv) {
             initUploadData();
         }
     }
 
     private void initUploadData() {
-        String topicContent1 = " ";
-        String topicContent2 = " ";
-        String topicContent3 = " ";
-        if (!TextUtils.isEmpty(protraitPath1)) {
-            Tool.getSmallBitmap(protraitPath1);
-            topicContent1 = Tool.getImgeHexBase64String(protraitPath1);
-        }
-        if (!TextUtils.isEmpty(protraitPath2)) {
-            topicContent2 = Tool.getImgeHexBase64String(protraitPath2);
-        }
-        if (!TextUtils.isEmpty(protraitPath3)) {
-            topicContent3 = Tool.getImgeHexBase64String(protraitPath3);
-        }
+        new AddCourceTask().execute();
     }
 
     private void showDialog() {
@@ -451,8 +447,6 @@ rightTv.setOnClickListener(this);
                 addImage4.setImageBitmap(resizedBitmap);
             }
         }
-
-
     }
 
     /**
@@ -483,5 +477,75 @@ rightTv.setOnClickListener(this);
             e.printStackTrace();
         }
         return degree;
+    }
+
+    public boolean checkParams() {
+        if (TextUtils.isEmpty(courseWeight.getText())) return false;
+        if (TextUtils.isEmpty(courseHeight.getText())) return false;
+        if (TextUtils.isEmpty(courseCalorie.getText())) return false;
+        if (TextUtils.isEmpty(courseIbm.getText())) return false;
+        return true;
+    }
+    class AddCourceTask extends AsyncTask<String,String,String>{
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            ProgressUtil.startProgressBar(AddCourceActivity.this);
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            if (checkParams()) {
+                String topicContent1 = " ";
+                String topicContent2 = " ";
+                String topicContent3 = " ";
+                String topicContent4 = " ";
+                if (!TextUtils.isEmpty(protraitPath1)) {
+                    Tool.getSmallBitmap(protraitPath1);
+                   // topicContent1 = Tool.getImgeHexBase64String(protraitPath1);
+
+                    try {
+                        topicContent1=Base64.encodeToString(Tool.bitmapTobyte(Tool.getSmallBitmap(protraitPath1)), Base64.DEFAULT);
+                    } catch (Exception e) {
+                        LogUtils.e(e);
+                    }
+                }
+                if (!TextUtils.isEmpty(protraitPath2)) {
+                    topicContent2 = Tool.getImgeHexBase64String(protraitPath2);
+                }
+                if (!TextUtils.isEmpty(protraitPath3)) {
+                    topicContent3 = Tool.getImgeHexBase64String(protraitPath3);
+                }
+                if (!TextUtils.isEmpty(protraitPath4)) {
+                    topicContent4 = Tool.getImgeHexBase64String(protraitPath4);
+                }
+                HashMap<String,String> hashMap=new HashMap<>();
+                hashMap.put("userID",Constants.user.getUsr_UserID()+"");
+                hashMap.put("photo1",topicContent1);
+                hashMap.put("photo2",topicContent2);
+                hashMap.put("photo3",topicContent3);
+                hashMap.put("photo4",topicContent4);
+                hashMap.put("p_e_last",courseHeight.getText().toString());
+                hashMap.put("weight",courseWeight.getText().toString());
+                hashMap.put("calorie",courseCalorie.getText().toString());
+                hashMap.put("IBM",courseIbm.getText().toString());
+                AddCourceProtocol protocol=new AddCourceProtocol(hashMap);
+                return protocol.load(UIUtils.getString(R.string.AddExerciseRecord_URL), BaseProtocol.POST);
+            }
+            return "-1";
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            ProgressUtil.stopProgressBar();
+            if("1".equals(s)){
+                UIUtils.showToastSafe(AddCourceActivity.this,UIUtils.getString(R.string.submit_ok));
+                finish();
+            }else{
+                UIUtils.showToastSafe(AddCourceActivity.this,UIUtils.getString(R.string.submit_error));
+            }
+        }
     }
 }

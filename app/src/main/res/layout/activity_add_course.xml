@@ -36,15 +36,15 @@
 
                 <ImageView
                     android:id="@+id/addImage1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/width_80"
+                    android:layout_height="@dimen/height_80"
                     android:layout_toRightOf="@id/gender_tv"
                     android:src="@drawable/btn_addimage" />
 
                 <ImageView
                     android:id="@+id/addImage2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/width_80"
+                    android:layout_height="@dimen/height_80"
                     android:layout_marginLeft="@dimen/margin_30"
                     android:layout_toRightOf="@id/addImage1"
                     android:src="@drawable/btn_addimage" />
@@ -52,8 +52,8 @@
 
                 <ImageView
                     android:id="@+id/addImage3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/width_80"
+                    android:layout_height="@dimen/height_80"
                     android:layout_below="@id/addImage1"
                     android:layout_marginTop="@dimen/margin_10"
                     android:layout_toRightOf="@id/gender_tv"
@@ -61,15 +61,13 @@
 
                 <ImageView
                     android:id="@+id/addImage4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/width_80"
+                    android:layout_height="@dimen/height_80"
                     android:layout_below="@id/addImage2"
                     android:layout_marginLeft="@dimen/margin_30"
                     android:layout_marginTop="@dimen/margin_10"
                     android:layout_toRightOf="@id/addImage1"
                     android:src="@drawable/btn_addimage" />
-
-
             </RelativeLayout>
 
             <LinearLayout
@@ -117,7 +115,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/margin_2"
-                        android:text="身高" />
+                        android:text="运动时长" />
 
                     <EditText
                         android:id="@+id/course_height"

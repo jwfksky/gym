@@ -58,6 +58,7 @@ public class MainActivity extends BaseActivity implements IFragment, View.OnClic
     private TextView edit;
     private TextView collect;
     private TextView course;
+    private TextView buyLesson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,6 +137,16 @@ public class MainActivity extends BaseActivity implements IFragment, View.OnClic
             list.add(UIUtils.getString(R.string.addCourse));
             intent.putStringArrayListExtra(Constants.TOOLBAR_ITEM, list);
             startActivity(intent);
+        }if (v == buyLesson) {
+            popup.dismiss();
+            Intent intent = new Intent(MainActivity.this, CommonActivity.class);
+            //第一个为标题，第二个为指定显示的fragment,第三个为toolbar右侧
+            ArrayList<String> list = new ArrayList<>();
+            list.add("个人里程");
+            list.add(FragmentFactory.CENTER_COURSE + "");
+            list.add(UIUtils.getString(R.string.addCourse));
+            intent.putStringArrayListExtra(Constants.TOOLBAR_ITEM, list);
+            startActivity(intent);
         }
     }
 
@@ -177,9 +188,11 @@ public class MainActivity extends BaseActivity implements IFragment, View.OnClic
         edit = (TextView) rootView.findViewById(R.id.edit_tv);
         collect = (TextView) rootView.findViewById(R.id.collect_tv);
         course = (TextView) rootView.findViewById(R.id.course_tv);
+        buyLesson = (TextView) rootView.findViewById(R.id.buyLesson_tv);
         edit.setOnClickListener(this);
         collect.setOnClickListener(this);
         course.setOnClickListener(this);
+        buyLesson.setOnClickListener(this);
     }
 
     /**

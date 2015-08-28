@@ -39,4 +39,7 @@
     <string name="text_Cancel">取消</string>
     <string name="text_takingPictures">拍照</string>
     <string name="text_selectPphotoAlbum">从相册中选取</string>
+    <string name="params_error">对不起，请检查数据是否正确</string>
+    <string name="submit_error">对不起，提交异常</string>
+    <string name="submit_ok">提交完成</string>
 </resources>

@@ -113,4 +113,7 @@
         <item name="android:windowBackground">@drawable/photo_choose_bg</item>
         <item name="android:windowNoTitle">true</item>
     </style>
+    <style name="dialog_styles" parent="@android:style/Theme.Panel">
+
+    </style>
 </resources>

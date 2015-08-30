@@ -10,7 +10,7 @@ import com.gym.ui.widget.LoadingPage;
 public class BoxFragment extends BaseFragment {
     @Override
     protected LoadingPage.LoadResult load() {
-        return null;
+        return LoadingPage.LoadResult.EMPTY;
     }
 
     @Override

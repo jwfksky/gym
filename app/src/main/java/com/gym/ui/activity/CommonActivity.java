@@ -58,16 +58,21 @@ public class CommonActivity extends BaseActivity implements IFragment {
         fm = getSupportFragmentManager();
         //
         toolbarItem = getIntent().getStringArrayListExtra(Constants.TOOLBAR_ITEM);
+        //根据传递的fragment编号确定当前展示的fragment
         if (toolbarItem != null && toolbarItem.size() >= 2) {
+            //需要显示顶部图片的fragment
             if (Integer.parseInt(toolbarItem.get(1)) == FragmentFactory.CENTER_COURSE) {
                 commonIv.setVisibility(View.VISIBLE);
             }else{
                 commonIv.setVisibility(View.GONE);
             }
+            //切换fragment
             onChangeFragment(FragmentFactory.createFragment(Integer.parseInt(toolbarItem.get(1))), null, true);
         }
 
     }
+
+
 
     @Override
     public void initActionbar() {
@@ -77,10 +82,12 @@ public class CommonActivity extends BaseActivity implements IFragment {
         mActionBar.setDefaultDisplayHomeAsUpEnabled(true);
         areaTb.setVisibility(View.GONE);
         backTb.setVisibility(View.VISIBLE);
-        if (toolbarItem != null && toolbarItem.size() >= 3) {
+        if (toolbarItem != null && toolbarItem.size() > 0) {
             titleTb.setText(toolbarItem.get(0));
-            rightTv.setText(toolbarItem.get(2));
-            rightTv.setVisibility(View.VISIBLE);
+            if (toolbarItem.size() >= 3) {
+                rightTv.setText(toolbarItem.get(2));
+                rightTv.setVisibility(View.VISIBLE);
+            }
         }
         operateToolbar();
     }

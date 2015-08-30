@@ -9,4 +9,16 @@
    <string name="GetPassword_URL">http://211.149.244.163:8090/apphtml/getpassword.html</string>
    <!-- 忘记密码 -->
    <string name="AddExerciseRecord_URL">http://211.149.244.163:8090/UserAccount.asmx/AddExerciseRecord</string>
+   <!-- 购买课程 -->
+   <string name="GetAllOfMyCourse_URL">http://211.149.244.163:8090/JobInfo.asmx/GetAllOfMyCourse</string>
+   <!-- 删除课程 -->
+   <string name="DeleteUserByCourse_URL">http://211.149.244.163:8090/JobInfo.asmx/DeleteUserByCourse</string>
+   <!-- 购买支付课程 -->
+   <string name="BuyCourse_URL">http://211.149.244.163:8090/JobInfo.asmx/BuyCourse</string>
+   <!-- 订单管理 -->
+   <string name="GetOrderByUserID_URL">http://211.149.244.163:8090/JobInfo.asmx/GetOrderByUserID</string>
+   <!-- 编辑用户信息 -->
+   <string name="UpdateUsers_URL">http://211.149.244.163:8090/UserAccount.asmx/UpdateUsers</string>
+   <!-- 用户积分 -->
+   <string name="GetPersonalIntegration_URL">http://211.149.244.163:8090/Integration.asmx/GetPersonalIntegration</string>
 </resources>

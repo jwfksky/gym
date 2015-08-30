@@ -59,6 +59,8 @@ public class MainActivity extends BaseActivity implements IFragment, View.OnClic
     private TextView collect;
     private TextView course;
     private TextView buyLesson;
+    private TextView orderManager;
+    private TextView editInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,7 +125,8 @@ public class MainActivity extends BaseActivity implements IFragment, View.OnClic
             popup.dismiss();
             Intent intent = new Intent(MainActivity.this, CommonActivity.class);
             ArrayList<String> list = new ArrayList<>();
-            list.add("个人积分");
+            list.add("积分明细");
+            list.add(FragmentFactory.CENTER_POINTS + "");
             intent.putStringArrayListExtra(Constants.TOOLBAR_ITEM, list);
             startActivity(intent);
         }
@@ -139,12 +142,31 @@ public class MainActivity extends BaseActivity implements IFragment, View.OnClic
             startActivity(intent);
         }if (v == buyLesson) {
             popup.dismiss();
-            Intent intent = new Intent(MainActivity.this, CommonActivity.class);
+            Intent intent = new Intent(MainActivity.this, CommonViewPagerActivity.class);
             //第一个为标题，第二个为指定显示的fragment,第三个为toolbar右侧
             ArrayList<String> list = new ArrayList<>();
-            list.add("个人里程");
-            list.add(FragmentFactory.CENTER_COURSE + "");
-            list.add(UIUtils.getString(R.string.addCourse));
+            list.add("购买课程");
+            list.add(FragmentFactory.CENTER_BUYLESSON + "");
+            intent.putStringArrayListExtra(Constants.TOOLBAR_ITEM, list);
+            startActivity(intent);
+        }
+        if (v == orderManager) {
+            popup.dismiss();
+            Intent intent = new Intent(MainActivity.this, CommonViewPagerActivity.class);
+            //第一个为标题，第二个为指定显示的fragment,第三个为toolbar右侧
+            ArrayList<String> list = new ArrayList<>();
+            list.add("订单管理");
+            list.add(FragmentFactory.CENTER_ORDERMANAGER + "");
+            intent.putStringArrayListExtra(Constants.TOOLBAR_ITEM, list);
+            startActivity(intent);
+        }
+        if (v == editInfo) {
+            popup.dismiss();
+            Intent intent = new Intent(MainActivity.this, EditPersonActivity.class);
+            //第一个为标题，第二个为指定显示的fragment,第三个为toolbar右侧
+            ArrayList<String> list = new ArrayList<>();
+            list.add("编辑个人资料");
+            list.add(FragmentFactory.CENTER_ORDERMANAGER + "");
             intent.putStringArrayListExtra(Constants.TOOLBAR_ITEM, list);
             startActivity(intent);
         }
@@ -189,10 +211,14 @@ public class MainActivity extends BaseActivity implements IFragment, View.OnClic
         collect = (TextView) rootView.findViewById(R.id.collect_tv);
         course = (TextView) rootView.findViewById(R.id.course_tv);
         buyLesson = (TextView) rootView.findViewById(R.id.buyLesson_tv);
+        orderManager = (TextView) rootView.findViewById(R.id.orderManager_tv);
+        editInfo = (TextView) rootView.findViewById(R.id.editInfo_tv);
         edit.setOnClickListener(this);
         collect.setOnClickListener(this);
         course.setOnClickListener(this);
         buyLesson.setOnClickListener(this);
+        orderManager.setOnClickListener(this);
+        editInfo.setOnClickListener(this);
     }
 
     /**

@@ -61,6 +61,13 @@
             android:windowSoftInputMode="adjustResize|stateHidden"
             android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|fontScale"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.CommonViewPagerActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden"
+            android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|fontScale"
+            android:screenOrientation="portrait" /><activity
+            android:name=".ui.activity.EditPersonActivity"
+            />
     </application>
 
 </manifest>

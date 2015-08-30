@@ -68,6 +68,30 @@
             android:text="购买课程"
             android:textColor="@color/light_grey"
             android:textSize="@dimen/text_13" />
+        <View style="@style/verticalLine" />
+
+        <TextView
+            android:id="@+id/orderManager_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/margin_10"
+            android:gravity="center"
+            android:text="订单管理"
+            android:textColor="@color/light_grey"
+            android:textSize="@dimen/text_13" />
+        <View style="@style/verticalLine" />
+
+        <TextView
+            android:id="@+id/editInfo_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/margin_10"
+            android:gravity="center"
+            android:text="个人资料"
+            android:textColor="@color/light_grey"
+            android:textSize="@dimen/text_13" />
     </LinearLayout>
 
 

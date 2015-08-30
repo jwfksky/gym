@@ -16,8 +16,8 @@
         android:layout_weight="1"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="3月18日"
-        android:textColor="@color/light_grey" />
+        android:text="日期"
+        android:textColor="@color/lighter_grey" />
     <TextView
         android:id="@+id/content"
         style="@style/edittext"
@@ -26,8 +26,8 @@
         android:layout_height="wrap_content"
         android:gravity="center"
 
-        android:text="瑜伽课"
-        android:textColor="@color/light_grey" />
+        android:text="内容"
+        android:textColor="@color/lighter_grey" />
     <TextView
         android:id="@+id/record"
         style="@style/edittext"
@@ -35,9 +35,12 @@
         android:gravity="center"
         android:layout_weight="1"
         android:layout_height="wrap_content"
-        android:text="+100"
-        android:textColor="@color/light_grey" />
+        android:text="记录"
+        android:textColor="@color/lighter_grey" />
 </LinearLayout>
     <View style="@style/verticalLine"
+        android:layout_height="@dimen/height_10"
+        android:layout_margin="0dp"
+        android:background="@color/lighter_grey"
         />
 </LinearLayout>

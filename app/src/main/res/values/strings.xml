@@ -42,4 +42,11 @@
     <string name="params_error">对不起，请检查数据是否正确</string>
     <string name="submit_error">对不起，提交异常</string>
     <string name="submit_ok">提交完成</string>
+
+    <string-array name="tab_names">
+        <item>全部</item>
+        <item>待付款</item>
+        <item>已退款</item>
+        <item>待评价</item>
+    </string-array>
 </resources>

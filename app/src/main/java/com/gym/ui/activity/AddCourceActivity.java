@@ -104,6 +104,10 @@ public class AddCourceActivity extends BaseActivity implements View.OnClickListe
     private Button takingPictures;
     private Button selectPphotoAlbum;
     private Button btnClose;
+    private String peLast;
+    private String weight;
+    private String calorie;
+    private String ibm;
 
     @Override
     public void init() {
@@ -488,37 +492,40 @@ public class AddCourceActivity extends BaseActivity implements View.OnClickListe
     }
     class AddCourceTask extends AsyncTask<String,String,String>{
 
+
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            peLast = courseHeight.getText().toString();
+            ibm = courseIbm.getText().toString();
+            weight = courseWeight.getText().toString();
+            calorie = courseCalorie.getText().toString();
             ProgressUtil.startProgressBar(AddCourceActivity.this);
         }
 
         @Override
         protected String doInBackground(String... params) {
             if (checkParams()) {
-                String topicContent1 = " ";
-                String topicContent2 = " ";
-                String topicContent3 = " ";
-                String topicContent4 = " ";
+                String topicContent1 = "";
+                String topicContent2 = "";
+                String topicContent3 = "";
+                String topicContent4 = "";
                 if (!TextUtils.isEmpty(protraitPath1)) {
-                    Tool.getSmallBitmap(protraitPath1);
-                   // topicContent1 = Tool.getImgeHexBase64String(protraitPath1);
-
-                    try {
-                        topicContent1=Base64.encodeToString(Tool.bitmapTobyte(Tool.getSmallBitmap(protraitPath1)), Base64.DEFAULT);
-                    } catch (Exception e) {
-                        LogUtils.e(e);
-                    }
+                  // topicContent1 = Tool.getImgeHexBase64String(protraitPath1).replace("\n","");
+                    topicContent1 =  Base64.encodeToString(Tool.bitmapTobyte(Tool.getSmallBitmap(protraitPath1)),Base64.DEFAULT).replace("\n","");
                 }
                 if (!TextUtils.isEmpty(protraitPath2)) {
-                    topicContent2 = Tool.getImgeHexBase64String(protraitPath2);
+                    topicContent2 =  Base64.encodeToString(Tool.bitmapTobyte(Tool.getSmallBitmap(protraitPath2)), Base64.DEFAULT).replace("\n","");
+
                 }
                 if (!TextUtils.isEmpty(protraitPath3)) {
-                    topicContent3 = Tool.getImgeHexBase64String(protraitPath3);
+                    topicContent3 =  Base64.encodeToString(Tool.bitmapTobyte(Tool.getSmallBitmap(protraitPath3)), Base64.DEFAULT).replace("\n","");
+
                 }
                 if (!TextUtils.isEmpty(protraitPath4)) {
-                    topicContent4 = Tool.getImgeHexBase64String(protraitPath4);
+                    topicContent4 =  Base64.encodeToString(Tool.bitmapTobyte(Tool.getSmallBitmap(protraitPath4)), Base64.DEFAULT).replace("\n","");
+
                 }
                 HashMap<String,String> hashMap=new HashMap<>();
                 hashMap.put("userID",Constants.user.getUsr_UserID()+"");
@@ -526,10 +533,14 @@ public class AddCourceActivity extends BaseActivity implements View.OnClickListe
                 hashMap.put("photo2",topicContent2);
                 hashMap.put("photo3",topicContent3);
                 hashMap.put("photo4",topicContent4);
-                hashMap.put("p_e_last",courseHeight.getText().toString());
-                hashMap.put("weight",courseWeight.getText().toString());
-                hashMap.put("calorie",courseCalorie.getText().toString());
-                hashMap.put("IBM",courseIbm.getText().toString());
+
+                hashMap.put("p_e_last", peLast);
+
+                hashMap.put("weight", weight);
+
+                hashMap.put("calorie", calorie);
+
+                hashMap.put("IBM", ibm);
                 AddCourceProtocol protocol=new AddCourceProtocol(hashMap);
                 return protocol.load(UIUtils.getString(R.string.AddExerciseRecord_URL), BaseProtocol.POST);
             }

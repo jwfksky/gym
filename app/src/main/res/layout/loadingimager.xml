@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true" >
 
-        <ImageView
+        <!--<ImageView
             android:id="@+id/loadImager"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -19,7 +19,14 @@
             android:id="@+id/loadImagerCenter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"/>
+            android:layout_centerInParent="true"/>-->
+        <ProgressBar
+            android:id="@+id/login_loading"
+            style="@style/ProgressBarBig"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="visible"/>
     </RelativeLayout>
 
 </RelativeLayout>

@@ -4,97 +4,57 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * Created by Administrator on 2015-08-26.
+ * Created by Administrator on 2015/8/30 0030.
  */
-public class CourseBean implements Parcelable {
+public class PointsBean implements Parcelable {
 
     /**
-     * create_time : {"Month":8,"Millisecond":0,"Year":2015,"Minute":0,"Second":0,"Hour":0,"Value":"2015-08-28 00:00:00","IsNull":false,"Day":28,"IsValidDateTime":true}
-     * p_e_last : 555
-     * IBM : 55.0
-     * calorie : 55
-     * weight : 555.0
-     * photoPath1 : http://211.149.244.163:8090/Pictures/9f32ea4a-20bc-4cfe-8ecc-6f2f1bc7d7ed.jpg
-     * id : 30
+     * date : {"Month":5,"Millisecond":0,"Year":2015,"Minute":59,"Second":14,"Hour":20,"Value":"2015-05-19 20:59:14","IsNull":false,"Day":19,"IsValidDateTime":true}
+     * course_Name : 注册
+     * integral : 50
      */
-    private CreateTimeEntity create_time;
-    private int p_e_last;
-    private double IBM;
-    private int calorie;
-    private double weight;
-    private String photoPath1;
-    private int id;
+    private DateEntity date;
+    private String course_Name;
+    private int integral;
 
-    public void setCreate_time(CreateTimeEntity create_time) {
-        this.create_time = create_time;
+    public void setDate(DateEntity date) {
+        this.date = date;
     }
 
-    public void setP_e_last(int p_e_last) {
-        this.p_e_last = p_e_last;
+    public void setCourse_Name(String course_Name) {
+        this.course_Name = course_Name;
     }
 
-    public void setIBM(double IBM) {
-        this.IBM = IBM;
+    public void setIntegral(int integral) {
+        this.integral = integral;
     }
 
-    public void setCalorie(int calorie) {
-        this.calorie = calorie;
+    public DateEntity getDate() {
+        return date;
     }
 
-    public void setWeight(double weight) {
-        this.weight = weight;
+    public String getCourse_Name() {
+        return course_Name;
     }
 
-    public void setPhotoPath1(String photoPath1) {
-        this.photoPath1 = photoPath1;
+    public int getIntegral() {
+        return integral;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public CreateTimeEntity getCreate_time() {
-        return create_time;
-    }
-
-    public int getP_e_last() {
-        return p_e_last;
-    }
-
-    public double getIBM() {
-        return IBM;
-    }
-
-    public int getCalorie() {
-        return calorie;
-    }
-
-    public double getWeight() {
-        return weight;
-    }
-
-    public String getPhotoPath1() {
-        return photoPath1;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public static class CreateTimeEntity implements Parcelable {
-
+    public static class DateEntity implements Parcelable {
         /**
-         * Month : 8
+         * Month : 5
          * Millisecond : 0
          * Year : 2015
-         * Minute : 0
-         * Second : 0
-         * Hour : 0
-         * Value : 2015-08-28 00:00:00
+         * Minute : 59
+         * Second : 14
+         * Hour : 20
+         * Value : 2015-05-19 20:59:14
          * IsNull : false
-         * Day : 28
+         * Day : 19
          * IsValidDateTime : true
          */
+
         private int Month;
         private int Millisecond;
         private int Year;
@@ -205,10 +165,10 @@ public class CourseBean implements Parcelable {
             dest.writeByte(IsValidDateTime ? (byte) 1 : (byte) 0);
         }
 
-        public CreateTimeEntity() {
+        public DateEntity() {
         }
 
-        protected CreateTimeEntity(Parcel in) {
+        protected DateEntity(Parcel in) {
             this.Month = in.readInt();
             this.Millisecond = in.readInt();
             this.Year = in.readInt();
@@ -221,13 +181,13 @@ public class CourseBean implements Parcelable {
             this.IsValidDateTime = in.readByte() != 0;
         }
 
-        public static final Creator<CreateTimeEntity> CREATOR = new Creator<CreateTimeEntity>() {
-            public CreateTimeEntity createFromParcel(Parcel source) {
-                return new CreateTimeEntity(source);
+        public static final Parcelable.Creator<DateEntity> CREATOR = new Parcelable.Creator<DateEntity>() {
+            public DateEntity createFromParcel(Parcel source) {
+                return new DateEntity(source);
             }
 
-            public CreateTimeEntity[] newArray(int size) {
-                return new CreateTimeEntity[size];
+            public DateEntity[] newArray(int size) {
+                return new DateEntity[size];
             }
         };
     }
@@ -239,35 +199,27 @@ public class CourseBean implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeParcelable(this.create_time, flags);
-        dest.writeInt(this.p_e_last);
-        dest.writeDouble(this.IBM);
-        dest.writeInt(this.calorie);
-        dest.writeDouble(this.weight);
-        dest.writeString(this.photoPath1);
-        dest.writeInt(this.id);
+        dest.writeParcelable(this.date, 0);
+        dest.writeString(this.course_Name);
+        dest.writeInt(this.integral);
     }
 
-    public CourseBean() {
+    public PointsBean() {
     }
 
-    protected CourseBean(Parcel in) {
-        this.create_time = in.readParcelable(CreateTimeEntity.class.getClassLoader());
-        this.p_e_last = in.readInt();
-        this.IBM = in.readDouble();
-        this.calorie = in.readInt();
-        this.weight = in.readDouble();
-        this.photoPath1 = in.readString();
-        this.id = in.readInt();
+    protected PointsBean(Parcel in) {
+        this.date = in.readParcelable(DateEntity.class.getClassLoader());
+        this.course_Name = in.readString();
+        this.integral = in.readInt();
     }
 
-    public static final Parcelable.Creator<CourseBean> CREATOR = new Parcelable.Creator<CourseBean>() {
-        public CourseBean createFromParcel(Parcel source) {
-            return new CourseBean(source);
+    public static final Parcelable.Creator<PointsBean> CREATOR = new Parcelable.Creator<PointsBean>() {
+        public PointsBean createFromParcel(Parcel source) {
+            return new PointsBean(source);
         }
 
-        public CourseBean[] newArray(int size) {
-            return new CourseBean[size];
+        public PointsBean[] newArray(int size) {
+            return new PointsBean[size];
         }
     };
 }

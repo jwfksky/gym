@@ -47,17 +47,17 @@ public class DialogUtil {
 			View view = laInflater.inflate(R.layout.loadingimager, null);
 			dialog.setContentView(view);
 
-			ImageView loadImageView = (ImageView) view
+			/*ImageView loadImageView = (ImageView) view
 					.findViewById(R.id.loadImager);
 
 			loadImageView.setBackgroundResource(R.drawable.progress_big);
 			final AnimationDrawable frameAnimation = (AnimationDrawable) loadImageView
 					.getBackground();
-			frameAnimation.setOneShot(false);
+			frameAnimation.setOneShot(false);*/
 			// loadImageView.setImageDrawable(frameAnimation);
 
 			// 一定要在Handler中延迟开始，要不不会转
-			if (handler == null) {
+			/*if (handler == null) {
 				handler = new Handler();
 			}
 			handler.postDelayed(new Runnable() {
@@ -65,14 +65,14 @@ public class DialogUtil {
 				public void run() {
 					frameAnimation.start();
 				}
-			}, 50);
+			}, 50);*/
 
 			WindowManager.LayoutParams params = dialog.getWindow()
 					.getAttributes();
 			params.gravity = Gravity.CENTER;
 			dialog.getWindow().setAttributes(params);
 
-			// 当Dialog取消的时候关闭动画
+			/*// 当Dialog取消的时候关闭动画
 			dialog.setOnCancelListener(new OnCancelListener() {
 
 				@Override
@@ -80,7 +80,7 @@ public class DialogUtil {
 					Log.d("CreatLoadingDialog", "Dialog is cancle");
 					frameAnimation.stop();
 				}
-			});
+			});*/
 			dialog.show();
 		} catch (Exception e) {
 			dialog.dismiss();

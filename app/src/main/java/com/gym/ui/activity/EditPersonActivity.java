@@ -135,7 +135,7 @@ public class EditPersonActivity extends BaseActivity implements View.OnClickList
         HashMap<String, String> hashMap = new HashMap<>();
         hashMap.put("userID",Constants.user.getUsr_UserID()+"");
         hashMap.put("UserName",userName.getText()+"");
-        hashMap.put("UserAlia",neckName.getText()+"");
+        hashMap.put("Usr_UserAlia",neckName.getText()+"");
         hashMap.put("Sex",gender.getText()+"");
         hashMap.put("MobilePhone",phone.getText()+"");
         hashMap.put("EmailAddress",email.getText()+"");

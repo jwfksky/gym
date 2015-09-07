@@ -13,6 +13,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.HttpRequestRetryHandler;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
@@ -66,14 +67,13 @@ public class HttpHelper {
     public static HttpResult post(String url, String value) {
         HttpPost httpPost = new HttpPost(url);
         try {
-            StringEntity stringEntity = new StringEntity(value, GBK);
-            stringEntity.setContentEncoding(GBK);
-            stringEntity.setContentType("application/json");
+            StringEntity stringEntity = new StringEntity(value, UTF8);
+            stringEntity.setContentEncoding(UTF8);
+            stringEntity.setContentType("application/json;");
             httpPost.setEntity(stringEntity);
 
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
-
         }
 
         return execute(url, httpPost);

@@ -31,9 +31,9 @@ public class PersonPointsFragment extends BaseFragment {
     @Override
     protected LoadingPage.LoadResult load() {
         HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put("userID", Constants.user.getUsr_UserID() + "");
+        hashMap.put("userID","1");
         PersonPointsProtocol protocol = new PersonPointsProtocol(hashMap);
-        pointsBeans = protocol.load(UIUtils.getString(R.string.GetPersonalIntegration_URL), BaseProtocol.POST);
+        pointsBeans = protocol.load(UIUtils.getString(R.string.GetPersonalIntegration_URL), BaseProtocol.GET);
         return checkResult(pointsBeans);
     }
 
@@ -49,6 +49,7 @@ public class PersonPointsFragment extends BaseFragment {
         PersonPointsAdapter adapter = new PersonPointsAdapter(pointsBeans);
         View headerView = UIUtils.inflate(R.layout.item_points_header);
         commonLv.addHeaderView(headerView);
+        commonLv.setDividerHeight(0);
         commonLv.setAdapter(adapter);
     }
 
@@ -85,7 +86,7 @@ public class PersonPointsFragment extends BaseFragment {
             viewHolder= (ViewHolder) view.getTag();
             PointsBean pointsBean=pointsBeans.get(i);
             viewHolder.content.setText(pointsBean.getCourse_Name());
-            viewHolder.record.setText(pointsBean.getIntegral() + "");
+            viewHolder.record.setText("+"+pointsBean.getIntegral() + "");
             if(pointsBean.getDate()!=null){
                 viewHolder.time.setText(pointsBean.getDate().getYear()+"-"+pointsBean.getDate().getMonth()+"-"+pointsBean.getDate().getDay());
             }

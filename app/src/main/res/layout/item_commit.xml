@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical"
+   >
+
+    <RelativeLayout
+        android:padding="@dimen/padding_7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/commit_headIv"
+            android:layout_width="@dimen/width_50"
+            android:layout_height="@dimen/width_50"
+            android:src="@drawable/avatar" />
+
+        <TextView
+            android:id="@+id/commit_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_5"
+            android:layout_marginLeft="@dimen/margin_10"
+            android:layout_marginTop="@dimen/margin_5"
+            android:layout_toRightOf="@id/commit_headIv"
+            android:text="标题"
+            android:textColor="@color/dark_grey"
+            android:textSize="@dimen/text_16"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/commit_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/commit_title"
+            android:layout_marginBottom="@dimen/margin_5"
+            android:layout_marginLeft="@dimen/margin_10"
+            android:layout_toRightOf="@id/commit_headIv"
+            android:text="四个小时前"
+            android:textColor="@color/light_grey"
+            android:textSize="@dimen/text_13" />
+    </RelativeLayout>
+
+    <MultiAutoCompleteTextView
+        android:padding="@dimen/padding_7"
+        android:id="@+id/commit_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:gravity="center_vertical"
+        android:lines="1" />
+
+    <RelativeLayout
+        android:padding="@dimen/padding_10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_5"
+        android:background="@color/light_white"
+       >
+
+        <ImageView
+            android:id="@+id/commit_lesson_image"
+            android:layout_width="@dimen/width_60"
+            android:layout_height="@dimen/height_60"
+            android:src="@drawable/photo_buy" />
+
+        <TextView
+            android:id="@+id/commit_lesson_name"
+            style="@style/textDefault"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_10"
+            android:layout_toRightOf="@id/commit_lesson_image"
+            android:text="瑜伽课"
+            android:textColor="@color/light_grey"
+            android:textSize="@dimen/text_16"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:id="@+id/commit_lesson_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/commit_lesson_name"
+            android:layout_marginLeft="@dimen/margin_10"
+            android:layout_marginTop="@dimen/margin_5"
+            android:layout_toRightOf="@id/commit_lesson_image"
+            android:drawableLeft="@drawable/pic_16"
+            android:drawablePadding="@dimen/padding_7"
+            android:gravity="center"
+            android:text="02：00-03：00"
+            android:textColor="@color/blue"
+            android:textSize="@dimen/text_13" />
+
+        <TextView
+            android:id="@+id/commit_lesson_addr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/commit_lesson_time"
+            android:layout_marginLeft="@dimen/margin_10"
+            android:layout_marginTop="@dimen/margin_5"
+            android:layout_toRightOf="@id/commit_lesson_image"
+            android:drawableLeft="@drawable/dizhi_bug"
+            android:drawablePadding="@dimen/padding_5"
+            android:gravity="center"
+            android:maxLength="10"
+            android:singleLine="true"
+            android:text="世界大厦101室"
+
+            android:textColor="@color/light_grey"
+            android:textSize="@dimen/text_13" />
+
+    </RelativeLayout>
+    <View
+        style="@style/verticalLine"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_height="@dimen/height_5"
+        android:background="@color/lighter_grey"/>
+
+</LinearLayout>

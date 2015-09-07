@@ -23,7 +23,7 @@ public class PersonPointsProtocol extends BaseProtocol<ArrayList<PointsBean>>  {
 
     @Override
     protected String getParames() {
-        return wrapParames(POST,hashMap);
+        return wrapParames(GET,hashMap);
     }
 
     @Override
@@ -35,7 +35,7 @@ public class PersonPointsProtocol extends BaseProtocol<ArrayList<PointsBean>>  {
                 if("1".equals(result)){
                     String data=obj.optString("data");
                     return getGson().fromJson(data, new TypeToken<ArrayList<PointsBean>>(){}.getType());
-                }else if("1".equals(result)){
+                }else if("0".equals(result)){
                     return new ArrayList<>();
                 }
             } catch (JSONException e) {

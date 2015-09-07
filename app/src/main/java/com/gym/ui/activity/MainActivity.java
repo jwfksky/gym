@@ -18,7 +18,10 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
 import com.gym.R;
+import com.gym.app.BaseApplication;
 import com.gym.app.Constants;
 import com.gym.ui.fragment.BaseFragment;
 import com.gym.ui.fragment.FragmentFactory;
@@ -35,7 +38,7 @@ import butterknife.InjectView;
 public class MainActivity extends BaseActivity implements IFragment, View.OnClickListener {
 
     @InjectView(R.id.back_tb)
-    TextView backTb;
+    public TextView backTb;
     @InjectView(R.id.title_tb)
     TextView titleTb;
     @InjectView(R.id.toolbar)
@@ -51,17 +54,19 @@ public class MainActivity extends BaseActivity implements IFragment, View.OnClic
     @InjectView(R.id.radioGroup_menu)
     RadioGroup radioGroupMenu;
     @InjectView(R.id.area_tb)
-    TextView areaTb;
+    public TextView areaTb;
     private ActionBar mActionBar;
     private FragmentManager fm;
     private PopupWindow popup;
-    private TextView edit;
     private TextView collect;
     private TextView course;
     private TextView buyLesson;
     private TextView orderManager;
     private TextView editInfo;
-
+    private TextView publishLesson;
+    private TextView coachInfo;
+    private TextView points;
+    private LocationClient locationClient;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,10 +82,12 @@ public class MainActivity extends BaseActivity implements IFragment, View.OnClic
     @Override
     public void initData() {
         menuCenter.setOnClickListener(this);
+        getAddress();
         BaseFragment bf = (BaseFragment) fm.findFragmentById(R.id.main_fl);
         if (bf == null) {
             fm.beginTransaction().replace(R.id.main_fl, new MainFragment()).commit();
         }
+
     }
 
     @Override
@@ -116,17 +123,21 @@ public class MainActivity extends BaseActivity implements IFragment, View.OnClic
         if (v == menuCenter) {
             usePopup(menuCenter);
         }
-        if (v == edit) {
+        if (v == points) {
             popup.dismiss();
-            Intent intent = new Intent(MainActivity.this, WebViewActivity.class);
+            Intent intent = new Intent(MainActivity.this, CommonActivity.class);
+            ArrayList<String> list = new ArrayList<>();
+            list.add("积分明细");
+            list.add(FragmentFactory.CENTER_POINTS + "");
+            intent.putStringArrayListExtra(Constants.TOOLBAR_ITEM, list);
             startActivity(intent);
         }
         if (v == collect) {
             popup.dismiss();
             Intent intent = new Intent(MainActivity.this, CommonActivity.class);
             ArrayList<String> list = new ArrayList<>();
-            list.add("积分明细");
-            list.add(FragmentFactory.CENTER_POINTS + "");
+            list.add("我的收藏");
+            list.add(FragmentFactory.CENTER_COLLECT + "");
             intent.putStringArrayListExtra(Constants.TOOLBAR_ITEM, list);
             startActivity(intent);
         }
@@ -170,6 +181,19 @@ public class MainActivity extends BaseActivity implements IFragment, View.OnClic
             intent.putStringArrayListExtra(Constants.TOOLBAR_ITEM, list);
             startActivity(intent);
         }
+        if (v == coachInfo) {//教练信息
+            popup.dismiss();
+            Intent intent = new Intent(MainActivity.this, CoachInfoActivity.class);
+            //第一个为标题，第二个为指定显示的fragment,第三个为toolbar右侧
+            ArrayList<String> list = new ArrayList<>();
+            startActivity(intent);
+        }if (v == publishLesson) {//发布课程
+            popup.dismiss();
+            Intent intent = new Intent(MainActivity.this, PublishLessonActivity.class);
+            //第一个为标题，第二个为指定显示的fragment,第三个为toolbar右侧
+            ArrayList<String> list = new ArrayList<>();
+            startActivity(intent);
+        }
     }
 
     /**
@@ -207,18 +231,23 @@ public class MainActivity extends BaseActivity implements IFragment, View.OnClic
      * @param rootView
      */
     private void operateItem(ViewGroup rootView) {
-        edit = (TextView) rootView.findViewById(R.id.edit_tv);
         collect = (TextView) rootView.findViewById(R.id.collect_tv);
         course = (TextView) rootView.findViewById(R.id.course_tv);
         buyLesson = (TextView) rootView.findViewById(R.id.buyLesson_tv);
         orderManager = (TextView) rootView.findViewById(R.id.orderManager_tv);
         editInfo = (TextView) rootView.findViewById(R.id.editInfo_tv);
-        edit.setOnClickListener(this);
+        publishLesson = (TextView) rootView.findViewById(R.id.publishLesson_tv);
+        coachInfo = (TextView) rootView.findViewById(R.id.coachInfo_tv);
+        points = (TextView) rootView.findViewById(R.id.points_tv);
+
         collect.setOnClickListener(this);
         course.setOnClickListener(this);
         buyLesson.setOnClickListener(this);
         orderManager.setOnClickListener(this);
         editInfo.setOnClickListener(this);
+        publishLesson.setOnClickListener(this);
+        coachInfo.setOnClickListener(this);
+        points.setOnClickListener(this);
     }
 
     /**
@@ -272,5 +301,26 @@ public class MainActivity extends BaseActivity implements IFragment, View.OnClic
     protected void onDestroy() {
         super.onDestroy();
         popup.dismiss();
+        locationClient.stop();
+    }
+    public void getAddress() {
+        locationClient= BaseApplication.mLocationClient;
+        initLocation();
+        locationClient.start();
+
+    }
+    private void initLocation(){
+        LocationClientOption option = new LocationClientOption();
+        option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);//可选，默认高精度，设置定位模式，高精度，低功耗，仅设备
+        option.setCoorType("bd09ll");//可选，默认gcj02，设置返回的定位结果坐标系，
+        int span=1000;
+        option.setScanSpan(span);//可选，默认0，即仅定位一次，设置发起定位请求的间隔需要大于等于1000ms才是有效的
+        option.setOpenGps(true);//可选，默认false,设置是否使用gps
+        option.setLocationNotify(true);//可选，默认false，设置是否当gps有效时按照1S1次频率输出GPS结果
+        option.setIgnoreKillProcess(true);//可选，默认true，定位SDK内部是一个SERVICE，并放到了独立进程，设置是否在stop的时候杀死这个进程，默认不杀死
+        option.setEnableSimulateGps(false);//可选，默认false，设置是否需要过滤gps仿真结果，默认需要
+        option.setIsNeedLocationDescribe(true);//可选，默认false，设置是否需要位置语义化结果，可以在BDLocation.getLocationDescribe里得到，结果类似于“在北京天安门附近”
+        option.setIsNeedLocationPoiList(true);//可选，默认false，设置是否需要POI结果，可以在BDLocation.getPoiList里得到
+        locationClient.setLocOption(option);
     }
 }

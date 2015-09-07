@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/cellbg2"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <include layout="@layout/include_toolbar" />
@@ -12,6 +12,7 @@
         android:layout_height="40dp">
 
         <TextView
+            android:id="@+id/accept"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -25,7 +26,7 @@
             style="@style/horizontalLine"
             android:padding="-7dp" />
 
-        <TextView
+        <TextView android:id="@+id/unaccept"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -40,8 +41,8 @@
 
         />
 
-    <ListView
-        android:id="@+id/course_lv"
+    <FrameLayout
+        android:id="@+id/course_fl"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

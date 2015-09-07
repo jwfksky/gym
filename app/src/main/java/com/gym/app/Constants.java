@@ -33,4 +33,6 @@ public class Constants {
     public static final Integer HTTP_STATUSCODE_2002 = 2002;
     public static final Integer HTTP_STATUSCODE_500 = 500;
     public static UserBean user;
+    public static String city="上海市";
+    public static String addrNow;
 }

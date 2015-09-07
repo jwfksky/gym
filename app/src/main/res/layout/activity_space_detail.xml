@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/cellbg2"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <include layout="@layout/include_toolbar" />
@@ -16,7 +16,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:background="@color/lighter_grey"
         android:orientation="horizontal"
         android:padding="@dimen/padding_7">
@@ -33,10 +33,13 @@
         <RatingBar
             android:id="@+id/item_rating"
             android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:layout_gravity="center_vertical"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:gravity="center"
-            android:isIndicator="true"
+            android:layout_marginTop="@dimen/margin_5"
+            android:numStars="5"
+            android:stepSize="1"
+            android:isIndicator="false"
             android:progressDrawable="@drawable/ratingbar_small"
             android:rating="2.5" />
     </LinearLayout>

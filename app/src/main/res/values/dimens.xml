@@ -29,4 +29,9 @@
     <dimen name="height_5">5dp</dimen>
     <dimen name="width_25">25dp</dimen>
     <dimen name="height_10">10dp</dimen>
+    <dimen name="height_35">35dp</dimen>
+    <dimen name="width_60">60dp</dimen>
+    <dimen name="height_60">60dp</dimen>
+    <dimen name="padding_10">10dp</dimen>
+    <dimen name="width_30">30dp</dimen>
 </resources>

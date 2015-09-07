@@ -4,6 +4,11 @@ import android.app.Application;
 import android.os.Handler;
 import android.os.Looper;
 
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
+import com.gym.utils.LogUtils;
 import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechUtility;
 
@@ -36,6 +41,9 @@ public class BaseApplication extends Application {
      * AcceptToken
      */
     private static String AcceptToken;
+    public static LocationClient mLocationClient;
+    private MyLocationListener mMyLocationListener;
+
     @Override
     public void onCreate() {
         mMainThreadId = android.os.Process.myTid();
@@ -44,9 +52,35 @@ public class BaseApplication extends Application {
         mMainLooper = getMainLooper();
         mInstance = this;
         initSpeechExecute();
+        initBDLocation();
         super.onCreate();
     }
 
+    //初始化百度
+    private void initBDLocation() {
+        mLocationClient = new LocationClient(this.getApplicationContext());
+        mMyLocationListener = new MyLocationListener();
+        mLocationClient.registerLocationListener(mMyLocationListener);
+    }
+    /**
+     * 实现实时位置回调监听
+     */
+    public class MyLocationListener implements BDLocationListener {
+
+        @Override
+        public void onReceiveLocation(BDLocation bdLocation) {
+            String addr=bdLocation.getLocationDescribe();
+            Constants.addrNow=addr;
+        }
+    }
+
+    /**
+     * 显示请求字符串
+     * @param str
+     */
+    public String logMsg(String str) {
+        return str;
+    }
     /**
      * 初始化 语音功能
      */

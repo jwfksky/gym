@@ -12,10 +12,10 @@ import android.widget.TextView;
 
 import com.gym.R;
 import com.gym.app.Constants;
-import com.gym.bean.BuyLessonBean;
+import com.gym.bean.OrderManagerBean;
 import com.gym.http.image.ImageLoader;
 import com.gym.http.protocol.BaseProtocol;
-import com.gym.http.protocol.BuyLessonProtocol;
+
 import com.gym.http.protocol.DeleteLessonProtocol;
 import com.gym.http.protocol.OrderManagerProtocol;
 import com.gym.http.protocol.PayLessonProtocol;
@@ -36,12 +36,12 @@ public class OrderManagerViewPagerFragment extends BaseFragment implements View.
     @InjectView(R.id.common_lv)
     ListView commonLv;
     private int payState;
-    private ArrayList<BuyLessonBean> lessonBeans;
-    private ArrayList<BuyLessonBean> stateBeans;
+    private ArrayList<OrderManagerBean> orderBeans;
+    private ArrayList<OrderManagerBean> stateBeans;
     private ViewHolder holder;
-    private BuyLessonBean bean;//当前选择的bean
+    private OrderManagerBean bean;//当前选择的bean
     private boolean loading=false;
-    private BuyLessonAdapter adapter;
+    private OrderManagerAdapter adapter;
 
     public int getPayState() {
         return payState;
@@ -55,19 +55,19 @@ public class OrderManagerViewPagerFragment extends BaseFragment implements View.
     protected LoadingPage.LoadResult load() {
         clearList();
         HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put("UserID", Constants.user.getUsr_UserID() + "");
+        hashMap.put("userID", Constants.user.getUsr_UserID() + "");
         OrderManagerProtocol protocol = new OrderManagerProtocol(hashMap);
-        protocol.load(UIUtils.getString(R.string.GetOrderByUserID_URL), BaseProtocol.POST);
+        orderBeans=protocol.load(UIUtils.getString(R.string.GetOrderByUserID_URL), BaseProtocol.POST);
         seperateState();
-        if(adapter!=null)adapter.notifyDataSetInvalidated();
+       // if(adapter!=null)adapter.notifyDataSetInvalidated();
         return checkResult(stateBeans);
     }
 
     private void clearList() {
         if (stateBeans != null)
             stateBeans.clear();
-        if (lessonBeans != null)
-            lessonBeans.clear();
+        if (orderBeans != null)
+            orderBeans.clear();
     }
 
     /**
@@ -77,7 +77,7 @@ public class OrderManagerViewPagerFragment extends BaseFragment implements View.
         stateBeans = new ArrayList<>();
         String state = "-1";
         if (getPayState() == 0) {
-            stateBeans = lessonBeans;
+            stateBeans = orderBeans;
             return;
         } else if (getPayState() == 1) {
             state = Constants.UNPAY;
@@ -86,7 +86,7 @@ public class OrderManagerViewPagerFragment extends BaseFragment implements View.
         } else if (getPayState() == 3) {
             state = Constants.UNASSESS;
         }
-        for (BuyLessonBean bean : lessonBeans) {
+        for (OrderManagerBean bean : orderBeans) {
             if (state.equals(bean.getRemark())) {
                 stateBeans.add(bean);
             }
@@ -102,7 +102,7 @@ public class OrderManagerViewPagerFragment extends BaseFragment implements View.
     }
 
     private void operateData() {
-        adapter = new BuyLessonAdapter(stateBeans);
+        adapter = new OrderManagerAdapter(stateBeans);
         commonLv.setAdapter(adapter);
         commonLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -114,7 +114,7 @@ public class OrderManagerViewPagerFragment extends BaseFragment implements View.
         });
     }
 
-    private void operateClick(ViewHolder holder, BuyLessonBean bean) {
+    private void operateClick(ViewHolder holder, OrderManagerBean bean) {
         holder.course.setOnClickListener(this);
         holder.refund.setOnClickListener(this);
         holder.agreeRefund.setOnClickListener(this);
@@ -140,10 +140,10 @@ public class OrderManagerViewPagerFragment extends BaseFragment implements View.
         }
     }
 
-    class BuyLessonAdapter extends BaseAdapter {
-        ArrayList<BuyLessonBean> list;
+    class OrderManagerAdapter extends BaseAdapter {
+        ArrayList<OrderManagerBean> list;
 
-        public BuyLessonAdapter(ArrayList<BuyLessonBean> list) {
+        public OrderManagerAdapter(ArrayList<OrderManagerBean> list) {
             this.list = list;
         }
 
@@ -171,9 +171,9 @@ public class OrderManagerViewPagerFragment extends BaseFragment implements View.
                 view.setTag(viewHolder);
             }
             viewHolder = (ViewHolder) view.getTag();
-            BuyLessonBean bean = list.get(i);
+            OrderManagerBean bean = list.get(i);
             viewHolder.lessonName.setText(bean.getJobTitle());
-            ImageLoader.load(viewHolder.itemImage, bean.getCourse_Photo());
+            ImageLoader.load(viewHolder.itemImage, bean.getJobRequirements());
             viewHolder.lessonAddr.setText(bean.getJobAddress());
             if (TextUtils.isEmpty(bean.getJobAddress())) {
                 viewHolder.lessonAddr.setVisibility(View.GONE);
@@ -192,7 +192,7 @@ public class OrderManagerViewPagerFragment extends BaseFragment implements View.
         }
 
 
-        private void showState(ViewHolder viewHolder, BuyLessonBean bean) {
+        private void showState(ViewHolder viewHolder, OrderManagerBean bean) {
             String remark = bean.getRemark();
             if (remark.equals(Constants.UNPAY)) {
                 viewHolder.payState.setVisibility(View.GONE);

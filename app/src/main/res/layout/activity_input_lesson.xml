@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/cellbg2"
+    android:background="@color/white"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
@@ -31,6 +31,7 @@
                     android:text="课程名称" />
 
                 <TextView
+
                     style="@style/edittext"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -68,9 +69,10 @@
                         android:text="图片" />
 
                     <ImageView
+                        android:layout_margin="@dimen/margin_10"
                         android:id="@+id/addImage"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/width_80"
+                        android:layout_height="@dimen/height_80"
                         android:src="@drawable/btn_addimage" />
 
 
@@ -89,6 +91,7 @@
                     android:layout_marginBottom="@dimen/margin_2"
                     android:text="课程介绍" />
                 <MultiAutoCompleteTextView
+                    android:id="@+id/lesson_intro"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/shape_login"
@@ -124,6 +127,8 @@
                         android:id="@+id/lesson_people"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:clickable="true"
+                        android:focusable="true"
                         android:background="@null"
                         android:textColorHint="@color/lighter_grey" />
 

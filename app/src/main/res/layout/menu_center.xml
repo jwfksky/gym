@@ -10,32 +10,9 @@
         android:background="@color/white"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/edit_tv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="@dimen/margin_10"
-            android:gravity="center"
-            android:text="编辑资料"
-            android:textColor="@color/light_grey"
-            android:textSize="@dimen/text_13" />
-
-        <View style="@style/verticalLine" />
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="@dimen/margin_10"
-            android:gravity="center"
-            android:text="个人信息"
-            android:textColor="@color/light_grey"
-            android:textSize="@dimen/text_13" />
-        <View style="@style/verticalLine" />
-
-        <TextView
-            android:id="@+id/collect_tv"
+            android:id="@+id/points_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -90,6 +67,42 @@
             android:layout_margin="@dimen/margin_10"
             android:gravity="center"
             android:text="个人资料"
+            android:textColor="@color/light_grey"
+            android:textSize="@dimen/text_13" />
+        <View style="@style/verticalLine" />
+
+        <TextView
+            android:id="@+id/publishLesson_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/margin_10"
+            android:gravity="center"
+            android:text="发布课程"
+            android:textColor="@color/light_grey"
+            android:textSize="@dimen/text_13" />
+        <View style="@style/verticalLine" />
+
+        <TextView
+            android:id="@+id/coachInfo_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/margin_10"
+            android:gravity="center"
+            android:text="教练信息"
+            android:textColor="@color/light_grey"
+            android:textSize="@dimen/text_13" />
+        <View style="@style/verticalLine" />
+
+        <TextView
+            android:id="@+id/collect_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/margin_10"
+            android:gravity="center"
+            android:text="我的收藏"
             android:textColor="@color/light_grey"
             android:textSize="@dimen/text_13" />
     </LinearLayout>

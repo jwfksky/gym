@@ -1,26 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.gym" >
+    package="com.gym">
 
-    <uses-permission android:name="android.permission.CAMERA"/>
-
-    <uses-permission android:name="android.permission.INTERNET"/>
-
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
-
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
-
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+    <uses-permission android:name="android.permission.READ_LOGS"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
 
-    <uses-permission android:name="android.permission.VIBRATE"/>
-
-    <uses-permission android:name="android.permission.FLASHLIGHT"/>
     <supports-screens
         android:anyDensity="true"
         android:largeScreens="true"
@@ -28,26 +27,26 @@
         android:resizeable="true"
         android:smallScreens="true" />
     <application
+        android:name=".app.BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:name=".app.BaseApplication"
         android:label="@string/app_name"
-        android:theme="@style/AppBaseTheme"
->
+        android:theme="@style/AppBaseTheme">
         <activity
             android:name=".ui.activity.LoginActivity"
             android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|fontScale"
-            android:screenOrientation="portrait"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.MainActivity"
+        <activity
+            android:name=".ui.activity.MainActivity"
             android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|fontScale"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.WebViewActivity"
             android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|fontScale"
@@ -58,16 +57,33 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.AddCourceActivity"
-            android:windowSoftInputMode="adjustResize|stateHidden"
             android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|fontScale"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".ui.activity.CommonViewPagerActivity"
-            android:windowSoftInputMode="adjustResize|stateHidden"
             android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|fontScale"
-            android:screenOrientation="portrait" /><activity
-            android:name=".ui.activity.EditPersonActivity"
-            />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity android:name=".ui.activity.EditPersonActivity" />
+        <activity android:name=".ui.activity.CoachInfoActivity" />
+        <activity android:name=".ui.activity.PublishLessonActivity" />
+        <activity android:name=".ui.activity.AddPublishLessonActivity" />
+        <activity android:name=".ui.activity.SpaceDetailActivity" />
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote" >
+            <intent-filter>
+                <action android:name="com.baidu.location.service_v2.2" >
+                </action>
+            </intent-filter>
+        </service>
+
+        <!-- meta-data需要写在application中 -->
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="dy2gj1kV4bzu2MHwBzIKONSX" />
     </application>
 
 </manifest>

@@ -79,6 +79,7 @@ public abstract class BaseProtocol<Data> {
                             + UIUtils.getString(R.string.HTTP_STATUSCODE_2002_JSON)
                             + "'}";
                 } else if (status == Constants.HTTP_STATUSCODE_500) {// 服务器异常
+                    json=result.getString();
                     json = "{'" + UIUtils.getString(R.string.HttpResult)
                             + "':'-1','Msg':'"
                             + UIUtils.getString(R.string.HTTP_STATUSCODE_500_JSON)
@@ -134,7 +135,6 @@ public abstract class BaseProtocol<Data> {
         }else if(POST.endsWith(method)){
             try {
                 HttpHelper.HttpResult httpResult=HttpHelper.post(url,getParames());
-
                 if (httpResult != null) {
                     result = httpResult;
                    // httpResult.close();

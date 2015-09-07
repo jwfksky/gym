@@ -20,5 +20,26 @@
    <!-- 编辑用户信息 -->
    <string name="UpdateUsers_URL">http://211.149.244.163:8090/UserAccount.asmx/UpdateUsers</string>
    <!-- 用户积分 -->
+
    <string name="GetPersonalIntegration_URL">http://211.149.244.163:8090/Integration.asmx/GetPersonalIntegration</string>
+   <!-- 课程列表 -->
+   <string name="GetJobInfoList_URL">http://211.149.244.163:8090/JobInfo.asmx/GetJobInfoList</string>
+   <!-- 课程列表 -->
+   <string name="UpdateUserforCoach_URL">http://211.149.244.163:8090/UserAccount.asmx/UpdateUserforCoach</string>
+   <!-- 添加教练证书、奖状 -->
+   <string name="AddCoachPhoto_URL">http://211.149.244.163:8090/UserAccount.asmx/AddCoachPhoto</string>
+   <!-- 我的收藏 -->
+   <string name="CollectInfoList_URL">http://211.149.244.163:8090/UserAccount.asmx/CollectInfoList</string>
+   <!-- 删除收藏 -->
+   <string name="DeleteForCollect_URL">http://211.149.244.163:8090/UserAccount.asmx/DeleteForCollect</string>
+   <!-- 添加课程-->
+   <string name="AddNewCourse_URL">http://211.149.244.163:8090/JobInfo.asmx/AddNewCourse</string>
+   <!-- 发布的课程-->
+   <string name="Select_ff_jobinfoByCoachID_URL">http://211.149.244.163:8090/UserAccount.asmx/Select_ff_jobinfoByCoachID</string>
+   <!-- 删除发布的课程-->
+   <string name="DeleteCourseByID_URL">http://211.149.244.163:8090/JobInfo.asmx/DeleteCourseByID</string>
+   <!-- 场地列表-->
+   <string name="GetAllField_URL">http://211.149.244.163:8090/UserAccount.asmx/GetAllField</string>
+   <!-- 场地评分-->
+   <string name="GradeForfitnessfield_URL">http://211.149.244.163:8090/UserAccount.asmx/GradeForfitnessfield</string>
 </resources>

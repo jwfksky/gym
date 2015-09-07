@@ -94,7 +94,7 @@ public class LoginActivity extends BaseActivity {
         loginCoach.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                login("1");//1为教练用户
+                login("2");//1为教练用户
             }
         });
     }

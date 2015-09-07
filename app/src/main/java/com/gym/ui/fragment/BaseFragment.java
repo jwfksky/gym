@@ -8,6 +8,11 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
+import com.gym.app.BaseApplication;
 import com.gym.ui.widget.LoadingPage;
 import com.gym.utils.UIUtils;
 
@@ -28,11 +33,12 @@ import butterknife.ButterKnife;
 public abstract class BaseFragment extends Fragment implements View.OnTouchListener {
 
     protected LoadingPage mContentView;
-    protected int currentPage=1;
+    protected int currentPage = 1;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        currentPage=1;
+        currentPage = 1;
         //  if(mContentView==null){//如果为空，就新建一个
         mContentView = new LoadingPage(UIUtils.getContext()) {
 
@@ -62,13 +68,15 @@ public abstract class BaseFragment extends Fragment implements View.OnTouchListe
             mContentView.show();
 
     }
+
     /**
      * 刷新或加载更多 加载数据
      */
-    public void refreshOrLoad(){
+    public void refreshOrLoad() {
         if (mContentView != null)
             mContentView.executeTask();
     }
+
     /**
      * 验证数据返回结果，刷新页面
      */
@@ -117,19 +125,21 @@ public abstract class BaseFragment extends Fragment implements View.OnTouchListe
             throw new RuntimeException(e);
         }
     }
+
     /**
      * operate load or refresh data
-     * @param beans extra data for api
-     * @param list  current display data
+     *
+     * @param beans   extra data for api
+     * @param list    current display data
      * @param pageNow current page
      */
-    protected List operateExtraData(List beans,List list,Integer pageNow) {
+    protected List operateExtraData(List beans, List list, Integer pageNow) {
         if ("1".equals(String.valueOf(pageNow))) {
             if (list != null) {
                 list.clear();
                 list.addAll(beans);
             } else {
-                if(beans!=null&&beans.size()==0){
+                if (beans != null && beans.size() == 0) {
                     return new ArrayList();
                 }
                 list = beans;
@@ -146,4 +156,7 @@ public abstract class BaseFragment extends Fragment implements View.OnTouchListe
     public boolean onTouch(View v, MotionEvent event) {
         return true;
     }
+
+
+
 }

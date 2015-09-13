@@ -22,7 +22,10 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.gym.R;
@@ -48,7 +51,9 @@ import butterknife.InjectView;
 /**
  * Created by Administrator on 2015/8/31 0031.
  */
-public class CoachInfoActivity extends BaseActivity implements View.OnClickListener {
+public class EditCoachInfoActivity extends BaseActivity implements View.OnClickListener {
+
+
     @InjectView(R.id.title_tb)
     TextView titleTb;
     @InjectView(R.id.back_tb)
@@ -59,30 +64,35 @@ public class CoachInfoActivity extends BaseActivity implements View.OnClickListe
     TextView rightTv;
     @InjectView(R.id.toolbar)
     Toolbar toolbar;
-    @InjectView(R.id.ren)
-    TextView ren;
+    @InjectView(R.id.name_tv)
+    TextView nameTv;
+    @InjectView(R.id.name)
+    EditText name;
     @InjectView(R.id.gender_tv)
     TextView genderTv;
-    @InjectView(R.id.height)
-    TextView height;
     @InjectView(R.id.height_tv)
     TextView heightTv;
-    @InjectView(R.id.weight)
-    TextView weight;
+    @InjectView(R.id.height)
+    EditText height;
     @InjectView(R.id.weight_tv)
     TextView weightTv;
-    @InjectView(R.id.expertise)
-    TextView expertise;
-    @InjectView(R.id.expertise_tv)
-    TextView expertiseTv;
+    @InjectView(R.id.weight)
+    EditText weight;
     @InjectView(R.id.body)
-    TextView body;
-    @InjectView(R.id.applianceType_tv)
-    TextView applianceTypeTv;
-    @InjectView(R.id.coachNum)
-    TextView coachNum;
-    @InjectView(R.id.coachNum_tv)
-    TextView coachNumTv;
+    EditText body;
+    @InjectView(R.id.teachTime_tv)
+    TextView teachTimeTv;
+    @InjectView(R.id.teachTime)
+    EditText teachTime;
+    @InjectView(R.id.cert_tv)
+    TextView certTv;
+    @InjectView(R.id.cert_add)
+    TextView certAdd;
+
+    @InjectView(R.id.ward_tv)
+    TextView wardTv;
+    @InjectView(R.id.ward_add)
+    TextView wardAdd;
     @InjectView(R.id.cert_image1)
     ImageView certImage1;
     @InjectView(R.id.cert_image2)
@@ -99,7 +109,8 @@ public class CoachInfoActivity extends BaseActivity implements View.OnClickListe
     ImageView wardImage3;
     @InjectView(R.id.ward_image4)
     ImageView wardImage4;
-
+    @InjectView(R.id.gender)
+    RadioGroup gender;
     private ActionBar mActionBar;
     private boolean loading = false;
 
@@ -117,12 +128,13 @@ public class CoachInfoActivity extends BaseActivity implements View.OnClickListe
     private Dialog dialog;
     private ImageView selectedIv;
     private String selectItem;
-    private static final String WARD="ward";
-    private static final String CERT="cert";
+    private static final String WARD = "ward";
+    private static final String CERT = "cert";
+
     @Override
     public void init() {
         super.init();
-        setContentView(R.layout.activity_coachinfo);
+        setContentView(R.layout.activity_inputcoach);
         ButterKnife.inject(this);
     }
 
@@ -161,40 +173,39 @@ public class CoachInfoActivity extends BaseActivity implements View.OnClickListe
         if (view == rightTv) {
             if (!loading)
                 new updateCoachInfoTask().execute();
-        }
-        else if(view == certImage1){
+        } else if (view == certImage1) {
             showDialog();
-            selectedIv=certImage1;
-            selectItem=CERT;
-        }else if(view == certImage2){
+            selectedIv = certImage1;
+            selectItem = CERT;
+        } else if (view == certImage2) {
             showDialog();
-            selectedIv=certImage2;
-            selectItem=CERT;
-        }else if(view == certImage3){
+            selectedIv = certImage2;
+            selectItem = CERT;
+        } else if (view == certImage3) {
             showDialog();
-            selectedIv=certImage3;
-            selectItem=CERT;
-        }else if(view == certImage4){
+            selectedIv = certImage3;
+            selectItem = CERT;
+        } else if (view == certImage4) {
             showDialog();
-            selectedIv=certImage4;
-            selectItem=CERT;
-        }else if(view == wardImage1){
+            selectedIv = certImage4;
+            selectItem = CERT;
+        } else if (view == wardImage1) {
             showDialog();
-            selectedIv=wardImage1;
-            selectItem=WARD;
-        }else if(view == wardImage2){
+            selectedIv = wardImage1;
+            selectItem = WARD;
+        } else if (view == wardImage2) {
             showDialog();
-            selectedIv=wardImage2;
-            selectItem=WARD;
-        }else if(view == wardImage3){
+            selectedIv = wardImage2;
+            selectItem = WARD;
+        } else if (view == wardImage3) {
             showDialog();
-            selectedIv=wardImage3;
-            selectItem=WARD;
-        }else if(view == wardImage4){
+            selectedIv = wardImage3;
+            selectItem = WARD;
+        } else if (view == wardImage4) {
             showDialog();
-            selectedIv=wardImage4;
-            selectItem=WARD;
-        }else if (view == selectPphotoAlbum) {// 从相册取
+            selectedIv = wardImage4;
+            selectItem = WARD;
+        } else if (view == selectPphotoAlbum) {// 从相册取
             openAlbum();
             dialog.dismiss();// 操作框 取消
         } else if (view == takingPictures) {// 拍照
@@ -207,18 +218,19 @@ public class CoachInfoActivity extends BaseActivity implements View.OnClickListe
 
     /**
      * 获取提交数据
+     *
      * @return
      */
     public HashMap<String, String> getParams() {
         HashMap<String, String> hash = new HashMap<>();
         hash.put("userID", String.valueOf(Constants.user.getUsr_UserID()));
         hash.put("Usr_User_ActualName", "");
-        hash.put("Usr_Sex", genderTv.getText().toString());
-        hash.put("Usr_Height", heightTv.getText().toString());
-        hash.put("Usr_Weight", weightTv.getText().toString());
-        hash.put("Usr_Expertise", expertiseTv.getText().toString());
+        hash.put("Usr_Sex", gender.getCheckedRadioButtonId()+"");
+        hash.put("Usr_Height", height.getText().toString());
+        hash.put("Usr_Weight", weight.getText().toString());
+        hash.put("Usr_Expertise", "");
         hash.put("Usr_shape", body.getText().toString());
-        hash.put("TeachingYear", coachNumTv.getText().toString());
+        hash.put("TeachingYear", teachTime.getText().toString());
         return hash;
     }
 
@@ -231,7 +243,7 @@ public class CoachInfoActivity extends BaseActivity implements View.OnClickListe
         protected void onPreExecute() {
             super.onPreExecute();
             loading = true;
-            ProgressUtil.startProgressBar(CoachInfoActivity.this);
+            ProgressUtil.startProgressBar(EditCoachInfoActivity.this);
         }
 
         @Override
@@ -246,9 +258,16 @@ public class CoachInfoActivity extends BaseActivity implements View.OnClickListe
             super.onPostExecute(s);
             loading = false;
             ProgressUtil.stopProgressBar();
-            UIUtils.showToastSafe(s);
+            if(TextUtils.isEmpty(s)){
+                UIUtils.showToastSafe(EditCoachInfoActivity.this,UIUtils.getString(R.string.network_error));
+            }else{
+                UIUtils.showToastSafe(EditCoachInfoActivity.this,s);
+                finish();
+            }
+
         }
     }
+
     private void initOperationDialog() {
         dialogView = this.getLayoutInflater().inflate(
                 R.layout.activity_edituserinfo_popuoperat, null);
@@ -260,6 +279,7 @@ public class CoachInfoActivity extends BaseActivity implements View.OnClickListe
         selectPphotoAlbum.setOnClickListener(this);
         btnClose.setOnClickListener(this);
     }
+
     private void showDialog() {
 
         dialog.setContentView(dialogView, new ViewGroup.LayoutParams(
@@ -276,12 +296,14 @@ public class CoachInfoActivity extends BaseActivity implements View.OnClickListe
         dialog.setCanceledOnTouchOutside(true);
         dialog.show();
     } // 打开本地相册
+
     public void openAlbum() {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         this.startActivityForResult(intent, PHOTO_ALBUM);
     } // 拍照
+
     public void takePicture() {
 
         String state = Environment.getExternalStorageState();
@@ -303,6 +325,7 @@ public class CoachInfoActivity extends BaseActivity implements View.OnClickListe
             UIUtils.showToastSafe(this, "手机设备无存储SDCard,请确认已经插入SD卡.");
         }
     }
+
     private void startPhotoZoom(Uri data, int takeType) {
         WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
         Intent intent = new Intent("com.android.camera.action.CROP");
@@ -318,6 +341,7 @@ public class CoachInfoActivity extends BaseActivity implements View.OnClickListe
         intent.putExtra("scaleUpIfNeeded", true);// 去黑边
         startActivityForResult(intent, this.CROP_PICTURE);
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -355,13 +379,14 @@ public class CoachInfoActivity extends BaseActivity implements View.OnClickListe
                 if (takeType == 1) {
                     realPath = protraitPath1;
                 }
-                if(!loading){
+                if (!loading) {
                     new UpdateImageTask().execute();
                 }
-                setImageView(realPath,selectedIv);
+                setImageView(realPath, selectedIv);
             }
         }
     }
+
     private Uri getUploadTempFile(Uri uri, int takeType) {
         String storageState = Environment.getExternalStorageState();
         if (storageState.equals(Environment.MEDIA_MOUNTED)) {
@@ -396,6 +421,7 @@ public class CoachInfoActivity extends BaseActivity implements View.OnClickListe
         Uri cropUri = Uri.fromFile(protraitFile);
         return cropUri;
     }
+
     public String getRealPathFromURI(Uri contentUri) {
         try {
             String[] proj = {MediaStore.Images.Media.DATA};
@@ -409,7 +435,8 @@ public class CoachInfoActivity extends BaseActivity implements View.OnClickListe
             return contentUri.getPath();
         }
     }
-    private void setImageView(final String realPath,ImageView addImage) {
+
+    private void setImageView(final String realPath, ImageView addImage) {
 
         Bitmap bmp = BitmapFactory.decodeFile(realPath);
         int degree = readPictureDegree(realPath);
@@ -428,6 +455,7 @@ public class CoachInfoActivity extends BaseActivity implements View.OnClickListe
             }
         }
     }
+
     /**
      * 读取照片exif信息中的旋转角度<br/>
      *
@@ -457,41 +485,42 @@ public class CoachInfoActivity extends BaseActivity implements View.OnClickListe
         }
         return degree;
     }
-    class UpdateImageTask extends AsyncTask<String,String,String>{
+
+    class UpdateImageTask extends AsyncTask<String, String, String> {
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loading=true;
-            ProgressUtil.startProgressBar(CoachInfoActivity.this);
+            loading = true;
+            ProgressUtil.startProgressBar(EditCoachInfoActivity.this);
         }
 
         @Override
         protected String doInBackground(String... strings) {
-            HashMap<String,String> hashMap=new HashMap<>();
+            HashMap<String, String> hashMap = new HashMap<>();
             hashMap.put("userID", String.valueOf(Constants.user.getUsr_UserID()));
-            String topicContent =  Base64.encodeToString(Tool.bitmapTobyte(Tool.getSmallBitmap(protraitPath1)), Base64.DEFAULT).replace("\n","");
-            if(selectItem.equals(CERT)){
-                hashMap.put("path_z",topicContent);
-                hashMap.put("path_j","");
-            }else{
-                hashMap.put("path_j",topicContent);
-                hashMap.put("path_z","");
+            String topicContent = Base64.encodeToString(Tool.bitmapTobyte(Tool.getSmallBitmap(protraitPath1)), Base64.DEFAULT).replace("\n", "");
+            if (selectItem.equals(CERT)) {
+                hashMap.put("path_z", topicContent);
+                hashMap.put("path_j", "");
+            } else {
+                hashMap.put("path_j", topicContent);
+                hashMap.put("path_z", "");
             }
-            AddCoachPhotoProtocol protocol=new AddCoachPhotoProtocol(hashMap);
-            return protocol.load(UIUtils.getString(R.string.AddCoachPhoto_URL),BaseProtocol.POST);
+            AddCoachPhotoProtocol protocol = new AddCoachPhotoProtocol(hashMap);
+            return protocol.load(UIUtils.getString(R.string.AddCoachPhoto_URL), BaseProtocol.POST);
 
         }
 
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            loading=false;
+            loading = false;
             ProgressUtil.stopProgressBar();
-            if(TextUtils.isEmpty(s)){
-                UIUtils.showToastSafe(CoachInfoActivity.this,UIUtils.getString(R.string.network_error));
-            }else{
-                UIUtils.showToastSafe(CoachInfoActivity.this,s);
+            if (TextUtils.isEmpty(s)) {
+                UIUtils.showToastSafe(EditCoachInfoActivity.this, UIUtils.getString(R.string.network_error));
+            } else {
+                UIUtils.showToastSafe(EditCoachInfoActivity.this, s);
             }
 
         }

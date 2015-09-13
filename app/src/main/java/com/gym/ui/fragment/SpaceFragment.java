@@ -60,9 +60,11 @@ public class SpaceFragment extends BaseFragment {
             }
         }
     };
-    private FitAdapter adapter;
     private View footerView;
     private View headerView;
+
+    private FitAdapter adapter;
+
     private ListView dropMenu;
     private String[] nearBy;
 
@@ -71,6 +73,8 @@ public class SpaceFragment extends BaseFragment {
     private String Score;
     private String Price;
     private PopupWindow popupWindow;
+    private MainActivity mainActivity;
+    private String jobType;
 
     @Override
     protected LoadingPage.LoadResult load() {
@@ -83,14 +87,14 @@ public class SpaceFragment extends BaseFragment {
         }
         list = (ArrayList<SpaceBean>) operateExtraData(currentList, list, pageNow);
         handler.sendEmptyMessage(0);
-        return checkResult(list);
+        return LoadingPage.LoadResult.SUCCEED;
     }
 
     @NonNull
     private HashMap<String, String> getParams() {
         HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put("nowCity", Constants.city);
-       // hashMap.put("nowAddress", Constants.addrNow);
+        hashMap.put("nowCity", Constants.city == null ? "上海市" : Constants.city.getCity());
+        // hashMap.put("nowAddress", Constants.addrNow);
         hashMap.put("nowAddress", "");
         hashMap.put("userID", Constants.user.getUsr_UserID() + "");
         hashMap.put("CommentNumber", CommentNumber == null ? "" : getCommentNumber());
@@ -99,20 +103,37 @@ public class SpaceFragment extends BaseFragment {
         hashMap.put("Price", Price == null ? "" : getPrice());
         hashMap.put("pageIndex", String.valueOf(pageNow));
         hashMap.put("pageSize", "10");
+        hashMap.put("Category", jobType == null ? "" : getJobType());
         return hashMap;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mainActivity.areaTb.setVisibility(View.GONE);
+        mainActivity.backTb.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mainActivity.areaTb.setVisibility(View.VISIBLE);
+        mainActivity.backTb.setVisibility(View.GONE);
     }
 
     @Override
     protected View createSuccessView() {
         View rootView = UIUtils.inflate(R.layout.fragment_common_list);
         ButterKnife.inject(this, rootView);
+        headerView = rootView.findViewById(R.id.inculdeMenu);
+        headerView.setVisibility(View.VISIBLE);
         operateData();
         return rootView;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        MainActivity mainActivity = (MainActivity) getActivity();
+        mainActivity = (MainActivity) getActivity();
         mainActivity.areaTb.setVisibility(View.GONE);
         mainActivity.backTb.setVisibility(View.VISIBLE);
         return super.onCreateView(inflater, container, savedInstanceState);
@@ -122,42 +143,28 @@ public class SpaceFragment extends BaseFragment {
 
         //添加展示列表的头，尾view
         footerView = UIUtils.getFooterView();
-        headerView = UIUtils.inflate(R.layout.include_search);
+
         commonLv.addFooterView(footerView);
-        commonLv.addHeaderView(headerView);
+
         adapter = new FitAdapter();
         commonLv.setAdapter(adapter);
         commonLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                SpaceBean bean=list.get(i);
-                Intent intent=new Intent(getActivity(),SpaceDetailActivity.class);
-                intent.putExtra("bean",bean);
-                startActivity(intent);
+                int position = i - 1;
+                if (position >= 0) {
+                SpaceBean bean = list.get(i);
+                Intent intent = new Intent(getActivity(), SpaceDetailActivity.class);
+                intent.putExtra("bean", bean);
+                startActivity(intent);}
             }
         });
         //初始化下拉菜单
         dropMenu = new ListView(getActivity());
-        nearBy = UIUtils.getStringArray(R.array.items_nearby);
+
         DropMenuAdapter dropMenuAdapter = new DropMenuAdapter();
         dropMenu.setAdapter(dropMenuAdapter);
-        dropMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                if (i == 1) {
-                    setDistance("1");
-                } else if (i == 2) {
-                    setCommentNumber("1");
-                } else if (i == 3) {
-                    setScore("1");
-                } else if (i == 4) {
-                    setPrice("1");
-                }
-                popupWindow.dismiss();
-                show();
 
-            }
-        });
         //显示下拉菜单
         operateHead(headerView);
         //不显示加载更多
@@ -181,8 +188,51 @@ public class SpaceFragment extends BaseFragment {
         order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                nearBy = UIUtils.getStringArray(R.array.items_nearby);
                 showPopup(headerView);
                 initDropItems();
+                dropMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        if (i == 1) {
+                            setCommentNumber("1");
+                        } else if (i == 2) {
+                            setScore("1");
+                        } else if (i == 3) {
+                            setScore("1");
+                        } else if (i == 4) {
+                            setPrice("1");
+                        }
+                        popupWindow.dismiss();
+                        refreshOrLoad();
+
+                    }
+                });
+            }
+        });
+        nearby.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setDistance("1");
+                refreshOrLoad();
+            }
+        });
+        category.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                nearBy = UIUtils.getStringArray(R.array.items_cat);
+                showPopup(headerView);
+                setJobType("");
+                dropMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        if (i > 0)
+                            setJobType(nearBy[i]);
+                        popupWindow.dismiss();
+                        refreshOrLoad();
+
+                    }
+                });
             }
         });
     }
@@ -395,5 +445,13 @@ public class SpaceFragment extends BaseFragment {
 
     public void setPrice(String price) {
         Price = price;
+    }
+
+    public String getJobType() {
+        return jobType;
+    }
+
+    public void setJobType(String jobType) {
+        this.jobType = jobType;
     }
 }

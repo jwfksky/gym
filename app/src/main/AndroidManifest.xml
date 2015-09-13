@@ -66,10 +66,14 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity android:name=".ui.activity.EditPersonActivity" />
-        <activity android:name=".ui.activity.CoachInfoActivity" />
+        <activity android:name=".ui.activity.EditCoachInfoActivity" />
         <activity android:name=".ui.activity.PublishLessonActivity" />
         <activity android:name=".ui.activity.AddPublishLessonActivity" />
         <activity android:name=".ui.activity.SpaceDetailActivity" />
+        <activity android:name=".ui.activity.CitySelectActivity" />
+        <activity android:name=".ui.activity.CoachDetailActivity" />
+        <activity android:name=".ui.activity.FitDetailActivity" />
+        <activity android:name=".ui.activity.ConfirmOrderActivity" />
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
@@ -84,6 +88,22 @@
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="dy2gj1kV4bzu2MHwBzIKONSX" />
+        <!-- QQ登陆 -->
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:noHistory="true"
+            android:launchMode="singleTask" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="tencent1104651057" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.tencent.connect.common.AssistActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            />
     </application>
 
 </manifest>

@@ -3,17 +3,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="@dimen/margin_10"
-    android:background="@drawable/cellbg2"
+
+
+    android:background="@color/white"
     android:orientation="vertical">
 
     <ImageView
+        android:padding="@dimen/padding_10"
         android:id="@+id/item_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_width="@dimen/width_80"
+        android:layout_height="@dimen/height_80"
         android:src="@drawable/btn_addimage" />
 
     <RelativeLayout
+        android:padding="@dimen/padding_10"
+        android:layout_centerVertical="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/margin_20"
@@ -69,5 +74,11 @@
             android:layout_height="wrap_content" />
 
     </RelativeLayout>
-
+    <View
+        style="@style/verticalLine"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="@dimen/margin_5"
+        android:padding="0dp" />
 </RelativeLayout>

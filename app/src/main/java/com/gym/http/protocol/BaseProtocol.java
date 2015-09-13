@@ -186,6 +186,7 @@ public abstract class BaseProtocol<Data> {
 
     protected synchronized String wrapParames(String method,Map<String,String> map) {
         String result="";
+        if(map==null) return "";
         if(GET.equals(method)){
             for(Map.Entry<String,String> entry : map.entrySet()){
                 if(!result.contains("?")){

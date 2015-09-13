@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/cellbg2"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <include layout="@layout/include_toolbar" />
@@ -162,11 +162,11 @@
                 style="@style/detail_title"
                 android:text="课程介绍" />
 
-            <MultiAutoCompleteTextView
+            <TextView
                 android:id="@+id/lesson_intro"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:lines="2" />
+                 />
 
             <LinearLayout
                 android:layout_width="match_parent"

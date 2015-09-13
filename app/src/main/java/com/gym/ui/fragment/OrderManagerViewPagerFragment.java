@@ -1,5 +1,6 @@
 package com.gym.ui.fragment;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.text.TextUtils;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import com.gym.R;
 import com.gym.app.Constants;
+import com.gym.bean.FitBean;
 import com.gym.bean.OrderManagerBean;
 import com.gym.http.image.ImageLoader;
 import com.gym.http.protocol.BaseProtocol;
@@ -19,6 +21,7 @@ import com.gym.http.protocol.BaseProtocol;
 import com.gym.http.protocol.DeleteLessonProtocol;
 import com.gym.http.protocol.OrderManagerProtocol;
 import com.gym.http.protocol.PayLessonProtocol;
+import com.gym.ui.activity.ConfirmOrderActivity;
 import com.gym.ui.widget.LoadingPage;
 import com.gym.utils.ProgressUtil;
 import com.gym.utils.UIUtils;
@@ -132,7 +135,12 @@ public class OrderManagerViewPagerFragment extends BaseFragment implements View.
         } else if (view == holder.course) {
 
         } else if (view == holder.pay) {
-            if(!loading) new BuyLessonTask().execute();
+            Intent intent=new Intent(getActivity(), ConfirmOrderActivity.class);
+            FitBean bean=new FitBean();
+            bean.setJobTitle(bean.getJobTitle());
+            bean.setTreatment(bean.getTreatment());
+            intent.putExtra("bean",bean);
+            startActivity(intent);
         } else if (view == holder.cancel) {
             if(!loading) new BuyLessonDeleteTask().execute();
         } else if (view == holder.delete) {

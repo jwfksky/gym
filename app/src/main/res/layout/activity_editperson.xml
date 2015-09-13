@@ -23,16 +23,17 @@
 
 
             <RelativeLayout
+                android:id="@+id/headerImg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_10">
 
-                <ImageView
+                <com.gym.ui.widget.RoundImageView
                     android:id="@+id/user_picture"
                     android:layout_width="@dimen/width_50"
                     android:layout_height="@dimen/height_50"
                     android:layout_gravity="center_vertical"
-                    android:scaleType="fitCenter"
+                    android:scaleType="centerCrop"
                     android:src="@drawable/avatar" />
 
                 <TextView

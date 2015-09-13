@@ -60,6 +60,16 @@ public class MainFragment extends BaseFragment implements View.OnClickListener {
             ((MainActivity)getActivity()).onChangeFragment(FragmentFactory.createFragment(FragmentFactory.MENU_FIT),null,true);
         }else if(view==menuSpace){
             ((MainActivity)getActivity()).onChangeFragment(FragmentFactory.createFragment(FragmentFactory.MENU_SPACE),null,true);
+        }else if(view==menuCoach){
+            ((MainActivity)getActivity()).onChangeFragment(FragmentFactory.createFragment(FragmentFactory.MENU_COACH),null,true);
+        }else if(view==menuBox){
+            FitFragment fit= (FitFragment) FragmentFactory.createFragment(FragmentFactory.MENU_FIT);
+            fit.setJobType(UIUtils.getString(R.string.box));
+            ((MainActivity)getActivity()).onChangeFragment(fit, null, true);
+        }else if(view==menuFight){
+            FitFragment fit= (FitFragment) FragmentFactory.createFragment(FragmentFactory.MENU_FIT);
+            fit.setJobType(UIUtils.getString(R.string.fight));
+            ((MainActivity)getActivity()).onChangeFragment(fit, null, true);
         }
     }
 }

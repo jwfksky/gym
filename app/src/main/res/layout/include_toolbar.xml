@@ -43,6 +43,7 @@
             android:gravity="center"
             android:text="@string/defaultArea"
             android:textColor="@color/bg_page"
+            android:maxLength="4"
             android:textSize="@dimen/text_16"
             android:visibility="gone" />
 

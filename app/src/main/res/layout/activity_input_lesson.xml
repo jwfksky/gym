@@ -69,20 +69,22 @@
                         android:text="图片" />
 
                     <ImageView
-                        android:layout_margin="@dimen/margin_10"
                         android:id="@+id/addImage"
                         android:layout_width="@dimen/width_80"
                         android:layout_height="@dimen/height_80"
+                        android:layout_margin="@dimen/margin_10"
                         android:src="@drawable/btn_addimage" />
 
 
                 </LinearLayout>
             </RelativeLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/margin_10"
                 android:orientation="vertical">
+
                 <TextView
 
                     style="@style/edittext"
@@ -90,13 +92,15 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/margin_2"
                     android:text="课程介绍" />
+
                 <MultiAutoCompleteTextView
                     android:id="@+id/lesson_intro"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/shape_login"
-                    android:lines="3"/>
+                    android:lines="3" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -117,30 +121,33 @@
                         android:layout_marginBottom="@dimen/margin_2"
                         android:text="课程人数" />
 
-                    <RelativeLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
+                        android:layout_height="40dp"
                         android:layout_below="@id/height_tv"
-                        android:background="@drawable/shape_login"
                         android:layout_marginRight="@dimen/margin_10"
-                        android:layout_height="40dp">
-                    <EditText
-                        android:id="@+id/lesson_people"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:background="@null"
-                        android:textColorHint="@color/lighter_grey" />
+                        android:background="@drawable/shape_login">
 
-                    <TextView
-                        style="@style/edittext"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:textColor="@color/black"
-                        android:layout_alignParentRight="true"
-                        android:text="人" />
-                    </RelativeLayout>
+                        <EditText
+                            android:id="@+id/lesson_people"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="4"
+                            android:background="@null"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:textColorHint="@color/lighter_grey" />
+
+                        <TextView
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/margin_5"
+                            android:layout_weight="1"
+                            android:layout_gravity="right|center_vertical"
+                            android:text="人"
+                            android:textColor="@color/black" />
+                    </LinearLayout>
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -157,32 +164,34 @@
                         android:layout_marginBottom="@dimen/margin_2"
                         android:text="课程周期" />
 
-                    <RelativeLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
+                        android:layout_height="40dp"
                         android:layout_below="@id/period_tv"
-                        android:background="@drawable/shape_login"
                         android:layout_marginRight="@dimen/margin_10"
-                        android:layout_height="40dp">
-                        <TextView
+                        android:background="@drawable/shape_login">
+
+                        <EditText
                             android:id="@+id/lesson_period"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
+                            android:layout_weight="4"
                             android:layout_height="match_parent"
                             android:background="@null"
                             android:textColorHint="@color/lighter_grey" />
 
                         <ImageView
 
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
                             android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
+                            android:layout_gravity="right|center_vertical"
+                            android:layout_marginRight="@dimen/margin_5"
                             android:src="@drawable/right_arrow"
-                            android:layout_alignParentRight="true"
 
-                             />
-                    </RelativeLayout>
+                            />
+                    </LinearLayout>
                 </RelativeLayout>
             </LinearLayout>
-
 
 
             <LinearLayout
@@ -194,7 +203,6 @@
                 <RelativeLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-
                     android:layout_weight="1">
 
                     <TextView
@@ -205,29 +213,32 @@
                         android:layout_marginBottom="@dimen/margin_2"
                         android:text="课程时间" />
 
-                    <RelativeLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
+                        android:layout_height="40dp"
                         android:layout_below="@id/time_tv"
-                        android:background="@drawable/shape_login"
                         android:layout_marginRight="@dimen/margin_10"
-                        android:layout_height="40dp">
-                        <TextView
+                        android:background="@drawable/shape_login">
+
+                        <EditText
                             android:id="@+id/lesson_time"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
+                            android:layout_weight="4"
                             android:layout_height="match_parent"
                             android:background="@null"
                             android:textColorHint="@color/lighter_grey" />
 
                         <ImageView
 
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
                             android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
+                            android:layout_gravity="right|center_vertical"
+                            android:layout_marginRight="@dimen/margin_5"
                             android:src="@drawable/right_arrow"
-                            android:layout_alignParentRight="true"
 
                             />
-                    </RelativeLayout>
+                    </LinearLayout>
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -244,32 +255,77 @@
                         android:layout_marginBottom="@dimen/margin_2"
                         android:text="维持周期" />
 
-                    <RelativeLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
+                        android:layout_height="40dp"
                         android:layout_below="@id/during_tv"
-                        android:background="@drawable/shape_login"
                         android:layout_marginRight="@dimen/margin_10"
-                        android:layout_height="40dp">
+                        android:background="@drawable/shape_login">
 
                         <EditText
                             android:id="@+id/lesson_during"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
+                            android:layout_weight="4"
                             android:layout_height="match_parent"
                             android:background="@null"
+
                             android:textColorHint="@color/lighter_grey" />
 
                         <TextView
                             style="@style/edittext"
-                            android:layout_width="wrap_content"
+
                             android:layout_height="wrap_content"
-                           android:layout_centerVertical="true"
-                            android:textColor="@color/black"
-                            android:layout_alignParentRight="true"
-                            android:text="个月" />
-                    </RelativeLayout>
+                            android:layout_width="0dp"
+                            android:layout_weight="2"
+                            android:layout_gravity="right|center_vertical"
+                            android:layout_marginRight="@dimen/margin_5"
+                            android:text="个月"
+                            android:textColor="@color/black" />
+                    </LinearLayout>
                 </RelativeLayout>
             </LinearLayout>
 
+            <RelativeLayout
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_10"
+                >
+
+                <TextView
+                    android:id="@+id/fit"
+                    style="@style/edittext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_2"
+                    android:text="健身馆" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_below="@id/fit"
+                    android:layout_marginRight="@dimen/margin_10"
+                    android:background="@drawable/shape_login">
+
+                    <TextView
+                        android:id="@+id/fit_et"
+                        android:layout_width="0dp"
+                        android:layout_weight="4"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:textColorHint="@color/lighter_grey" />
+
+                    <ImageView
+
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right|center_vertical"
+                        android:layout_marginRight="@dimen/margin_5"
+                        android:src="@drawable/right_arrow"
+
+                        />
+                </LinearLayout>
+            </RelativeLayout>
 
         </LinearLayout>
 

@@ -3,12 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="@dimen/margin_10"
+
     android:background="@color/white"
-   
+
     android:orientation="vertical">
 
     <ImageView
+        android:padding="@dimen/padding_10"
         android:id="@+id/item_image"
         android:layout_width="@dimen/width_80"
         android:layout_height="@dimen/height_80"
@@ -16,11 +17,12 @@
         android:src="@drawable/btn_addimage" />
 
     <RelativeLayout
-        android:padding="@dimen/padding_7"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/margin_20"
-        android:layout_toRightOf="@id/item_image">
+        android:layout_toRightOf="@id/item_image"
+        android:padding="@dimen/padding_10">
 
         <TextView
             android:id="@+id/item_title"
@@ -38,55 +40,63 @@
             android:layout_marginTop="@dimen/margin_10"
             android:isIndicator="true"
             android:progressDrawable="@drawable/ratingbar_small"
-            android:rating="2.5"
-/>
+            android:rating="2.5" />
+
         <TextView
-            android:layout_marginTop="@dimen/margin_5"
-            android:layout_alignParentRight="true"
-            android:gravity="center"
-            android:textColor="@color/yellow"
-            android:textStyle="bold"
-            android:textSize="@dimen/text_20"
             android:id="@+id/item_price"
-            android:text="200/人"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
             android:layout_marginTop="@dimen/margin_5"
-            android:textColor="@color/light_grey"
-            android:textSize="@dimen/text_13"
+            android:gravity="center"
+            android:text="200/人"
+            android:textColor="@color/yellow"
+            android:textSize="@dimen/text_20"
+            android:textStyle="bold" />
+
+        <TextView
             android:id="@+id/item_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/item_rating"
+            android:layout_marginTop="@dimen/margin_5"
             android:background="@color/blue"
             android:text="地铁西南口"
-            android:layout_below="@id/item_rating"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:layout_below="@id/item_rating"
-            android:layout_marginTop="@dimen/margin_5"
-            android:layout_marginLeft="@dimen/margin_10"
             android:textColor="@color/light_grey"
-            android:textSize="@dimen/text_13"
+            android:textSize="@dimen/text_13" />
+
+        <TextView
             android:id="@+id/item_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/item_rating"
+            android:layout_marginLeft="@dimen/margin_10"
+            android:layout_marginTop="@dimen/margin_5"
+            android:layout_toRightOf="@id/item_content"
             android:drawableLeft="@drawable/pic_16"
             android:drawablePadding="@dimen/margin_10"
             android:text="06:00-07:00"
-android:layout_toRightOf="@id/item_content"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:textColor="@color/light_grey"
+            android:textSize="@dimen/text_13" />
+
         <TextView
+            android:id="@+id/item_distance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
             android:layout_below="@id/item_rating"
             android:layout_marginTop="@dimen/margin_5"
-            android:textColor="@color/light_grey"
-            android:textSize="@dimen/text_13"
-            android:id="@+id/item_distance"
             android:drawableLeft="@drawable/dizhi_bug"
+            android:maxLength="5"
             android:text="500m"
-            android:layout_alignParentRight="true"
 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:textColor="@color/light_grey"
+            android:textSize="@dimen/text_13" />
 
     </RelativeLayout>
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/margin_5"
+        android:background="@color/lighter_grey" />
 </RelativeLayout>

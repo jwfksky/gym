@@ -3,6 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="40dp"
     android:background="@color/white"
+    android:id="@+id/inculdeMenu"
+    android:visibility="gone"
     android:orientation="vertical">
 
     <LinearLayout
@@ -17,12 +19,15 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:gravity="center"
-            android:textStyle="bold"
+            android:padding="@dimen/padding_10"
             android:text="附近"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_16" />
+            android:textColor="@color/light_grey"
+            android:textSize="@dimen/text_16"
+            android:textStyle="bold" />
 
-        <View style="@style/horizontalLine" />
+        <View
+            style="@style/horizontalLine"
+            android:background="@color/lighter_grey" />
 
         <TextView
             android:id="@+id/category"
@@ -31,12 +36,15 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:gravity="center"
-            android:textStyle="bold"
+            android:padding="@dimen/padding_10"
             android:text="类别"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_16" />
+            android:textColor="@color/light_grey"
+            android:textSize="@dimen/text_16"
+            android:textStyle="bold" />
 
-        <View style="@style/horizontalLine" />
+        <View
+            style="@style/horizontalLine"
+            android:background="@color/lighter_grey" />
 
         <TextView
             android:id="@+id/order"
@@ -45,15 +53,12 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:gravity="center"
-            android:textStyle="bold"
+            android:padding="@dimen/padding_10"
             android:text="排序"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_16" />
+            android:textColor="@color/light_grey"
+            android:textSize="@dimen/text_16"
+            android:textStyle="bold" />
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="@dimen/margin_5"
-        android:background="@color/light_grey" />
+
 </LinearLayout>

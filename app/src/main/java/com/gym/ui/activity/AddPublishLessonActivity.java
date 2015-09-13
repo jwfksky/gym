@@ -24,13 +24,18 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.MultiAutoCompleteTextView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.gym.R;
 import com.gym.app.Constants;
+import com.gym.bean.FitSpaceBean;
 import com.gym.http.protocol.AddPublishLessonProtocol;
 import com.gym.http.protocol.BaseProtocol;
+import com.gym.http.protocol.GetFitSpaceProtocol;
+import com.gym.ui.adapter.ShowAddressAdapter;
 import com.gym.utils.ImageUtils;
 import com.gym.utils.ProgressUtil;
 import com.gym.utils.StringUtils;
@@ -40,6 +45,7 @@ import com.gym.utils.UIUtils;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -86,6 +92,10 @@ public class AddPublishLessonActivity extends BaseActivity implements View.OnCli
     EditText lessonDuring;
     @InjectView(R.id.lesson_intro)
     MultiAutoCompleteTextView lessonIntro;
+    @InjectView(R.id.fit)
+    TextView fit;
+    @InjectView(R.id.fit_et)
+    TextView fitEt;
     private ActionBar mActionBar;
     private boolean loading = false;
 
@@ -101,6 +111,9 @@ public class AddPublishLessonActivity extends BaseActivity implements View.OnCli
     private Button selectPphotoAlbum;
     private Button btnClose;
     private Dialog dialog;
+    private ArrayList<FitSpaceBean> fitSpaces;
+    private PopupWindow showPopup;
+    private ShowAddressAdapter spaceAdapter;
 
     @Override
     public void init() {
@@ -114,6 +127,9 @@ public class AddPublishLessonActivity extends BaseActivity implements View.OnCli
         super.initData();
         initOperationDialog();
         addImage.setOnClickListener(this);
+        fitEt.setOnClickListener(this);
+
+        new FFListTask().execute();
     }
 
     @Override
@@ -138,9 +154,9 @@ public class AddPublishLessonActivity extends BaseActivity implements View.OnCli
     @Override
     public void onClick(View view) {
         if (view == rightTv) {
-            if(!loading)
-            new AddPublishLessonTask().execute();
-        }else if (view == selectPphotoAlbum) {// 从相册取
+            if (!loading)
+                new AddPublishLessonTask().execute();
+        } else if (view == selectPphotoAlbum) {// 从相册取
             openAlbum();
             dialog.dismiss();// 操作框 取消
         } else if (view == takingPictures) {// 拍照
@@ -148,26 +164,47 @@ public class AddPublishLessonActivity extends BaseActivity implements View.OnCli
             dialog.dismiss();// 操作框 取消
         } else if (view == btnClose) {
             dialog.dismiss();// 操作框 取消s
-        }else if(view==addImage){
+        } else if (view == addImage) {
             showDialog();
-        }else if(view==backTb){
+        } else if (view == backTb) {
             onBackPressed();
+        }else if (view == fitEt) {
+            showPopup();
         }
+    }
+
+    private void showPopup() {
+        showPopup = new PopupWindow(this);
+        // 设置宽度
+        showPopup.setWidth(fitEt.getWidth());
+        showPopup.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+        // 设置焦点
+        showPopup.setFocusable(true);
+        // TODO
+        ListView popupList=new ListView(this);
+        spaceAdapter=new ShowAddressAdapter(fitSpaces,this);
+        popupList.setAdapter(spaceAdapter);
+        showPopup.setContentView(popupList);
+
+        // 把popupWindow显示出来
+        if (!showPopup.isShowing())
+            showPopup.showAsDropDown(fitEt, 0, 0);
     }
 
     public HashMap<String, String> getParams() {
         HashMap<String, String> hashMap = new HashMap<>();
         hashMap.put("coachID", String.valueOf(Constants.user.getUsr_UserID()));
         hashMap.put("courseTitle", name.getText().toString());
-        String topicContent =  Base64.encodeToString(Tool.bitmapTobyte(Tool.getSmallBitmap(protraitPath1)), Base64.DEFAULT).replace("\n","");
+        String topicContent = Base64.encodeToString(Tool.bitmapTobyte(Tool.getSmallBitmap(protraitPath1)), Base64.DEFAULT).replace("\n", "");
         hashMap.put("img", topicContent);
-        hashMap.put("courseIntroduce",lessonIntro.getText().toString() );
+        hashMap.put("courseIntroduce", lessonIntro.getText().toString());
         hashMap.put("peopleCount", lessonPeople.getText().toString());
         hashMap.put("CourseTime", lessonPeriod.getText().toString());
         hashMap.put("CourseCycle", lessonTime.getText().toString());
         hashMap.put("MaintenanceCycle", lessonDuring.getText().toString());
         return hashMap;
     }
+
 
 
     class AddPublishLessonTask extends AsyncTask<String, String, String> {
@@ -181,8 +218,8 @@ public class AddPublishLessonActivity extends BaseActivity implements View.OnCli
 
         @Override
         protected String doInBackground(String... strings) {
-            HashMap<String,String> hashMap=getParams();
-            AddPublishLessonProtocol protocol=new AddPublishLessonProtocol(hashMap);
+            HashMap<String, String> hashMap = getParams();
+            AddPublishLessonProtocol protocol = new AddPublishLessonProtocol(hashMap);
             return protocol.load(UIUtils.getString(R.string.AddNewCourse_URL), BaseProtocol.POST);
         }
 
@@ -191,13 +228,14 @@ public class AddPublishLessonActivity extends BaseActivity implements View.OnCli
             super.onPostExecute(s);
             loading = false;
             ProgressUtil.stopProgressBar();
-            if(TextUtils.isEmpty(s)){
-                UIUtils.showToastSafe(AddPublishLessonActivity.this,UIUtils.getString(R.string.network_error));
-            }else{
-                UIUtils.showToastSafe(AddPublishLessonActivity.this,s);
+            if (TextUtils.isEmpty(s)) {
+                UIUtils.showToastSafe(AddPublishLessonActivity.this, UIUtils.getString(R.string.network_error));
+            } else {
+                UIUtils.showToastSafe(AddPublishLessonActivity.this, s);
             }
         }
     }
+
     private void initOperationDialog() {
         dialogView = this.getLayoutInflater().inflate(
                 R.layout.activity_edituserinfo_popuoperat, null);
@@ -209,6 +247,7 @@ public class AddPublishLessonActivity extends BaseActivity implements View.OnCli
         selectPphotoAlbum.setOnClickListener(this);
         btnClose.setOnClickListener(this);
     }
+
     private void showDialog() {
 
         dialog.setContentView(dialogView, new ViewGroup.LayoutParams(
@@ -225,12 +264,14 @@ public class AddPublishLessonActivity extends BaseActivity implements View.OnCli
         dialog.setCanceledOnTouchOutside(true);
         dialog.show();
     } // 打开本地相册
+
     public void openAlbum() {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         this.startActivityForResult(intent, PHOTO_ALBUM);
     } // 拍照
+
     public void takePicture() {
 
         String state = Environment.getExternalStorageState();
@@ -252,6 +293,7 @@ public class AddPublishLessonActivity extends BaseActivity implements View.OnCli
             UIUtils.showToastSafe(this, "手机设备无存储SDCard,请确认已经插入SD卡.");
         }
     }
+
     private void startPhotoZoom(Uri data, int takeType) {
         WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
         Intent intent = new Intent("com.android.camera.action.CROP");
@@ -267,6 +309,7 @@ public class AddPublishLessonActivity extends BaseActivity implements View.OnCli
         intent.putExtra("scaleUpIfNeeded", true);// 去黑边
         startActivityForResult(intent, this.CROP_PICTURE);
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -308,6 +351,7 @@ public class AddPublishLessonActivity extends BaseActivity implements View.OnCli
             }
         }
     }
+
     private Uri getUploadTempFile(Uri uri, int takeType) {
         String storageState = Environment.getExternalStorageState();
         if (storageState.equals(Environment.MEDIA_MOUNTED)) {
@@ -342,6 +386,7 @@ public class AddPublishLessonActivity extends BaseActivity implements View.OnCli
         Uri cropUri = Uri.fromFile(protraitFile);
         return cropUri;
     }
+
     public String getRealPathFromURI(Uri contentUri) {
         try {
             String[] proj = {MediaStore.Images.Media.DATA};
@@ -355,6 +400,7 @@ public class AddPublishLessonActivity extends BaseActivity implements View.OnCli
             return contentUri.getPath();
         }
     }
+
     private void setImageView(final String realPath) {
 
         Bitmap bmp = BitmapFactory.decodeFile(realPath);
@@ -374,6 +420,7 @@ public class AddPublishLessonActivity extends BaseActivity implements View.OnCli
             }
         }
     }
+
     /**
      * 读取照片exif信息中的旋转角度<br/>
      *
@@ -402,5 +449,23 @@ public class AddPublishLessonActivity extends BaseActivity implements View.OnCli
             e.printStackTrace();
         }
         return degree;
+    }
+    class FFListTask extends AsyncTask<String,String,ArrayList<FitSpaceBean>>{
+
+        @Override
+        protected ArrayList<FitSpaceBean> doInBackground(String... strings) {
+            GetFitSpaceProtocol protocol=new GetFitSpaceProtocol();
+            return protocol.load(UIUtils.getString(R.string.GetFFlist_URL),BaseProtocol.POST);
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<FitSpaceBean> fitSpaceBeans) {
+            super.onPostExecute(fitSpaceBeans);
+            if(fitSpaceBeans!=null){
+                fitSpaces=fitSpaceBeans;
+                if(spaceAdapter!=null)
+                spaceAdapter.notifyDataSetChanged();
+            }
+        }
     }
 }

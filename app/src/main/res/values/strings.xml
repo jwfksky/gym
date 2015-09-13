@@ -47,6 +47,10 @@
     <string name="publishLesson">发布课程</string>
     <string name="coachInfo">教练资料</string>
     <string name="add_publishLesson">添加</string>
+    <string name="city_search">选择城市</string>
+    <string name="box">球类</string>
+    <string name="fight">格斗</string>
+    <string name="submit_order">提交订单</string>
 
     <string-array name="tab_names">
         <item>全部</item>
@@ -60,5 +64,20 @@
         <item>人气最高</item>
         <item>评价最好</item>
         <item>价格最低</item>
+    </string-array>
+    <string-array name="items_space">
+        <item>智能排序</item>
+
+        <item>人气最高</item>
+        <item>评价最好</item>
+
+    </string-array>
+    <string-array name="items_cat">
+        <item>全部类别</item>
+        <item>瑜伽</item>
+        <item>舞蹈</item>
+        <item>动感单车</item>
+        <item>自由器械</item>
+        <item>增肌</item>
     </string-array>
 </resources>

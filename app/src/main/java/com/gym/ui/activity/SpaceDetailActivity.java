@@ -12,8 +12,10 @@ import android.widget.TextView;
 import com.gym.R;
 import com.gym.app.Constants;
 import com.gym.bean.SpaceBean;
+import com.gym.bean.SpaceDetailBean;
 import com.gym.http.protocol.BaseProtocol;
 import com.gym.http.protocol.ChangeStarProtocol;
+import com.gym.http.protocol.SpaceDetailProtocol;
 import com.gym.utils.ProgressUtil;
 import com.gym.utils.UIUtils;
 
@@ -103,6 +105,7 @@ public class SpaceDetailActivity extends BaseActivity {
         super.init();
         setContentView(R.layout.activity_space_detail);
         ButterKnife.inject(this);
+        new SpaceDetailTask().execute();
     }
 
     @Override
@@ -147,6 +150,32 @@ public class SpaceDetailActivity extends BaseActivity {
         backTb.setVisibility(View.VISIBLE);
         titleTb.setText(bean.getGymName());
     }
+    class SpaceDetailTask extends AsyncTask<String,String,SpaceDetailBean>{
+        @Override
+        protected SpaceDetailBean doInBackground(String... hashMaps) {
+            HashMap<String,String> hashMap=new HashMap<>();
+            hashMap.put("ID",bean.getId()+"");
+            SpaceDetailProtocol changeStarProtocol=new SpaceDetailProtocol(hashMap);
+            return changeStarProtocol.load(UIUtils.getString(R.string.GetFieldDetail_URL), BaseProtocol.POST);
+        }
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            loading=true;
+            ProgressUtil.startProgressBar(SpaceDetailActivity.this);
+        }
+        @Override
+        protected void onPostExecute(SpaceDetailBean bean) {
+            loading=false;
+            ProgressUtil.stopProgressBar();
+            if(bean==null){
+                UIUtils.showToastSafe(UIUtils.getString(R.string.network_error));
+            }else{
+
+            }
+        }
+    }
+
     class ChangeStarTask extends AsyncTask<HashMap<String,String>,String,String>{
         @Override
         protected String doInBackground(HashMap<String, String>... hashMaps) {
@@ -154,15 +183,12 @@ public class SpaceDetailActivity extends BaseActivity {
             ChangeStarProtocol changeStarProtocol=new ChangeStarProtocol(hashMaps[0]);
             return changeStarProtocol.load(UIUtils.getString(R.string.GradeForfitnessfield_URL), BaseProtocol.POST);
         }
-
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             loading=true;
             ProgressUtil.startProgressBar(SpaceDetailActivity.this);
         }
-
-
         @Override
         protected void onPostExecute(String s) {
             loading=false;

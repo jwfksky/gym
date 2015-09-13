@@ -1,5 +1,6 @@
 package com.gym.ui.fragment;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.text.TextUtils;
 import android.view.View;
@@ -13,11 +14,13 @@ import android.widget.TextView;
 import com.gym.R;
 import com.gym.app.Constants;
 import com.gym.bean.BuyLessonBean;
+import com.gym.bean.FitBean;
 import com.gym.http.image.ImageLoader;
 import com.gym.http.protocol.BaseProtocol;
 import com.gym.http.protocol.BuyLessonProtocol;
 import com.gym.http.protocol.DeleteLessonProtocol;
 import com.gym.http.protocol.PayLessonProtocol;
+import com.gym.ui.activity.ConfirmOrderActivity;
 import com.gym.ui.widget.LoadingPage;
 import com.gym.utils.ProgressUtil;
 import com.gym.utils.UIUtils;
@@ -131,7 +134,12 @@ public class BuyLessonViewPagerFragment extends BaseFragment implements View.OnC
         } else if (view == holder.course) {
 
         } else if (view == holder.pay) {
-            if(!loading) new BuyLessonTask().execute();
+            Intent intent=new Intent(getActivity(), ConfirmOrderActivity.class);
+            FitBean bean=new FitBean();
+            bean.setJobTitle(bean.getJobTitle());
+            bean.setTreatment(bean.getTreatment());
+            intent.putExtra("bean",bean);
+            startActivity(intent);
         } else if (view == holder.cancel) {
             if(!loading) new BuyLessonDeleteTask().execute();
         } else if (view == holder.delete) {
@@ -288,35 +296,5 @@ public class BuyLessonViewPagerFragment extends BaseFragment implements View.OnC
             }
         }
     }
-    class BuyLessonTask extends AsyncTask<String,String,String>{
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            ProgressUtil.startProgressBar(getActivity());
-            loading=true;
-        }
 
-        @Override
-        protected String doInBackground(String... strings) {
-            HashMap<String,String> hashMap=new HashMap<>();
-            hashMap.put("courseID",bean.getId()+"");
-            hashMap.put("userID",Constants.user.getUsr_UserID()+"");
-            hashMap.put("userName",Constants.user.getUsr_UserName());
-            PayLessonProtocol protocol=new PayLessonProtocol(hashMap);
-            return protocol.load(UIUtils.getString(R.string.BuyCourse_URL),BaseProtocol.POST);
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            ProgressUtil.stopProgressBar();
-            loading=false;
-            if(TextUtils.isEmpty(s)){
-                UIUtils.showToastSafe(R.string.network_error);
-            }else{
-                UIUtils.showToastSafe(s);
-                show();
-            }
-        }
-    }
 }

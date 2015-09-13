@@ -18,7 +18,14 @@ import com.gym.app.Constants;
 import com.gym.bean.UserBean;
 import com.gym.http.protocol.BaseProtocol;
 import com.gym.http.protocol.LoginProtocol;
+import com.gym.utils.LogUtils;
 import com.gym.utils.UIUtils;
+import com.tencent.tauth.IUiListener;
+import com.tencent.tauth.Tencent;
+import com.tencent.tauth.UiError;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.List;
@@ -56,9 +63,14 @@ public class LoginActivity extends BaseActivity {
     EditText userEt;
     @InjectView(R.id.pwd_et)
     EditText pwdEt;
+    @InjectView(R.id.qqLogin)
+    ImageView qqLogin;
 
     private boolean loading = false;
     private SharedPreferences sp;
+    private Tencent mTencent;
+    private LoginListener loginListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,10 +80,11 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void operateView() {
-        sp=getSharedPreferences("config",MODE_PRIVATE);
-        if(sp!=null){
-            userEt.setText(sp.getString("user",""));
-            pwdEt.setText(sp.getString("pwd",""));
+        sp = getSharedPreferences("config", MODE_PRIVATE);
+        loginListener=new LoginListener();
+        if (sp != null) {
+            userEt.setText(sp.getString("user", ""));
+            pwdEt.setText(sp.getString("pwd", ""));
         }
         register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,6 +110,14 @@ public class LoginActivity extends BaseActivity {
                 login("2");//1为教练用户
             }
         });
+        //qq登陆
+        qqLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mTencent = Tencent.createInstance(Constants.QQLogin, LoginActivity.this);
+                mTencent.login(LoginActivity.this, "all",loginListener );
+            }
+        });
     }
 
     private void showWebView(String url) {
@@ -105,25 +126,28 @@ public class LoginActivity extends BaseActivity {
         startActivity(intent);
     }
 
+
     /**
      * 登陆
+     *
      * @param flag
      */
     private void login(String flag) {
-        if(checkData()&&!loading){
-            String user=userEt.getText().toString();
-            String pwd=pwdEt.getText().toString();
-            new LoginTask().execute(user,pwd,flag);
+        if (checkData() && !loading) {
+            String user = userEt.getText().toString();
+            String pwd = pwdEt.getText().toString();
+            new LoginTask().execute(user, pwd, flag);
         }
     }
 
     /**
      * 验证输入数据的正确性
+     *
      * @return
      */
     private boolean checkData() {
-        if(TextUtils.isEmpty(userEt.getText()))return false;
-        if(TextUtils.isEmpty(pwdEt.getText()))return false;
+        if (TextUtils.isEmpty(userEt.getText())) return false;
+        if (TextUtils.isEmpty(pwdEt.getText())) return false;
         return true;
     }
 
@@ -141,12 +165,12 @@ public class LoginActivity extends BaseActivity {
 
         @Override
         protected List<UserBean> doInBackground(String... params) {
-            HashMap<String,String> hashMap=new HashMap<>();
-            hashMap.put("emailAddress",params[0]);
-            hashMap.put("password",params[1]);
-            hashMap.put("userType",params[2]);
-            LoginProtocol loginProtocol=new LoginProtocol(hashMap);
-            List userBean=loginProtocol.load(UIUtils.getString(R.string.Login_URL), BaseProtocol.POST);
+            HashMap<String, String> hashMap = new HashMap<>();
+            hashMap.put("emailAddress", params[0]);
+            hashMap.put("password", params[1]);
+            hashMap.put("userType", params[2]);
+            LoginProtocol loginProtocol = new LoginProtocol(hashMap);
+            List userBean = loginProtocol.load(UIUtils.getString(R.string.Login_URL), BaseProtocol.POST);
             return userBean;
         }
 
@@ -155,14 +179,100 @@ public class LoginActivity extends BaseActivity {
             super.onPostExecute(userBeans);
             loading = false;
             login_loading.setVisibility(View.GONE);
-            if(userBeans==null){
-                UIUtils.showToastSafe(LoginActivity.this,UIUtils.getString(R.string.login_error));
-            }else{
-                Constants.user=userBeans.get(0);
+            if (userBeans == null) {
+                UIUtils.showToastSafe(LoginActivity.this, UIUtils.getString(R.string.login_error));
+            } else {
+                Constants.user = userBeans.get(0);
                 //设置记住账号，密码
-                SharedPreferences.Editor editor=sp.edit();
-                editor.putString("user",userEt.getText().toString());
-                editor.putString("pwd",pwdEt.getText().toString());
+                SharedPreferences.Editor editor = sp.edit();
+                editor.putString("user", userEt.getText().toString());
+                editor.putString("pwd", pwdEt.getText().toString());
+                editor.commit();
+                //跳转首页
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+
+        }
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        mTencent.onActivityResultData(requestCode, resultCode,data,loginListener);
+
+        if(requestCode == com.tencent.connect.common.Constants.REQUEST_API) {
+            if(resultCode == com.tencent.connect.common.Constants.RESULT_LOGIN) {
+                Tencent.handleResultData(data, loginListener);
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    class LoginListener implements IUiListener {
+
+        @Override
+        public void onComplete(Object o) {
+            try {
+                JSONObject obj=new JSONObject(o.toString());
+                String openid=obj.optString("openid");
+               String openkey=obj.optString("pfkey");
+                String qq="1";
+
+                new ThreeLoginTask().execute(openid,openkey,qq);
+            } catch (JSONException e) {
+                LogUtils.e(e);
+                UIUtils.showToastSafe(LoginActivity.this, UIUtils.getString(R.string.login_error));
+            }
+
+        }
+
+        @Override
+        public void onError(UiError uiError) {
+            UIUtils.showToastSafe(LoginActivity.this, UIUtils.getString(R.string.login_error));
+        }
+
+        @Override
+        public void onCancel() {
+
+        }
+    }
+
+    class ThreeLoginTask extends AsyncTask<String,String,List<UserBean>>{
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            loading = true;
+            login_loading.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected List<UserBean> doInBackground(String... params) {
+            HashMap<String, String> hashMap = new HashMap<>();
+            hashMap.put("openId", params[0]);
+            hashMap.put("openKey", params[1]);
+            hashMap.put("other1", params[2]);
+            hashMap.put("other2", "");
+            LoginProtocol loginProtocol = new LoginProtocol(hashMap);
+            List userBean = loginProtocol.load(UIUtils.getString(R.string.QQLogin_URL), BaseProtocol.POST);
+            return userBean;
+        }
+
+        @Override
+        protected void onPostExecute(List<UserBean> userBeans) {
+            super.onPostExecute(userBeans);
+            loading = false;
+            login_loading.setVisibility(View.GONE);
+            if (userBeans == null) {
+                UIUtils.showToastSafe(LoginActivity.this, UIUtils.getString(R.string.login_error));
+            } else {
+                Constants.user = userBeans.get(0);
+                //设置记住账号，密码
+                SharedPreferences.Editor editor = sp.edit();
+                editor.putString("user", userEt.getText().toString());
+                editor.putString("pwd", pwdEt.getText().toString());
                 editor.commit();
                 //跳转首页
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);

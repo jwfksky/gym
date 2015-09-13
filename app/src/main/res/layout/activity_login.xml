@@ -147,15 +147,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-
             android:layout_marginRight="@dimen/margin_40"
             android:layout_marginLeft="@dimen/margin_40"
             android:src="@drawable/pic_6"/>
         <ImageView
+            android:id="@+id/qqLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-
             android:src="@drawable/pic_7"/>
 
     </LinearLayout></RelativeLayout>

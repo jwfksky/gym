@@ -12,15 +12,17 @@
         style="@style/edittext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/margin_10"
+        android:padding="@dimen/padding_10"
         android:text="小苹果"
-        android:textColor="@color/light_grey" />
+        android:textColor="@color/light_grey"
+        android:textSize="@dimen/text_16" />
 
     <View
         android:id="@+id/line"
         style="@style/verticalLine"
         android:layout_marginLeft="0dp"
         android:layout_marginRight="0dp"
-        android:layout_marginTop="@dimen/margin_5" />
+        android:layout_marginTop="@dimen/margin_5"
+        android:background="@color/lighter_grey" />
 
 </LinearLayout>

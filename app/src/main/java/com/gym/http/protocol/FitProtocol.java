@@ -23,7 +23,7 @@ public class FitProtocol extends BaseProtocol<HashMap<String,Object>> {
     }
     @Override
     protected String getParames() {
-        return wrapParames(POST,hashMap);
+        return wrapParames(GET,hashMap);
     }
 
     @Override
@@ -35,7 +35,7 @@ public class FitProtocol extends BaseProtocol<HashMap<String,Object>> {
                 String result=obj.optString("result");
                 if("1".equals(result)){
                     String data=obj.optString("data");
-                    ArrayList<FitBean.DataEntity> list=getGson().fromJson(data,new TypeToken<ArrayList<FitBean.DataEntity>>(){}.getType());
+                    ArrayList<FitBean> list=getGson().fromJson(data,new TypeToken<ArrayList<FitBean>>(){}.getType());
                     String totalPage=obj.optString("totalPageCount");
                     hashMap.put("list",list);
                     hashMap.put("totalPage",totalPage);

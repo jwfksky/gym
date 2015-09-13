@@ -1,6 +1,7 @@
 package com.gym.app;
 
 
+import com.gym.bean.CityBean;
 import com.gym.bean.UserBean;
 import com.gym.utils.SpeechSynthesisUtil;
 
@@ -33,6 +34,7 @@ public class Constants {
     public static final Integer HTTP_STATUSCODE_2002 = 2002;
     public static final Integer HTTP_STATUSCODE_500 = 500;
     public static UserBean user;
-    public static String city="上海市";
+    public static CityBean city;
     public static String addrNow;
+    public static String QQLogin="1104651057";
 }

@@ -98,6 +98,22 @@ public class MainActivity extends BaseActivity implements IFragment, View.OnClic
         areaTb.setVisibility(View.VISIBLE);
         backTb.setVisibility(View.GONE);
         titleTb.setText(UIUtils.getString(R.string.app_name));
+
+        areaTb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(MainActivity.this,CitySelectActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(Constants.city!=null){
+            areaTb.setText(Constants.city.getCity());
+        }
     }
 
     @Override
@@ -183,7 +199,7 @@ public class MainActivity extends BaseActivity implements IFragment, View.OnClic
         }
         if (v == coachInfo) {//教练信息
             popup.dismiss();
-            Intent intent = new Intent(MainActivity.this, CoachInfoActivity.class);
+            Intent intent = new Intent(MainActivity.this, EditCoachInfoActivity.class);
             //第一个为标题，第二个为指定显示的fragment,第三个为toolbar右侧
             ArrayList<String> list = new ArrayList<>();
             startActivity(intent);

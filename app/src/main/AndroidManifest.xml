@@ -74,6 +74,7 @@
         <activity android:name=".ui.activity.CoachDetailActivity" />
         <activity android:name=".ui.activity.FitDetailActivity" />
         <activity android:name=".ui.activity.ConfirmOrderActivity" />
+        <activity android:name=".ui.activity.CommentActivity" />
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"

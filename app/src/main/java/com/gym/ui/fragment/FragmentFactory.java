@@ -17,6 +17,7 @@ public class FragmentFactory {
     public static final int CENTER_ORDERMANAGER=7;
     public static final int CENTER_POINTS = 8;
     public static final int CENTER_COLLECT = 9;
+    public static final int CENTER_COMMENT = 10;
     private static HashMap<Integer,BaseFragment> map=new HashMap<>();
 
 
@@ -53,6 +54,9 @@ public class FragmentFactory {
                     break;
                 case CENTER_COLLECT:
                     fragment=new CollectFragment();
+                    break;
+                case CENTER_COMMENT:
+                    fragment = new CommentFragment();
                     break;
             }
         }

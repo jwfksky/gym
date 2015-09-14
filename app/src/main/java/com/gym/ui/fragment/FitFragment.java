@@ -150,9 +150,7 @@ public class FitFragment extends BaseFragment {
 
         //添加展示列表的头，尾view
         footerView = UIUtils.getFooterView();
-
         commonLv.addFooterView(footerView);
-
         adapter = new FitAdapter();
         commonLv.setAdapter(adapter);
         commonLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -166,7 +164,6 @@ public class FitFragment extends BaseFragment {
         });
         //初始化下拉菜单
         dropMenu = new ListView(getActivity());
-
         DropMenuAdapter dropMenuAdapter = new DropMenuAdapter();
         dropMenu.setAdapter(dropMenuAdapter);
 

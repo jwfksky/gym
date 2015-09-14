@@ -107,7 +107,7 @@ public class LoginActivity extends BaseActivity {
         loginCoach.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                login("2");//1为教练用户
+                login("2");//2为教练用户
             }
         });
         //qq登陆

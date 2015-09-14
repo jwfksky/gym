@@ -1,10 +1,10 @@
 package com.gym.http.protocol;
 
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.google.gson.reflect.TypeToken;
-import com.gym.bean.CourseCommitBean;
+import com.gym.bean.CommentBean;
+import com.gym.bean.FitBean;
 import com.gym.utils.LogUtils;
 
 import org.json.JSONException;
@@ -14,14 +14,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * Created by Administrator on 2015/9/11 0011.
+ * Created by Administrator on 2015/8/31 0031.
  */
-public class CourseCommitProtocol extends BaseProtocol<HashMap<String,Object>> {
-    private HashMap<String, String> hashMap;
-    public CourseCommitProtocol(HashMap<String, String> hashMap) {
+public class CommentProtocol extends BaseProtocol<HashMap<String,Object>> {
+    private HashMap<String,String> hashMap;
+    public CommentProtocol(HashMap<String, String> hashMap){
         this.hashMap=hashMap;
     }
-
     @Override
     protected String getParames() {
         return wrapParames(POST,hashMap);
@@ -35,9 +34,8 @@ public class CourseCommitProtocol extends BaseProtocol<HashMap<String,Object>> {
                 JSONObject obj=new JSONObject(json);
                 String result=obj.optString("result");
                 if("1".equals(result)){
-
                     String data=obj.optString("data");
-                    ArrayList<CourseCommitBean> list=getGson().fromJson(data,new TypeToken<ArrayList<CourseCommitBean>>(){}.getType());
+                    ArrayList<CommentBean> list=getGson().fromJson(data,new TypeToken<ArrayList<CommentBean>>(){}.getType());
                     String totalPage=obj.optString("totalPageCount");
                     hashMap.put("list",list);
                     hashMap.put("totalPage",totalPage);

@@ -18,8 +18,8 @@ import com.gym.bean.FitBean;
 import com.gym.http.image.ImageLoader;
 import com.gym.http.protocol.BaseProtocol;
 import com.gym.http.protocol.BuyLessonProtocol;
-import com.gym.http.protocol.DeleteLessonProtocol;
-import com.gym.http.protocol.PayLessonProtocol;
+import com.gym.http.protocol.BuyLessonCommonProtocol;
+import com.gym.ui.activity.CommentActivity;
 import com.gym.ui.activity.ConfirmOrderActivity;
 import com.gym.ui.widget.LoadingPage;
 import com.gym.utils.ProgressUtil;
@@ -130,9 +130,11 @@ public class BuyLessonViewPagerFragment extends BaseFragment implements View.OnC
         if (view == holder.agreeRefund) {
 
         } else if (view == holder.refund) {
-
+            if(!loading) new BuyLessonCommonTask().execute(UIUtils.getString(R.string.ApplyRefund_URL));
         } else if (view == holder.course) {
-
+            Intent intent=new Intent(getActivity(), CommentActivity.class);
+            intent.putExtra("courseID",bean.getId());
+            startActivity(intent);
         } else if (view == holder.pay) {
             Intent intent=new Intent(getActivity(), ConfirmOrderActivity.class);
             FitBean bean=new FitBean();
@@ -141,10 +143,16 @@ public class BuyLessonViewPagerFragment extends BaseFragment implements View.OnC
             intent.putExtra("bean",bean);
             startActivity(intent);
         } else if (view == holder.cancel) {
-            if(!loading) new BuyLessonDeleteTask().execute();
+            if(!loading) new BuyLessonCommonTask().execute(UIUtils.getString(R.string.DeleteUserByCourse_URL));
         } else if (view == holder.delete) {
-            if(!loading) new BuyLessonDeleteTask().execute();
+            if(!loading) new BuyLessonCommonTask().execute(UIUtils.getString(R.string.DeleteUserByCourse_URL));
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        refreshOrLoad();
     }
 
     class BuyLessonAdapter extends BaseAdapter {
@@ -266,7 +274,7 @@ public class BuyLessonViewPagerFragment extends BaseFragment implements View.OnC
             ButterKnife.inject(this, view);
         }
     }
-    class BuyLessonDeleteTask extends AsyncTask<String,String,String>{
+    class BuyLessonCommonTask extends AsyncTask<String,String,String>{
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -278,8 +286,8 @@ public class BuyLessonViewPagerFragment extends BaseFragment implements View.OnC
         protected String doInBackground(String... strings) {
             HashMap<String,String> hashMap=new HashMap<>();
             hashMap.put("id",bean.getId()+"");
-            DeleteLessonProtocol protocol=new DeleteLessonProtocol(hashMap);
-            return protocol.load(UIUtils.getString(R.string.DeleteUserByCourse_URL),BaseProtocol.POST);
+            BuyLessonCommonProtocol protocol=new BuyLessonCommonProtocol(hashMap);
+            return protocol.load(strings[0],BaseProtocol.POST);
         }
 
         @Override
@@ -296,5 +304,7 @@ public class BuyLessonViewPagerFragment extends BaseFragment implements View.OnC
             }
         }
     }
+
+
 
 }

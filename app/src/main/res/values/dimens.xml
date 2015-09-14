@@ -34,4 +34,5 @@
     <dimen name="height_60">60dp</dimen>
     <dimen name="padding_10">10dp</dimen>
     <dimen name="width_30">30dp</dimen>
+    <dimen name="height_200">200dp</dimen>
 </resources>

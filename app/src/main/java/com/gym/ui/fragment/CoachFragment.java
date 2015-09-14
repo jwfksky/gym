@@ -81,16 +81,17 @@ public class CoachFragment extends BaseFragment {
     private String Price;
     private PopupWindow popupWindow;
     private MainActivity mainActivity;
-private String jobType;
+    private String jobType;
+
     @Override
     protected LoadingPage.LoadResult load() {
         HashMap<String, String> hashMap = new HashMap<>();
 
         hashMap.put("pageIndex", String.valueOf(pageNow));
         hashMap.put("pageSize", "10");
-        hashMap.put("strWhere", jobType==null?"":getJobType());
-        hashMap.put("ScoreNumber", CommentNumber==null?"":getCommentNumber());
-        hashMap.put("Score", Score==null?"":getScore());
+        hashMap.put("strWhere", jobType == null ? "" : getJobType());
+        hashMap.put("ScoreNumber", CommentNumber == null ? "" : getCommentNumber());
+        hashMap.put("Score", Score == null ? "" : getScore());
         CoachProtocol coachProtocol = new CoachProtocol(hashMap);
         HashMap<String, Object> bean = coachProtocol.load(UIUtils.getString(R.string.GetCoachInfo_URL), BaseProtocol.POST);
         if (bean != null) {
@@ -145,7 +146,7 @@ private String jobType;
         commonLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                int position = i - 1;
+                int position = i;
                 if (position >= 0) {
                     CoachBean bean = list.get(position);
                     Intent intent = new Intent(getActivity(), CoachDetailActivity.class);

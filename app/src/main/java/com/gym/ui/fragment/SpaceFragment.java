@@ -151,7 +151,7 @@ public class SpaceFragment extends BaseFragment {
         commonLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                int position = i - 1;
+                int position = i;
                 if (position >= 0) {
                 SpaceBean bean = list.get(i);
                 Intent intent = new Intent(getActivity(), SpaceDetailActivity.class);

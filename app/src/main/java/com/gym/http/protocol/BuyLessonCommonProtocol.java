@@ -13,9 +13,9 @@ import java.util.HashMap;
 /**
  * Created by Administrator on 2015/8/30 0030.
  */
-public class DeleteLessonProtocol extends BaseProtocol<String> {
+public class BuyLessonCommonProtocol extends BaseProtocol<String> {
     private HashMap<String,String> hashMap;
-    public DeleteLessonProtocol(HashMap<String,String> hashMap){
+    public BuyLessonCommonProtocol(HashMap<String, String> hashMap){
         this.hashMap=hashMap;
     }
     @Override

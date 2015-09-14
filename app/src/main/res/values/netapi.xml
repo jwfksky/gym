@@ -62,8 +62,20 @@
     <string name="GetFieldDetail_URL">http://211.149.244.163:8090/Useraccount.asmx/GetFieldDetail</string>
     <!-- 课程详情-->
     <string name="GetJobInfoById_URL">http://211.149.244.163:8090/JobInfo.asmx/GetJobInfoById</string>
-    <!-- 课程详情-->
+    <!-- 申请退款-->
+    <string name="ApplyRefund_URL">http://211.149.244.163:8090/JobInfo.asmx/ApplyRefund</string>
+    <!-- 申请退款-->
+    <string name="AddCourseTopic_URL">http://211.149.244.163:8090/JobInfo.asmx/AddCourseTopic</string>
+    <!-- 申请退款-->
+    <string name="GetAllOfMyTopic_URL">http://211.149.244.163:8090/JobInfo.asmx/GetAllOfMyTopic</string>
+    <!-- 删除评论-->
+    <string name="DeleteCourseTopic_URL">http://211.149.244.163:8090/JobInfo.asmx/DeleteCourseTopic</string>
+    <!-- 更新评论-->
+    <string name="UpdateCourseTopic_URL">http://211.149.244.163:8090/JobInfo.asmx/UpdateCourseTopic</string>
+    <!-- 课程评论-->
     <string name="GetCourseComment_URL">http://211.149.244.163:8090/JobInfo.asmx/GetCourseComment</string>
+    <!-- 首页数据-->
+    <string name="GetCourseInfo_URL">http://211.149.244.163:8090/Useraccount.asmx/GetCourseInfo</string>
 
 
 </resources>

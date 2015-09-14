@@ -1,56 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/white"
-    android:layout_height="match_parent">
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-<TextView
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:layout_weight="1"
-    android:text="场地"
-    android:id="@+id/menu_space"
-    style="@style/textDefault"
-    android:drawableTop="@drawable/imgb_1"/>
+
         <TextView
+            android:id="@+id/menu_space"
+            style="@style/textDefault"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/imgb_1"
+            android:text="场地" />
+
+        <TextView
             android:id="@+id/menu_coach"
-            android:layout_weight="1"
-            android:text="教练"
             style="@style/textDefault"
-            android:drawableTop="@drawable/imgb_2"/>
-        <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            style="@style/textDefault"
+            android:drawableTop="@drawable/imgb_2"
+            android:text="教练" />
+
+        <TextView
             android:id="@+id/menu_fit"
-            android:text="健身"
-            android:drawableTop="@drawable/imgb_3"/>
-        <TextView
+            style="@style/textDefault"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            style="@style/textDefault"
+            android:drawableTop="@drawable/imgb_3"
+            android:text="健身" />
+
+        <TextView
             android:id="@+id/menu_box"
-            android:text="球类"
-            android:drawableTop="@drawable/imgb_4"/>
-        <TextView
+            style="@style/textDefault"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            style="@style/textDefault"
+            android:drawableTop="@drawable/imgb_4"
+            android:text="球类" />
+
+        <TextView
             android:id="@+id/menu_fight"
-            android:text="格斗"
-            android:drawableTop="@drawable/imgb_5"/>
+            style="@style/textDefault"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/imgb_5"
+            android:text="格斗" />
     </LinearLayout>
+
     <ListView
+        android:layout_marginTop="@dimen/margin_10"
         android:id="@+id/specailItems"
+        android:dividerHeight="@dimen/margin_5"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 </LinearLayout>

@@ -33,6 +33,7 @@ public class SpaceBean implements Parcelable {
      * GymName : FUS健身馆
      * Create_Time : 00:00:00
      */
+    private int FFID;
     private int PeopleNumber;
     private int EncoreNumber;
     private String ChangRoomNewAndOld;
@@ -56,6 +57,14 @@ public class SpaceBean implements Parcelable {
     private int Distance;
     private String GymName;
     private String Create_Time;
+
+    public int getFFID() {
+        return FFID;
+    }
+
+    public void setFFID(int FFID) {
+        this.FFID = FFID;
+    }
 
     public void setPeopleNumber(int PeopleNumber) {
         this.PeopleNumber = PeopleNumber;
@@ -241,6 +250,9 @@ public class SpaceBean implements Parcelable {
         return Create_Time;
     }
 
+    public SpaceBean() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -248,6 +260,7 @@ public class SpaceBean implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.FFID);
         dest.writeInt(this.PeopleNumber);
         dest.writeInt(this.EncoreNumber);
         dest.writeString(this.ChangRoomNewAndOld);
@@ -273,10 +286,8 @@ public class SpaceBean implements Parcelable {
         dest.writeString(this.Create_Time);
     }
 
-    public SpaceBean() {
-    }
-
     protected SpaceBean(Parcel in) {
+        this.FFID = in.readInt();
         this.PeopleNumber = in.readInt();
         this.EncoreNumber = in.readInt();
         this.ChangRoomNewAndOld = in.readString();
@@ -302,7 +313,7 @@ public class SpaceBean implements Parcelable {
         this.Create_Time = in.readString();
     }
 
-    public static final Parcelable.Creator<SpaceBean> CREATOR = new Parcelable.Creator<SpaceBean>() {
+    public static final Creator<SpaceBean> CREATOR = new Creator<SpaceBean>() {
         public SpaceBean createFromParcel(Parcel source) {
             return new SpaceBean(source);
         }

@@ -4,94 +4,72 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * Created by Administrator on 2015/9/2 0002.
+ * Created by Administrator on 2015/9/14 0014.
  */
-public class FitBean implements Parcelable {
-
+public class SpecailBean implements Parcelable {
 
     /**
-     * CourseCycle :
      * CourseDate : 1,3,5
      * ScoreNumber : 0
      * JobTitle : 有氧健身
      * FF_Name : NSR健身馆
      * JobTypeName : 健身
-     * Remark :
      * JobContent : 健身健身健身健身健身内容
-     * UserID : 1
      * JobBeginTime : 13:00:00
+     * Sort : 5
      * TotalScore : 0.0
-     * Distance : 2147483647
      * Status : 1
-     * CourseTime :
      * CompanyId : 3
      * LinkMan : 张老师
-     * IsReportByPhone_ : 1
+     * CreateTime : 2015-05-12 14:47:48
      * FF_City : 上海市
+     * CreateUser : admin1
      * JobEndTime : 14:00:00
      * JobRequirements : http://121.40.168.164:8091/Pictures/2.jpg
      * HireNum : 30
-     * IsReportByEmail_ : 1
      * CourseRateType : 2
      * Score : 0.0
+     * JobTypeId : 1
      * Treatment : 1000.0
      * JobStartDate : 2015-05-29
      * CourseLast : 20
      * FF_Phone : 110
-     * LinkEmail_ :
-     * MaintenanceCycle :
-     * Id : 914
+     * Id : 572
      * FFID : 2
      * LinkPhone : 1388888999
+     * JobAddress : 上海市南京西路100号
      * FF_Address : 上海市浦东国际机场
      */
-    private int JobID;
-    private String CourseCycle;
     private String CourseDate;
     private int ScoreNumber;
     private String JobTitle;
     private String FF_Name;
     private String JobTypeName;
-    private String Remark;
     private String JobContent;
-    private int UserID;
     private String JobBeginTime;
+    private int Sort;
     private double TotalScore;
-    private int Distance;
     private String Status;
-    private String CourseTime;
     private int CompanyId;
     private String LinkMan;
-    private int IsReportByPhone_;
+    private String CreateTime;
     private String FF_City;
+    private String CreateUser;
     private String JobEndTime;
     private String JobRequirements;
     private String HireNum;
-    private int IsReportByEmail_;
     private String CourseRateType;
     private double Score;
+    private int JobTypeId;
     private double Treatment;
     private String JobStartDate;
     private String CourseLast;
     private String FF_Phone;
-    private String LinkEmail_;
-    private String MaintenanceCycle;
     private int Id;
     private int FFID;
     private String LinkPhone;
+    private String JobAddress;
     private String FF_Address;
-
-    public int getJobID() {
-        return JobID;
-    }
-
-    public void setJobID(int jobID) {
-        JobID = jobID;
-    }
-
-    public void setCourseCycle(String CourseCycle) {
-        this.CourseCycle = CourseCycle;
-    }
 
     public void setCourseDate(String CourseDate) {
         this.CourseDate = CourseDate;
@@ -113,36 +91,24 @@ public class FitBean implements Parcelable {
         this.JobTypeName = JobTypeName;
     }
 
-    public void setRemark(String Remark) {
-        this.Remark = Remark;
-    }
-
     public void setJobContent(String JobContent) {
         this.JobContent = JobContent;
-    }
-
-    public void setUserID(int UserID) {
-        this.UserID = UserID;
     }
 
     public void setJobBeginTime(String JobBeginTime) {
         this.JobBeginTime = JobBeginTime;
     }
 
+    public void setSort(int Sort) {
+        this.Sort = Sort;
+    }
+
     public void setTotalScore(double TotalScore) {
         this.TotalScore = TotalScore;
     }
 
-    public void setDistance(int Distance) {
-        this.Distance = Distance;
-    }
-
     public void setStatus(String Status) {
         this.Status = Status;
-    }
-
-    public void setCourseTime(String CourseTime) {
-        this.CourseTime = CourseTime;
     }
 
     public void setCompanyId(int CompanyId) {
@@ -153,12 +119,16 @@ public class FitBean implements Parcelable {
         this.LinkMan = LinkMan;
     }
 
-    public void setIsReportByPhone_(int IsReportByPhone_) {
-        this.IsReportByPhone_ = IsReportByPhone_;
+    public void setCreateTime(String CreateTime) {
+        this.CreateTime = CreateTime;
     }
 
     public void setFF_City(String FF_City) {
         this.FF_City = FF_City;
+    }
+
+    public void setCreateUser(String CreateUser) {
+        this.CreateUser = CreateUser;
     }
 
     public void setJobEndTime(String JobEndTime) {
@@ -173,16 +143,16 @@ public class FitBean implements Parcelable {
         this.HireNum = HireNum;
     }
 
-    public void setIsReportByEmail_(int IsReportByEmail_) {
-        this.IsReportByEmail_ = IsReportByEmail_;
-    }
-
     public void setCourseRateType(String CourseRateType) {
         this.CourseRateType = CourseRateType;
     }
 
     public void setScore(double Score) {
         this.Score = Score;
+    }
+
+    public void setJobTypeId(int JobTypeId) {
+        this.JobTypeId = JobTypeId;
     }
 
     public void setTreatment(double Treatment) {
@@ -201,14 +171,6 @@ public class FitBean implements Parcelable {
         this.FF_Phone = FF_Phone;
     }
 
-    public void setLinkEmail_(String LinkEmail_) {
-        this.LinkEmail_ = LinkEmail_;
-    }
-
-    public void setMaintenanceCycle(String MaintenanceCycle) {
-        this.MaintenanceCycle = MaintenanceCycle;
-    }
-
     public void setId(int Id) {
         this.Id = Id;
     }
@@ -221,12 +183,12 @@ public class FitBean implements Parcelable {
         this.LinkPhone = LinkPhone;
     }
 
-    public void setFF_Address(String FF_Address) {
-        this.FF_Address = FF_Address;
+    public void setJobAddress(String JobAddress) {
+        this.JobAddress = JobAddress;
     }
 
-    public String getCourseCycle() {
-        return CourseCycle;
+    public void setFF_Address(String FF_Address) {
+        this.FF_Address = FF_Address;
     }
 
     public String getCourseDate() {
@@ -249,36 +211,24 @@ public class FitBean implements Parcelable {
         return JobTypeName;
     }
 
-    public String getRemark() {
-        return Remark;
-    }
-
     public String getJobContent() {
         return JobContent;
-    }
-
-    public int getUserID() {
-        return UserID;
     }
 
     public String getJobBeginTime() {
         return JobBeginTime;
     }
 
+    public int getSort() {
+        return Sort;
+    }
+
     public double getTotalScore() {
         return TotalScore;
     }
 
-    public int getDistance() {
-        return Distance;
-    }
-
     public String getStatus() {
         return Status;
-    }
-
-    public String getCourseTime() {
-        return CourseTime;
     }
 
     public int getCompanyId() {
@@ -289,12 +239,16 @@ public class FitBean implements Parcelable {
         return LinkMan;
     }
 
-    public int getIsReportByPhone_() {
-        return IsReportByPhone_;
+    public String getCreateTime() {
+        return CreateTime;
     }
 
     public String getFF_City() {
         return FF_City;
+    }
+
+    public String getCreateUser() {
+        return CreateUser;
     }
 
     public String getJobEndTime() {
@@ -309,16 +263,16 @@ public class FitBean implements Parcelable {
         return HireNum;
     }
 
-    public int getIsReportByEmail_() {
-        return IsReportByEmail_;
-    }
-
     public String getCourseRateType() {
         return CourseRateType;
     }
 
     public double getScore() {
         return Score;
+    }
+
+    public int getJobTypeId() {
+        return JobTypeId;
     }
 
     public double getTreatment() {
@@ -337,14 +291,6 @@ public class FitBean implements Parcelable {
         return FF_Phone;
     }
 
-    public String getLinkEmail_() {
-        return LinkEmail_;
-    }
-
-    public String getMaintenanceCycle() {
-        return MaintenanceCycle;
-    }
-
     public int getId() {
         return Id;
     }
@@ -357,11 +303,12 @@ public class FitBean implements Parcelable {
         return LinkPhone;
     }
 
-    public String getFF_Address() {
-        return FF_Address;
+    public String getJobAddress() {
+        return JobAddress;
     }
 
-    public FitBean() {
+    public String getFF_Address() {
+        return FF_Address;
     }
 
     @Override
@@ -371,88 +318,81 @@ public class FitBean implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.JobID);
-        dest.writeString(this.CourseCycle);
         dest.writeString(this.CourseDate);
         dest.writeInt(this.ScoreNumber);
         dest.writeString(this.JobTitle);
         dest.writeString(this.FF_Name);
         dest.writeString(this.JobTypeName);
-        dest.writeString(this.Remark);
         dest.writeString(this.JobContent);
-        dest.writeInt(this.UserID);
         dest.writeString(this.JobBeginTime);
+        dest.writeInt(this.Sort);
         dest.writeDouble(this.TotalScore);
-        dest.writeInt(this.Distance);
         dest.writeString(this.Status);
-        dest.writeString(this.CourseTime);
         dest.writeInt(this.CompanyId);
         dest.writeString(this.LinkMan);
-        dest.writeInt(this.IsReportByPhone_);
+        dest.writeString(this.CreateTime);
         dest.writeString(this.FF_City);
+        dest.writeString(this.CreateUser);
         dest.writeString(this.JobEndTime);
         dest.writeString(this.JobRequirements);
         dest.writeString(this.HireNum);
-        dest.writeInt(this.IsReportByEmail_);
         dest.writeString(this.CourseRateType);
         dest.writeDouble(this.Score);
+        dest.writeInt(this.JobTypeId);
         dest.writeDouble(this.Treatment);
         dest.writeString(this.JobStartDate);
         dest.writeString(this.CourseLast);
         dest.writeString(this.FF_Phone);
-        dest.writeString(this.LinkEmail_);
-        dest.writeString(this.MaintenanceCycle);
         dest.writeInt(this.Id);
         dest.writeInt(this.FFID);
         dest.writeString(this.LinkPhone);
+        dest.writeString(this.JobAddress);
         dest.writeString(this.FF_Address);
     }
 
-    protected FitBean(Parcel in) {
-        this.JobID = in.readInt();
-        this.CourseCycle = in.readString();
+    public SpecailBean() {
+    }
+
+    protected SpecailBean(Parcel in) {
         this.CourseDate = in.readString();
         this.ScoreNumber = in.readInt();
         this.JobTitle = in.readString();
         this.FF_Name = in.readString();
         this.JobTypeName = in.readString();
-        this.Remark = in.readString();
         this.JobContent = in.readString();
-        this.UserID = in.readInt();
         this.JobBeginTime = in.readString();
+        this.Sort = in.readInt();
         this.TotalScore = in.readDouble();
-        this.Distance = in.readInt();
         this.Status = in.readString();
-        this.CourseTime = in.readString();
         this.CompanyId = in.readInt();
         this.LinkMan = in.readString();
-        this.IsReportByPhone_ = in.readInt();
+        this.CreateTime = in.readString();
         this.FF_City = in.readString();
+        this.CreateUser = in.readString();
         this.JobEndTime = in.readString();
         this.JobRequirements = in.readString();
         this.HireNum = in.readString();
-        this.IsReportByEmail_ = in.readInt();
         this.CourseRateType = in.readString();
         this.Score = in.readDouble();
+        this.JobTypeId = in.readInt();
         this.Treatment = in.readDouble();
         this.JobStartDate = in.readString();
         this.CourseLast = in.readString();
         this.FF_Phone = in.readString();
-        this.LinkEmail_ = in.readString();
-        this.MaintenanceCycle = in.readString();
         this.Id = in.readInt();
         this.FFID = in.readInt();
         this.LinkPhone = in.readString();
+        this.JobAddress = in.readString();
         this.FF_Address = in.readString();
     }
 
-    public static final Creator<FitBean> CREATOR = new Creator<FitBean>() {
-        public FitBean createFromParcel(Parcel source) {
-            return new FitBean(source);
+    public static final Parcelable.Creator<SpecailBean> CREATOR = new Parcelable.Creator<SpecailBean>() {
+        public SpecailBean createFromParcel(Parcel source) {
+            return new SpecailBean(source);
         }
 
-        public FitBean[] newArray(int size) {
-            return new FitBean[size];
+        public SpecailBean[] newArray(int size) {
+            return new SpecailBean[size];
         }
     };
 }

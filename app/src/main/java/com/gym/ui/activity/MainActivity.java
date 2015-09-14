@@ -55,6 +55,7 @@ public class MainActivity extends BaseActivity implements IFragment, View.OnClic
     RadioGroup radioGroupMenu;
     @InjectView(R.id.area_tb)
     public TextView areaTb;
+
     private ActionBar mActionBar;
     private FragmentManager fm;
     private PopupWindow popup;
@@ -67,6 +68,8 @@ public class MainActivity extends BaseActivity implements IFragment, View.OnClic
     private TextView coachInfo;
     private TextView points;
     private LocationClient locationClient;
+    private TextView comment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,23 +98,20 @@ public class MainActivity extends BaseActivity implements IFragment, View.OnClic
         setSupportActionBar(toolbar);
         mActionBar = getSupportActionBar();
         mActionBar.setDefaultDisplayHomeAsUpEnabled(true);
-        areaTb.setVisibility(View.VISIBLE);
-        backTb.setVisibility(View.GONE);
         titleTb.setText(UIUtils.getString(R.string.app_name));
-
-        areaTb.setOnClickListener(new View.OnClickListener() {
+        backTb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(MainActivity.this,CitySelectActivity.class);
-                startActivity(intent);
+                onBackPressed();
             }
         });
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if(Constants.city!=null){
+        if (Constants.city != null) {
             areaTb.setText(Constants.city.getCity());
         }
     }
@@ -157,6 +157,15 @@ public class MainActivity extends BaseActivity implements IFragment, View.OnClic
             intent.putStringArrayListExtra(Constants.TOOLBAR_ITEM, list);
             startActivity(intent);
         }
+        if (v == comment) {
+            popup.dismiss();
+            Intent intent = new Intent(MainActivity.this, CommonActivity.class);
+            ArrayList<String> list = new ArrayList<>();
+            list.add("我评论的");
+            list.add(FragmentFactory.CENTER_COMMENT + "");
+            intent.putStringArrayListExtra(Constants.TOOLBAR_ITEM, list);
+            startActivity(intent);
+        }
         if (v == course) {
             popup.dismiss();
             Intent intent = new Intent(MainActivity.this, CommonActivity.class);
@@ -167,7 +176,8 @@ public class MainActivity extends BaseActivity implements IFragment, View.OnClic
             list.add(UIUtils.getString(R.string.addCourse));
             intent.putStringArrayListExtra(Constants.TOOLBAR_ITEM, list);
             startActivity(intent);
-        }if (v == buyLesson) {
+        }
+        if (v == buyLesson) {
             popup.dismiss();
             Intent intent = new Intent(MainActivity.this, CommonViewPagerActivity.class);
             //第一个为标题，第二个为指定显示的fragment,第三个为toolbar右侧
@@ -203,7 +213,8 @@ public class MainActivity extends BaseActivity implements IFragment, View.OnClic
             //第一个为标题，第二个为指定显示的fragment,第三个为toolbar右侧
             ArrayList<String> list = new ArrayList<>();
             startActivity(intent);
-        }if (v == publishLesson) {//发布课程
+        }
+        if (v == publishLesson) {//发布课程
             popup.dismiss();
             Intent intent = new Intent(MainActivity.this, PublishLessonActivity.class);
             //第一个为标题，第二个为指定显示的fragment,第三个为toolbar右侧
@@ -255,7 +266,8 @@ public class MainActivity extends BaseActivity implements IFragment, View.OnClic
         publishLesson = (TextView) rootView.findViewById(R.id.publishLesson_tv);
         coachInfo = (TextView) rootView.findViewById(R.id.coachInfo_tv);
         points = (TextView) rootView.findViewById(R.id.points_tv);
-
+        comment = (TextView) rootView.findViewById(R.id.comment_tv);
+        showItems();//区别显示 用户和教练
         collect.setOnClickListener(this);
         course.setOnClickListener(this);
         buyLesson.setOnClickListener(this);
@@ -264,6 +276,31 @@ public class MainActivity extends BaseActivity implements IFragment, View.OnClic
         publishLesson.setOnClickListener(this);
         coachInfo.setOnClickListener(this);
         points.setOnClickListener(this);
+        comment.setOnClickListener(this);
+    }
+
+    private void showItems() {
+        if(Constants.user.getUsr_UserType()==0){
+            collect.setVisibility(View.VISIBLE);
+            course.setVisibility(View.VISIBLE);
+            buyLesson.setVisibility(View.VISIBLE);
+            orderManager.setVisibility(View.GONE);
+            editInfo.setVisibility(View.VISIBLE);
+            publishLesson.setVisibility(View.GONE);
+            coachInfo.setVisibility(View.GONE);
+            points.setVisibility(View.VISIBLE);
+            comment.setVisibility(View.VISIBLE);
+        }else if(Constants.user.getUsr_UserType()==2){
+            collect.setVisibility(View.VISIBLE);
+            course.setVisibility(View.GONE);
+            buyLesson.setVisibility(View.GONE);
+            orderManager.setVisibility(View.VISIBLE);
+            editInfo.setVisibility(View.GONE);
+            publishLesson.setVisibility(View.VISIBLE);
+            coachInfo.setVisibility(View.VISIBLE);
+            points.setVisibility(View.VISIBLE);
+            comment.setVisibility(View.GONE);
+        }
     }
 
     /**
@@ -319,17 +356,19 @@ public class MainActivity extends BaseActivity implements IFragment, View.OnClic
         popup.dismiss();
         locationClient.stop();
     }
+
     public void getAddress() {
-        locationClient= BaseApplication.mLocationClient;
+        locationClient = BaseApplication.mLocationClient;
         initLocation();
         locationClient.start();
 
     }
-    private void initLocation(){
+
+    private void initLocation() {
         LocationClientOption option = new LocationClientOption();
         option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);//可选，默认高精度，设置定位模式，高精度，低功耗，仅设备
         option.setCoorType("bd09ll");//可选，默认gcj02，设置返回的定位结果坐标系，
-        int span=1000;
+        int span = 1000;
         option.setScanSpan(span);//可选，默认0，即仅定位一次，设置发起定位请求的间隔需要大于等于1000ms才是有效的
         option.setOpenGps(true);//可选，默认false,设置是否使用gps
         option.setLocationNotify(true);//可选，默认false，设置是否当gps有效时按照1S1次频率输出GPS结果

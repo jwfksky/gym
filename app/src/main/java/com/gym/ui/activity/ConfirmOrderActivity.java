@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.gym.R;
 import com.gym.app.Constants;
 import com.gym.bean.FitBean;
+import com.gym.bean.JobInfoBean;
 import com.gym.http.protocol.BaseProtocol;
 import com.gym.http.protocol.PayLessonProtocol;
 import com.gym.utils.ProgressUtil;
@@ -54,7 +55,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     @InjectView(R.id.login_coach)
     Button loginCoach;
     private ActionBar mActionBar;
-    private FitBean bean;
+    private JobInfoBean bean;
 private int num=1;
     private boolean loading=false;
 

@@ -83,13 +83,24 @@
             android:textSize="@dimen/text_10" />
 
         <ImageView
-            android:id="@+id/delete"
-            android:layout_width="wrap_content"
+        android:id="@+id/delete"
+        android:layout_width="wrap_content"
 
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/margin_20"
+
+        android:src="@drawable/lajixiang" />
+        <TextView
+            android:id="@+id/applyRefund"
+            android:layout_width="wrap_content"
+            android:text="申请退款"
+            android:textColor="@color/light_yellow"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/margin_20"
-            android:src="@drawable/lajixiang" />
+            android:layout_marginRight="@dimen/margin_15"
+android:visibility="gone"
+             />
 
         <TextView
             android:id="@+id/payState"

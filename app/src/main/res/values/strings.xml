@@ -51,6 +51,7 @@
     <string name="box">球类</string>
     <string name="fight">格斗</string>
     <string name="submit_order">提交订单</string>
+    <string name="comment">评论</string>
 
     <string-array name="tab_names">
         <item>全部</item>

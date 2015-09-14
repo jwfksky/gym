@@ -98,7 +98,8 @@ public class SpaceDetailActivity extends BaseActivity {
     TextView othersTv;
     private ActionBar mActionBar;
     private SpaceBean bean;
-    private boolean loading=false;
+    private boolean loading = false;
+    private HashMap<String, String> hashMap;
 
     @Override
     public void init() {
@@ -111,30 +112,22 @@ public class SpaceDetailActivity extends BaseActivity {
     @Override
     public void initData() {
         super.initData();
-        bean=getIntent().getParcelableExtra("bean");
-        personsTv.setText(bean.getPeopleNumber()+"");
-        squresTv.setText(bean.getSeparateRoom()+"");
-        applianceTv.setText(bean.getEquipmentNewAndOld()+"");
-        applianceTypeTv.setText(bean.getInstrumentType()+"");
-        applianceNumTv.setText(bean.getInstrumentNumber()+"");
-        coachNumTv.setText(bean.getCoachNumber()+"");
-        rebackNumTv.setText(bean.getWardrobeNumber()+"");
-        closetTv.setText(bean.getNozzleNumber()+"");
-        bathTv.setText(bean.getSeparateRoom()+"");
-        showerTv.setText(bean.getShowerRoom()+"");
-        saunaTv.setText(bean.getSaunaRoom()+"");
-        bathDepTv.setText(bean.getChangRoomNewAndOld()+"");
-        aloneRoomTv.setText(bean.getSeparateRoom()+"");
-        othersTv.setText(bean.getOtherSettings()+"");
-        itemRating.setRating((float) bean.getScore());
+        bean = getIntent().getParcelableExtra("bean");
+
         itemRating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
-                HashMap<String,String> hashMap=new HashMap<>();
-                hashMap.put("userID",String.valueOf(Constants.user.getUsr_UserID()));
-                hashMap.put("FFID",String.valueOf(bean.getId()));
+                hashMap = new HashMap<>();
+                hashMap.put("userID", String.valueOf(Constants.user.getUsr_UserID()));
+                hashMap.put("FFID", String.valueOf(bean.getFFID()));
 
-               hashMap.put("Score",String.valueOf(v));
+                hashMap.put("Score", String.valueOf(v));
+
+            }
+        });
+        itemRating.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 new ChangeStarTask().execute(hashMap);
             }
         });
@@ -150,52 +143,71 @@ public class SpaceDetailActivity extends BaseActivity {
         backTb.setVisibility(View.VISIBLE);
         titleTb.setText(bean.getGymName());
     }
-    class SpaceDetailTask extends AsyncTask<String,String,SpaceDetailBean>{
+
+    class SpaceDetailTask extends AsyncTask<String, String, SpaceDetailBean> {
         @Override
         protected SpaceDetailBean doInBackground(String... hashMaps) {
-            HashMap<String,String> hashMap=new HashMap<>();
-            hashMap.put("ID",bean.getId()+"");
-            SpaceDetailProtocol changeStarProtocol=new SpaceDetailProtocol(hashMap);
+            HashMap<String, String> hashMap = new HashMap<>();
+            hashMap.put("ID", bean.getFFID() + "");
+            SpaceDetailProtocol changeStarProtocol = new SpaceDetailProtocol(hashMap);
             return changeStarProtocol.load(UIUtils.getString(R.string.GetFieldDetail_URL), BaseProtocol.POST);
         }
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loading=true;
+            loading = true;
             ProgressUtil.startProgressBar(SpaceDetailActivity.this);
         }
+
         @Override
         protected void onPostExecute(SpaceDetailBean bean) {
-            loading=false;
+            loading = false;
             ProgressUtil.stopProgressBar();
-            if(bean==null){
+            if (bean == null) {
                 UIUtils.showToastSafe(UIUtils.getString(R.string.network_error));
-            }else{
-
+            } else {
+                personsTv.setText(bean.getPeopleNumber() + "");
+                squresTv.setText(bean.getSeparateRoom() + "");
+                applianceTv.setText(bean.getEquipmentNewAndOld() + "");
+                applianceTypeTv.setText(bean.getInstrumentType() + "");
+                applianceNumTv.setText(bean.getInstrumentNumber() + "");
+                coachNumTv.setText(bean.getCoachNumber() + "");
+                rebackNumTv.setText(bean.getWardrobeNumber() + "");
+                closetTv.setText(bean.getNozzleNumber() + "");
+                bathTv.setText(bean.getSeparateRoom() + "");
+                showerTv.setText(bean.getShowerRoom() + "");
+                saunaTv.setText(bean.getSaunaRoom() + "");
+                bathDepTv.setText(bean.getEquipmentNewAndOld() + "");
+                aloneRoomTv.setText(bean.getSeparateRoom() + "");
+                othersTv.setText(bean.getOtherSettings() + "");
+                itemRating.setRating((float) bean.getScore());
             }
         }
     }
 
-    class ChangeStarTask extends AsyncTask<HashMap<String,String>,String,String>{
+    class ChangeStarTask extends AsyncTask<HashMap<String, String>, String, String> {
         @Override
         protected String doInBackground(HashMap<String, String>... hashMaps) {
 
-            ChangeStarProtocol changeStarProtocol=new ChangeStarProtocol(hashMaps[0]);
+            ChangeStarProtocol changeStarProtocol = new ChangeStarProtocol(hashMaps[0]);
             return changeStarProtocol.load(UIUtils.getString(R.string.GradeForfitnessfield_URL), BaseProtocol.POST);
         }
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loading=true;
+            loading = true;
             ProgressUtil.startProgressBar(SpaceDetailActivity.this);
         }
+
         @Override
         protected void onPostExecute(String s) {
-            loading=false;
+            loading = false;
             ProgressUtil.stopProgressBar();
-            if(TextUtils.isEmpty(s)){
+            if (TextUtils.isEmpty(s)) {
                 UIUtils.showToastSafe(UIUtils.getString(R.string.network_error));
-            }else{
+            } else {
                 UIUtils.showToastSafe(s);
             }
         }

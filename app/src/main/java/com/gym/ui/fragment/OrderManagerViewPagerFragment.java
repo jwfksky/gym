@@ -18,9 +18,10 @@ import com.gym.bean.OrderManagerBean;
 import com.gym.http.image.ImageLoader;
 import com.gym.http.protocol.BaseProtocol;
 
-import com.gym.http.protocol.DeleteLessonProtocol;
+import com.gym.http.protocol.BuyLessonCommonProtocol;
 import com.gym.http.protocol.OrderManagerProtocol;
 import com.gym.http.protocol.PayLessonProtocol;
+import com.gym.ui.activity.CommentActivity;
 import com.gym.ui.activity.ConfirmOrderActivity;
 import com.gym.ui.widget.LoadingPage;
 import com.gym.utils.ProgressUtil;
@@ -43,7 +44,7 @@ public class OrderManagerViewPagerFragment extends BaseFragment implements View.
     private ArrayList<OrderManagerBean> stateBeans;
     private ViewHolder holder;
     private OrderManagerBean bean;//当前选择的bean
-    private boolean loading=false;
+    private boolean loading = false;
     private OrderManagerAdapter adapter;
 
     public int getPayState() {
@@ -60,9 +61,9 @@ public class OrderManagerViewPagerFragment extends BaseFragment implements View.
         HashMap<String, String> hashMap = new HashMap<>();
         hashMap.put("userID", Constants.user.getUsr_UserID() + "");
         OrderManagerProtocol protocol = new OrderManagerProtocol(hashMap);
-        orderBeans=protocol.load(UIUtils.getString(R.string.GetOrderByUserID_URL), BaseProtocol.POST);
+        orderBeans = protocol.load(UIUtils.getString(R.string.GetOrderByUserID_URL), BaseProtocol.POST);
         seperateState();
-       // if(adapter!=null)adapter.notifyDataSetInvalidated();
+        // if(adapter!=null)adapter.notifyDataSetInvalidated();
         return checkResult(stateBeans);
     }
 
@@ -133,18 +134,20 @@ public class OrderManagerViewPagerFragment extends BaseFragment implements View.
         } else if (view == holder.refund) {
 
         } else if (view == holder.course) {
-
+            Intent intent=new Intent(getActivity(), CommentActivity.class);
+            intent.putExtra("courseID",bean.getId());
+            startActivity(intent);
         } else if (view == holder.pay) {
-            Intent intent=new Intent(getActivity(), ConfirmOrderActivity.class);
-            FitBean bean=new FitBean();
+            Intent intent = new Intent(getActivity(), ConfirmOrderActivity.class);
+            FitBean bean = new FitBean();
             bean.setJobTitle(bean.getJobTitle());
             bean.setTreatment(bean.getTreatment());
-            intent.putExtra("bean",bean);
+            intent.putExtra("bean", bean);
             startActivity(intent);
         } else if (view == holder.cancel) {
-            if(!loading) new BuyLessonDeleteTask().execute();
+            if (!loading) new BuyLessonDeleteTask().execute();
         } else if (view == holder.delete) {
-            if(!loading) new BuyLessonDeleteTask().execute();
+            if (!loading) new BuyLessonDeleteTask().execute();
         }
     }
 
@@ -204,11 +207,13 @@ public class OrderManagerViewPagerFragment extends BaseFragment implements View.
             String remark = bean.getRemark();
             if (remark.equals(Constants.UNPAY)) {
                 viewHolder.payState.setVisibility(View.GONE);
-                viewHolder.cancel.setVisibility(View.VISIBLE);
-                viewHolder.pay.setVisibility(View.VISIBLE);
+                viewHolder.cancel.setVisibility(View.GONE);
+                viewHolder.pay.setVisibility(View.GONE);
                 viewHolder.course.setVisibility(View.GONE);
-                viewHolder.agreeRefund.setVisibility(View.GONE);
+                viewHolder.agreeRefund.setVisibility(View.VISIBLE);
                 viewHolder.refund.setVisibility(View.GONE);
+                viewHolder.agreeRefund.setVisibility(View.VISIBLE);
+                viewHolder.delete.setVisibility(View.GONE);
             } else if (remark.equals(Constants.UNASSESS)) {
                 viewHolder.payState.setVisibility(View.GONE);
                 viewHolder.cancel.setVisibility(View.GONE);
@@ -216,19 +221,27 @@ public class OrderManagerViewPagerFragment extends BaseFragment implements View.
                 viewHolder.course.setVisibility(View.VISIBLE);
                 viewHolder.agreeRefund.setVisibility(View.GONE);
                 viewHolder.refund.setVisibility(View.VISIBLE);
+                viewHolder.agreeRefund.setVisibility(View.GONE);
+                viewHolder.delete.setVisibility(View.VISIBLE);
             } else if (remark.equals(Constants.REFUND)) {
-                viewHolder.payState.setVisibility(View.VISIBLE);
+                viewHolder.payState.setVisibility(View.GONE);
                 viewHolder.cancel.setVisibility(View.GONE);
                 viewHolder.pay.setVisibility(View.GONE);
-                viewHolder.course.setVisibility(View.VISIBLE);
+                viewHolder.course.setVisibility(View.GONE);
                 viewHolder.agreeRefund.setVisibility(View.GONE);
                 viewHolder.refund.setVisibility(View.GONE);
+                viewHolder.agreeRefund.setVisibility(View.GONE);
+                viewHolder.delete.setVisibility(View.VISIBLE);
             }
         }
 
 
     }
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        refreshOrLoad();
+    }
     /**
      * This class contains all butterknife-injected Views & Layouts from layout file 'item_buy_lesson.xml'
      * for easy to all layout elements.
@@ -262,67 +275,71 @@ public class OrderManagerViewPagerFragment extends BaseFragment implements View.
         TextView refund;
         @InjectView(R.id.cancel)
         TextView cancel;
+        @InjectView(R.id.applyRefund)
+        TextView applyRefund;
 
         ViewHolder(View view) {
             ButterKnife.inject(this, view);
         }
     }
-    class BuyLessonDeleteTask extends AsyncTask<String,String,String>{
+
+    class BuyLessonDeleteTask extends AsyncTask<String, String, String> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             ProgressUtil.startProgressBar(getActivity());
-            loading=true;
+            loading = true;
         }
 
         @Override
         protected String doInBackground(String... strings) {
-            HashMap<String,String> hashMap=new HashMap<>();
-            hashMap.put("id",bean.getId()+"");
-            DeleteLessonProtocol protocol=new DeleteLessonProtocol(hashMap);
-            return protocol.load(UIUtils.getString(R.string.DeleteUserByCourse_URL),BaseProtocol.POST);
+            HashMap<String, String> hashMap = new HashMap<>();
+            hashMap.put("id", bean.getId() + "");
+            BuyLessonCommonProtocol protocol = new BuyLessonCommonProtocol(hashMap);
+            return protocol.load(UIUtils.getString(R.string.DeleteUserByCourse_URL), BaseProtocol.POST);
         }
 
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             ProgressUtil.stopProgressBar();
-            loading=false;
-            if(TextUtils.isEmpty(s)){
+            loading = false;
+            if (TextUtils.isEmpty(s)) {
                 UIUtils.showToastSafe(R.string.network_error);
-            }else{
+            } else {
                 UIUtils.showToastSafe(s);
                 refreshOrLoad();
                 adapter.notifyDataSetChanged();
             }
         }
     }
-    class BuyLessonTask extends AsyncTask<String,String,String>{
+
+    class BuyLessonTask extends AsyncTask<String, String, String> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             ProgressUtil.startProgressBar(getActivity());
-            loading=true;
+            loading = true;
         }
 
         @Override
         protected String doInBackground(String... strings) {
-            HashMap<String,String> hashMap=new HashMap<>();
-            hashMap.put("courseID",bean.getId()+"");
-            hashMap.put("userID",Constants.user.getUsr_UserID()+"");
-            hashMap.put("userName",Constants.user.getUsr_UserName());
-            PayLessonProtocol protocol=new PayLessonProtocol(hashMap);
-            return protocol.load(UIUtils.getString(R.string.BuyCourse_URL),BaseProtocol.POST);
+            HashMap<String, String> hashMap = new HashMap<>();
+            hashMap.put("courseID", bean.getId() + "");
+            hashMap.put("userID", Constants.user.getUsr_UserID() + "");
+            hashMap.put("userName", Constants.user.getUsr_UserName());
+            PayLessonProtocol protocol = new PayLessonProtocol(hashMap);
+            return protocol.load(UIUtils.getString(R.string.BuyCourse_URL), BaseProtocol.POST);
         }
 
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             ProgressUtil.stopProgressBar();
-            loading=false;
-            if(TextUtils.isEmpty(s)){
+            loading = false;
+            if (TextUtils.isEmpty(s)) {
                 UIUtils.showToastSafe(R.string.network_error);
-            }else{
+            } else {
                 UIUtils.showToastSafe(s);
                 show();
             }

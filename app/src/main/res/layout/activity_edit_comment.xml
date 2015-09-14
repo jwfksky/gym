@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:gravity="bottom"
+    android:orientation="vertical"
+    android:padding="5dip" >
+
+    <Button
+        android:id="@+id/showLesson"
+        style="@style/operatPopMenu"
+        android:background="@drawable/operation_reservation_selector"
+        android:text="查看对方课程" />
+
+    <TextView
+    android:layout_width="match_parent"
+    android:layout_height="1dip"
+    android:background="#DAD9DB" />
+
+    <Button
+        android:id="@+id/edit"
+        style="@style/operatPopMenu"
+        android:background="@drawable/operation_speech_selector"
+        android:text="编辑" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dip"
+        android:background="#DAD9DB" />
+
+    <Button
+        android:id="@+id/delete"
+        style="@style/operatPopMenu"
+        android:background="@drawable/operation_speech_selector"
+        android:textColor="@color/light_yellow"
+        android:text="删除" />
+
+    <Button
+        android:id="@+id/btnClose"
+        style="@style/operatPopMenu"
+        android:layout_marginTop="5dip"
+        android:background="@drawable/operation_cancel_selector"
+        android:textColor="@color/Orange"
+        android:text="@string/text_Cancel" />
+
+</LinearLayout>

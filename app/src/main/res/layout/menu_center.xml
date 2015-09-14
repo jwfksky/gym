@@ -22,6 +22,17 @@
             android:textColor="@color/light_grey"
             android:textSize="@dimen/text_13" />
         <View style="@style/verticalLine" />
+        <TextView
+            android:id="@+id/comment_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/margin_10"
+            android:gravity="center"
+            android:text="我评价的"
+            android:textColor="@color/light_grey"
+            android:textSize="@dimen/text_13" />
+        <View style="@style/verticalLine" />
 
         <TextView
             android:id="@+id/course_tv"

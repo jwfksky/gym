@@ -51,8 +51,8 @@ public class CollectFragment extends BaseFragment {
         }
     };
     private Integer totalPage;
-    private ArrayList<CollectBean.DataEntity> list;
-    private ArrayList<CollectBean.DataEntity> collectBeans;
+    private ArrayList<CollectBean> list;
+    private ArrayList<CollectBean> collectBeans;
     private View footerView;
     private boolean loading = false;
 
@@ -64,10 +64,13 @@ public class CollectFragment extends BaseFragment {
         hashMap.put("pageIndex", String.valueOf(pageIndex));
         hashMap.put("pageSize", String.valueOf("10"));
         CollectProtocol collectProtocol = new CollectProtocol(hashMap);
-        CollectBean bean = collectProtocol.load(UIUtils.getString(R.string.CollectInfoList_URL), BaseProtocol.POST);
-        collectBeans = (ArrayList<CollectBean.DataEntity>) bean.getData();
-        list = (ArrayList<CollectBean.DataEntity>) operateExtraData(collectBeans, list, pageIndex);
-        totalPage=bean.getTotalPageCount();
+        HashMap<String, Object> bean =collectProtocol.load(UIUtils.getString(R.string.CollectInfoList_URL), BaseProtocol.POST);
+        if (bean != null) {
+            collectBeans = (ArrayList<CollectBean>) bean.get("list");
+            totalPage = Integer.parseInt((String) bean.get("totalPage"));
+        }
+
+        list = (ArrayList<CollectBean>) operateExtraData(collectBeans, list, pageIndex);
         handler.sendEmptyMessage(0);
         return checkResult(list);
     }
@@ -151,7 +154,7 @@ public class CollectFragment extends BaseFragment {
                 view.setTag(viewHolder);
             }
             viewHolder = (ViewHolder) view.getTag();
-            final CollectBean.DataEntity bean = list.get(i);
+            final CollectBean bean = list.get(i);
 
             viewHolder.delete.setOnClickListener(new View.OnClickListener() {
                 @Override

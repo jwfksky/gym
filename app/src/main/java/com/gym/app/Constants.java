@@ -22,6 +22,7 @@ public class Constants {
     public static final String UNPAY = "0";//未付款
     public static final String UNASSESS = "1";//未评价
     public static final String REFUND= "4";//已退款
+    public static final String COMMENTFRAGMENT = "CommentFragment";//区别更新评论来源
 
     public static String VOICER = "xiaoyan";
     public static SpeechSynthesisUtil speechUtil;

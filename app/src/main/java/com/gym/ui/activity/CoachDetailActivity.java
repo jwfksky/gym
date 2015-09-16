@@ -5,14 +5,18 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.gym.R;
+import com.gym.app.Constants;
 import com.gym.bean.CoachBean;
 import com.gym.bean.CoachDetailBean;
 import com.gym.bean.CoachPhotoBean;
 import com.gym.http.image.ImageLoader;
+import com.gym.http.protocol.AddPublishLessonProtocol;
 import com.gym.http.protocol.BaseProtocol;
 import com.gym.http.protocol.CoachDetailProtocol;
 import com.gym.http.protocol.CoachPhotoProtocol;
@@ -32,7 +36,7 @@ public class CoachDetailActivity extends BaseActivity {
     @InjectView(R.id.title_tb)
     TextView titleTb;
     @InjectView(R.id.back_tb)
-    TextView backTb;
+    ImageView backTb;
     @InjectView(R.id.area_tb)
     TextView areaTb;
     @InjectView(R.id.right_tv)
@@ -79,9 +83,12 @@ public class CoachDetailActivity extends BaseActivity {
     ImageView wardImage3;
     @InjectView(R.id.ward_image4)
     ImageView wardImage4;
+    @InjectView(R.id.right_rb)
+    RadioButton rightRb;
     private ActionBar mActionBar;
     private CoachBean bean;
     private boolean loading = false;
+    private CoachDetailBean mCoachDetailBean1;
 
     @Override
     public void init() {
@@ -115,6 +122,23 @@ public class CoachDetailActivity extends BaseActivity {
             }
         });
         titleTb.setText(UIUtils.getString(R.string.coachInfo));
+        rightRb.setVisibility(View.VISIBLE);
+        rightRb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(rightRb.isChecked()){
+                    new CollectTask().execute(UIUtils.getString(R.string.AddCollect_URL));
+                }else{
+                    rightRb.setChecked(true);
+                }
+            }
+        });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        rightRb.setVisibility(View.GONE);
     }
 
     class CoachDetailTask extends AsyncTask<String, String, CoachDetailBean> {
@@ -142,6 +166,7 @@ public class CoachDetailActivity extends BaseActivity {
             if (coachDetailBean == null) {
                 UIUtils.showToastSafe(CoachDetailActivity.this, UIUtils.getString(R.string.network_error));
             } else {
+                mCoachDetailBean1 = coachDetailBean;
                 genderTv.setText(coachDetailBean.getUsr_Sex());
                 heightTv.setText(coachDetailBean.getUsr_Height()+"");
                 weightTv.setText(coachDetailBean.getUsr_Weight()+"");
@@ -195,6 +220,36 @@ public class CoachDetailActivity extends BaseActivity {
                         }
                     }
                 }
+            }
+        }
+    }
+    class CollectTask extends AsyncTask<String,String,String>{
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            loading=true;
+            ProgressUtil.startProgressBar(CoachDetailActivity.this);
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            HashMap<String,String> hashMap=new HashMap<>();
+            hashMap.put("userID", Constants.user.getUsr_UserID()+"");
+            hashMap.put("CollectID", mCoachDetailBean1.getUsr_UserID()+"");
+            hashMap.put("CollectType", "0");
+            AddPublishLessonProtocol protocol=new AddPublishLessonProtocol(hashMap);
+            return protocol.load(strings[0],BaseProtocol.POST);
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            loading=false;
+            ProgressUtil.stopProgressBar();
+            if(TextUtils.isEmpty(s)){
+                UIUtils.showToastSafe(CoachDetailActivity.this,UIUtils.getString(R.string.network_error));
+            }else{
+                UIUtils.showToastSafe(CoachDetailActivity.this,s);
             }
         }
     }

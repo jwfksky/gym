@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -38,7 +39,7 @@ import butterknife.InjectView;
 public class MainActivity extends BaseActivity implements IFragment, View.OnClickListener {
 
     @InjectView(R.id.back_tb)
-    public TextView backTb;
+    public ImageView backTb;
     @InjectView(R.id.title_tb)
     TextView titleTb;
     @InjectView(R.id.toolbar)
@@ -105,12 +106,22 @@ public class MainActivity extends BaseActivity implements IFragment, View.OnClic
                 onBackPressed();
             }
         });
-
+        backTb.setVisibility(View.GONE);
+        areaTb.setVisibility(View.VISIBLE);
+        areaTb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, CitySelectActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        backTb.setVisibility(View.GONE);
+        areaTb.setVisibility(View.VISIBLE);
         if (Constants.city != null) {
             areaTb.setText(Constants.city.getCity());
         }
@@ -137,7 +148,15 @@ public class MainActivity extends BaseActivity implements IFragment, View.OnClic
     @Override
     public void onClick(View v) {
         if (v == menuCenter) {
-            usePopup(menuCenter);
+            if (Constants.user != null) {
+                usePopup(menuCenter);
+            } else {
+                clearAll(this);
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+
         }
         if (v == points) {
             popup.dismiss();
@@ -150,11 +169,9 @@ public class MainActivity extends BaseActivity implements IFragment, View.OnClic
         }
         if (v == collect) {
             popup.dismiss();
-            Intent intent = new Intent(MainActivity.this, CommonActivity.class);
+            Intent intent = new Intent(MainActivity.this, CollectActivity.class);
+            //第一个为标题，第二个为指定显示的fragment,第三个为toolbar右侧
             ArrayList<String> list = new ArrayList<>();
-            list.add("我的收藏");
-            list.add(FragmentFactory.CENTER_COLLECT + "");
-            intent.putStringArrayListExtra(Constants.TOOLBAR_ITEM, list);
             startActivity(intent);
         }
         if (v == comment) {
@@ -280,26 +297,28 @@ public class MainActivity extends BaseActivity implements IFragment, View.OnClic
     }
 
     private void showItems() {
-        if(Constants.user.getUsr_UserType()==0){
-            collect.setVisibility(View.VISIBLE);
-            course.setVisibility(View.VISIBLE);
-            buyLesson.setVisibility(View.VISIBLE);
-            orderManager.setVisibility(View.GONE);
-            editInfo.setVisibility(View.VISIBLE);
-            publishLesson.setVisibility(View.GONE);
-            coachInfo.setVisibility(View.GONE);
-            points.setVisibility(View.VISIBLE);
-            comment.setVisibility(View.VISIBLE);
-        }else if(Constants.user.getUsr_UserType()==2){
-            collect.setVisibility(View.VISIBLE);
-            course.setVisibility(View.GONE);
-            buyLesson.setVisibility(View.GONE);
-            orderManager.setVisibility(View.VISIBLE);
-            editInfo.setVisibility(View.GONE);
-            publishLesson.setVisibility(View.VISIBLE);
-            coachInfo.setVisibility(View.VISIBLE);
-            points.setVisibility(View.VISIBLE);
-            comment.setVisibility(View.GONE);
+        if (Constants.user != null) {
+            if (Constants.user.getUsr_UserType() == 0) {
+                collect.setVisibility(View.VISIBLE);
+                course.setVisibility(View.VISIBLE);
+                buyLesson.setVisibility(View.VISIBLE);
+                orderManager.setVisibility(View.GONE);
+                editInfo.setVisibility(View.VISIBLE);
+                publishLesson.setVisibility(View.GONE);
+                coachInfo.setVisibility(View.GONE);
+                points.setVisibility(View.VISIBLE);
+                comment.setVisibility(View.VISIBLE);
+            } else if (Constants.user.getUsr_UserType() == 2) {
+                collect.setVisibility(View.VISIBLE);
+                course.setVisibility(View.GONE);
+                buyLesson.setVisibility(View.GONE);
+                orderManager.setVisibility(View.VISIBLE);
+                editInfo.setVisibility(View.GONE);
+                publishLesson.setVisibility(View.VISIBLE);
+                coachInfo.setVisibility(View.VISIBLE);
+                points.setVisibility(View.VISIBLE);
+                comment.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -353,7 +372,8 @@ public class MainActivity extends BaseActivity implements IFragment, View.OnClic
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        popup.dismiss();
+        if (popup != null)
+            popup.dismiss();
         locationClient.stop();
     }
 

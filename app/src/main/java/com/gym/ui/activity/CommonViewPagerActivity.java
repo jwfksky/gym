@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gym.R;
@@ -33,7 +34,7 @@ public class CommonViewPagerActivity extends BaseActivity {
     @InjectView(R.id.title_tb)
     TextView titleTb;
     @InjectView(R.id.back_tb)
-    TextView backTb;
+    ImageView backTb;
     @InjectView(R.id.area_tb)
     TextView areaTb;
     @InjectView(R.id.right_tv)

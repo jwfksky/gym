@@ -28,7 +28,7 @@ import butterknife.InjectView;
  */
 public class CommonActivity extends BaseActivity implements IFragment {
     @InjectView(R.id.back_tb)
-    TextView backTb;
+    ImageView backTb;
     @InjectView(R.id.area_tb)
     TextView areaTb;
     @InjectView(R.id.title_tb)

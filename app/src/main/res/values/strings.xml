@@ -30,7 +30,7 @@
     <string name="back">返回</string>
     <string name="cancel">取消</string>
     <string name="home">首页</string>
-    <string name="defaultArea">上海</string>
+    <string name="defaultArea">上海市</string>
     <string name="editInfo">编辑信息</string>
     <string name="pointsDetail">积分详情</string>
     <string name="login_error">对不起登陆异常</string>
@@ -52,6 +52,16 @@
     <string name="fight">格斗</string>
     <string name="submit_order">提交订单</string>
     <string name="comment">评论</string>
+    <string name="weibosdk_demo_toast_auth_failed">授权登陆失败</string>
+    <string name="weibosdk_demo_toast_auth_canceled">授权登陆取消</string>
+    <string name="cancel_weixin">发送取消</string>
+    <string name="refuse_weixin">发送拒绝</string>
+    <string name="return_weixin">发送返回</string>
+    <string name="login_guide">游客访问</string>
+    <string name="no_login">您当前是游客模式，不能查看相应内容</string>
+    <string name="coach">教练</string>
+    <string name="lesson">课程</string>
+    <string name="collect">我的收藏</string>
 
     <string-array name="tab_names">
         <item>全部</item>

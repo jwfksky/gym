@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.Rect;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -17,13 +18,16 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Base64;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.PopupWindow;
@@ -59,7 +63,7 @@ public class AddPublishLessonActivity extends BaseActivity implements View.OnCli
     @InjectView(R.id.title_tb)
     TextView titleTb;
     @InjectView(R.id.back_tb)
-    TextView backTb;
+    ImageView backTb;
     @InjectView(R.id.area_tb)
     TextView areaTb;
     @InjectView(R.id.right_tv)
@@ -96,6 +100,10 @@ public class AddPublishLessonActivity extends BaseActivity implements View.OnCli
     TextView fit;
     @InjectView(R.id.fit_et)
     TextView fitEt;
+    @InjectView(R.id.category)
+    TextView category;
+    @InjectView(R.id.root)
+    LinearLayout root;
     private ActionBar mActionBar;
     private boolean loading = false;
 
@@ -128,8 +136,8 @@ public class AddPublishLessonActivity extends BaseActivity implements View.OnCli
         initOperationDialog();
         addImage.setOnClickListener(this);
         fitEt.setOnClickListener(this);
+        category.setOnClickListener(this);
 
-        new FFListTask().execute();
     }
 
     @Override
@@ -168,27 +176,93 @@ public class AddPublishLessonActivity extends BaseActivity implements View.OnCli
             showDialog();
         } else if (view == backTb) {
             onBackPressed();
-        }else if (view == fitEt) {
-            showPopup();
+        } else if (view == fitEt) {
+            if (fitSpaces != null)
+                fitSpaces.clear();
+            new FFListTask().execute();
+
+        } else if (view == category) {
+            if (fitSpaces != null) {
+                fitSpaces.clear();
+            } else {
+                fitSpaces = new ArrayList<>();
+            }
+            FitSpaceBean bean1 = new FitSpaceBean();
+            bean1.setGymName("健身");
+            FitSpaceBean bean2 = new FitSpaceBean();
+            bean2.setGymName("球类");
+            FitSpaceBean bean3 = new FitSpaceBean();
+            bean3.setGymName("格斗");
+            fitSpaces.add(bean1);
+            fitSpaces.add(bean2);
+            fitSpaces.add(bean3);
+            showPopup(category);
         }
     }
 
-    private void showPopup() {
+    private void showPopup(final TextView et) {
         showPopup = new PopupWindow(this);
         // 设置宽度
-        showPopup.setWidth(fitEt.getWidth());
+        showPopup.setWidth(name.getWidth());
         showPopup.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
         // 设置焦点
         showPopup.setFocusable(true);
         // TODO
-        ListView popupList=new ListView(this);
-        spaceAdapter=new ShowAddressAdapter(fitSpaces,this);
+        ListView popupList = new ListView(this);
+        popupList.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        popupList.setPadding(20, 20, 20, 20);
+        spaceAdapter = new ShowAddressAdapter(fitSpaces, this);
         popupList.setAdapter(spaceAdapter);
         showPopup.setContentView(popupList);
+        popupList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
+                et.setText(fitSpaces.get(i).getGymName());
+                showPopup.dismiss();
+            }
+        });
         // 把popupWindow显示出来
-        if (!showPopup.isShowing())
-            showPopup.showAsDropDown(fitEt, 0, 0);
+        if (!showPopup.isShowing()) {
+            int[] xy = calcPopupXY(popupList, root);
+            //不用任何gravity，使用绝对的(x,y)坐标
+            showPopup.showAtLocation(root, Gravity.CENTER, xy[0], xy[1]);
+        }
+
+    }
+
+    private int[] calcPopupXY(View rootView, View anchor) {
+        int w = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        int h = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        rootView.measure(w, h);
+        int popupWidth = rootView.getMeasuredWidth();
+        int popupHeight = rootView.getMeasuredHeight();
+        Rect anchorRect = getViewAbsoluteLocation(anchor);
+        Rect parentRect = getViewAbsoluteLocation(root);
+        // int x = anchorRect.left + (anchorRect.right - anchorRect.left)/2 - popupWidth / 2;
+        // int y = anchorRect.top - popupHeight;
+        int x = anchorRect.left;
+        int y = parentRect.top - popupHeight;
+        return new int[]{x, y};
+    }
+
+    public static Rect getViewAbsoluteLocation(View view) {
+        if (view == null) {
+            return new Rect();
+        }
+        // 获取View相对于屏幕的坐标
+        int[] location = new int[2];
+        view.getLocationOnScreen(location);//这是获取相对于屏幕的绝对坐标，而view.getLocationInWindow(location); 是获取window上的相对坐标，本例中只有一个window，二者等价
+        // 获取View的宽高
+        int width = view.getMeasuredWidth();
+        int height = view.getMeasuredHeight();
+        // 获取View的Rect
+        Rect rect = new Rect();
+        rect.left = location[0];
+        rect.top = location[1];
+        rect.right = rect.left + width;
+        rect.bottom = rect.top + height;
+        return rect;
     }
 
     public HashMap<String, String> getParams() {
@@ -204,7 +278,6 @@ public class AddPublishLessonActivity extends BaseActivity implements View.OnCli
         hashMap.put("MaintenanceCycle", lessonDuring.getText().toString());
         return hashMap;
     }
-
 
 
     class AddPublishLessonTask extends AsyncTask<String, String, String> {
@@ -450,21 +523,22 @@ public class AddPublishLessonActivity extends BaseActivity implements View.OnCli
         }
         return degree;
     }
-    class FFListTask extends AsyncTask<String,String,ArrayList<FitSpaceBean>>{
+
+    class FFListTask extends AsyncTask<String, String, ArrayList<FitSpaceBean>> {
 
         @Override
         protected ArrayList<FitSpaceBean> doInBackground(String... strings) {
-            GetFitSpaceProtocol protocol=new GetFitSpaceProtocol();
-            return protocol.load(UIUtils.getString(R.string.GetFFlist_URL),BaseProtocol.POST);
+            GetFitSpaceProtocol protocol = new GetFitSpaceProtocol();
+            return protocol.load(UIUtils.getString(R.string.GetFFlist_URL), BaseProtocol.POST);
         }
 
         @Override
         protected void onPostExecute(ArrayList<FitSpaceBean> fitSpaceBeans) {
             super.onPostExecute(fitSpaceBeans);
-            if(fitSpaceBeans!=null){
-                fitSpaces=fitSpaceBeans;
-                if(spaceAdapter!=null)
-                spaceAdapter.notifyDataSetChanged();
+            if (fitSpaceBeans != null) {
+                fitSpaces = fitSpaceBeans;
+                showPopup(fitEt);
+
             }
         }
     }

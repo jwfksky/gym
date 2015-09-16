@@ -9,6 +9,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gym.R;
@@ -25,7 +26,7 @@ public class WebViewActivity extends BaseActivity {
     @InjectView(R.id.toolbar)
     Toolbar toolbar;
     @InjectView(R.id.back_tb)
-    TextView backTb;
+    ImageView backTb;
     @InjectView(R.id.register_wv)
     WebView registWebView;
     private ActionBar mActionbar;

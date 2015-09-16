@@ -11,12 +11,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.gym.R;
+import com.gym.app.Constants;
 import com.gym.bean.FitBean;
 import com.gym.bean.SpecailBean;
 import com.gym.http.image.ImageLoader;
 import com.gym.http.protocol.BaseProtocol;
 import com.gym.http.protocol.SpecailProtocol;
 import com.gym.ui.activity.FitDetailActivity;
+import com.gym.ui.activity.LoginActivity;
 import com.gym.ui.activity.MainActivity;
 import com.gym.ui.widget.LoadingPage;
 import com.gym.utils.UIUtils;
@@ -75,7 +77,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener {
         specailItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                SpecailBean specailBean=list.get(i);
+                SpecailBean specailBean = list.get(i);
                 FitBean bean = new FitBean();
                 bean.setJobID(specailBean.getId());
                 bean.setFF_Name(specailBean.getFF_Name());
@@ -89,19 +91,40 @@ public class MainFragment extends BaseFragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         if (view == menuFit) {
-            ((MainActivity) getActivity()).onChangeFragment(FragmentFactory.createFragment(FragmentFactory.MENU_FIT), null, true);
+            if (Constants.user != null) {
+                ((MainActivity) getActivity()).onChangeFragment(FragmentFactory.createFragment(FragmentFactory.MENU_FIT), null, true);
+            } else {
+                UIUtils.showToastSafe(getActivity(), UIUtils.getString(R.string.no_login));
+            }
+
         } else if (view == menuSpace) {
-            ((MainActivity) getActivity()).onChangeFragment(FragmentFactory.createFragment(FragmentFactory.MENU_SPACE), null, true);
+            if (Constants.user != null) {
+                ((MainActivity) getActivity()).onChangeFragment(FragmentFactory.createFragment(FragmentFactory.MENU_SPACE), null, true);
+            } else {
+                UIUtils.showToastSafe(getActivity(), UIUtils.getString(R.string.no_login));
+            }
         } else if (view == menuCoach) {
-            ((MainActivity) getActivity()).onChangeFragment(FragmentFactory.createFragment(FragmentFactory.MENU_COACH), null, true);
+            if (Constants.user != null) {
+                ((MainActivity) getActivity()).onChangeFragment(FragmentFactory.createFragment(FragmentFactory.MENU_COACH), null, true);
+            } else {
+                UIUtils.showToastSafe(getActivity(), UIUtils.getString(R.string.no_login));
+            }
         } else if (view == menuBox) {
-            FitFragment fit = (FitFragment) FragmentFactory.createFragment(FragmentFactory.MENU_FIT);
-            fit.setJobType(UIUtils.getString(R.string.box));
-            ((MainActivity) getActivity()).onChangeFragment(fit, null, true);
+            if (Constants.user != null) {
+                FitFragment fit = (FitFragment) FragmentFactory.createFragment(FragmentFactory.MENU_FIT);
+                fit.setJobType(UIUtils.getString(R.string.box));
+                ((MainActivity) getActivity()).onChangeFragment(fit, null, true);
+            } else {
+                UIUtils.showToastSafe(getActivity(), UIUtils.getString(R.string.no_login));
+            }
         } else if (view == menuFight) {
-            FitFragment fit = (FitFragment) FragmentFactory.createFragment(FragmentFactory.MENU_FIT);
-            fit.setJobType(UIUtils.getString(R.string.fight));
-            ((MainActivity) getActivity()).onChangeFragment(fit, null, true);
+            if (Constants.user != null) {
+                FitFragment fit = (FitFragment) FragmentFactory.createFragment(FragmentFactory.MENU_FIT);
+                fit.setJobType(UIUtils.getString(R.string.fight));
+                ((MainActivity) getActivity()).onChangeFragment(fit, null, true);
+            } else {
+                UIUtils.showToastSafe(getActivity(), UIUtils.getString(R.string.no_login));
+            }
         }
     }
 
@@ -125,23 +148,24 @@ public class MainFragment extends BaseFragment implements View.OnClickListener {
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
             ViewHolder holder;
-            if(view==null){
-                view= UIUtils.inflate(R.layout.item_home_list);
-                holder=new ViewHolder(view);
+            if (view == null) {
+                view = UIUtils.inflate(R.layout.item_home_list);
+                holder = new ViewHolder(view);
                 view.setTag(holder);
             }
-            holder= (ViewHolder) view.getTag();
-            SpecailBean bean=list.get(i);
+            holder = (ViewHolder) view.getTag();
+            SpecailBean bean = list.get(i);
             holder.title.setText(bean.getJobTitle());
             holder.content.setText(bean.getJobContent());
-            if(TextUtils.isEmpty(bean.getJobRequirements())){
-                ImageLoader.load(holder.ivHome,bean.getJobRequirements());
+            if (TextUtils.isEmpty(bean.getJobRequirements())) {
+                ImageLoader.load(holder.ivHome, bean.getJobRequirements());
             }
             return view;
         }
 
 
     }
+
     /**
      * This class contains all butterknife-injected Views & Layouts from layout file 'item_home_list.xml'
      * for easy to all layout elements.

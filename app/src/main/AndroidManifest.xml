@@ -75,6 +75,23 @@
         <activity android:name=".ui.activity.FitDetailActivity" />
         <activity android:name=".ui.activity.ConfirmOrderActivity" />
         <activity android:name=".ui.activity.CommentActivity" />
+        <activity android:name=".ui.activity.CollectActivity" />
+
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" >
+                </action>
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"

@@ -11,15 +11,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.gym.R;
+import com.gym.app.Constants;
 import com.gym.bean.CourseCommitBean;
 import com.gym.bean.FitBean;
 import com.gym.bean.JobInfoBean;
+import com.gym.http.protocol.AddPublishLessonProtocol;
 import com.gym.http.protocol.BaseProtocol;
 import com.gym.http.protocol.CourseCommitProtocol;
 import com.gym.http.protocol.FitDetailProtocol;
@@ -43,7 +47,7 @@ public class FitDetailActivity extends BaseActivity {
     @InjectView(R.id.title_tb)
     TextView titleTb;
     @InjectView(R.id.back_tb)
-    TextView backTb;
+    ImageView backTb;
     @InjectView(R.id.area_tb)
     TextView areaTb;
     @InjectView(R.id.right_tv)
@@ -78,6 +82,9 @@ public class FitDetailActivity extends BaseActivity {
     Button buy;
     @InjectView(R.id.sv)
     ScrollView sv;
+
+    @InjectView(R.id.right_rb)
+    RadioButton rightRb;
     /*@InjectView(R.id.swipe)
     LoadRefreshLayout swipe;*/
     private ActionBar mActionBar;
@@ -130,6 +137,17 @@ public class FitDetailActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 onBackPressed();
+            }
+        });
+        rightRb.setVisibility(View.VISIBLE);
+        rightRb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (rightRb.isChecked()) {
+                    new CollectTask().execute(UIUtils.getString(R.string.AddCollect_URL));
+                } else {
+                    rightRb.setChecked(true);
+                }
             }
         });
     }
@@ -334,6 +352,36 @@ public class FitDetailActivity extends BaseActivity {
 
         ViewHolder(View view) {
             ButterKnife.inject(this, view);
+        }
+    }
+    class CollectTask extends AsyncTask<String,String,String>{
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            loading=true;
+            ProgressUtil.startProgressBar(FitDetailActivity.this);
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            HashMap<String,String> hashMap=new HashMap<>();
+            hashMap.put("userID", Constants.user.getUsr_UserID()+"");
+            hashMap.put("CollectID", currentBean.getId()+"");
+            hashMap.put("CollectType", "0");
+            AddPublishLessonProtocol protocol=new AddPublishLessonProtocol(hashMap);
+            return protocol.load(strings[0],BaseProtocol.POST);
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            loading=false;
+            ProgressUtil.stopProgressBar();
+            if(TextUtils.isEmpty(s)){
+                UIUtils.showToastSafe(FitDetailActivity.this,UIUtils.getString(R.string.network_error));
+            }else{
+                UIUtils.showToastSafe(FitDetailActivity.this,s);
+            }
         }
     }
 }

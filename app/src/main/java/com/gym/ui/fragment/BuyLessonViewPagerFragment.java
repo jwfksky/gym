@@ -2,25 +2,33 @@ package com.gym.ui.fragment;
 
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.gym.R;
 import com.gym.app.Constants;
 import com.gym.bean.BuyLessonBean;
-import com.gym.bean.FitBean;
+import com.gym.bean.JobInfoBean;
 import com.gym.http.image.ImageLoader;
 import com.gym.http.protocol.BaseProtocol;
-import com.gym.http.protocol.BuyLessonProtocol;
 import com.gym.http.protocol.BuyLessonCommonProtocol;
+import com.gym.http.protocol.BuyLessonProtocol;
 import com.gym.ui.activity.CommentActivity;
 import com.gym.ui.activity.ConfirmOrderActivity;
+import com.gym.ui.widget.LoadRefreshLayout;
 import com.gym.ui.widget.LoadingPage;
 import com.gym.utils.ProgressUtil;
 import com.gym.utils.UIUtils;
@@ -37,12 +45,26 @@ import butterknife.InjectView;
 public class BuyLessonViewPagerFragment extends BaseFragment implements View.OnClickListener {
     @InjectView(R.id.common_lv)
     ListView commonLv;
+    @InjectView(R.id.nearby)
+    TextView nearby;
+    @InjectView(R.id.category)
+    TextView category;
+    @InjectView(R.id.order)
+    TextView order;
+    @InjectView(R.id.inculdeMenu)
+    LinearLayout inculdeMenu;
+    @InjectView(R.id.swipe)
+    LoadRefreshLayout swipe;
+    @InjectView(R.id.chargeMsg)
+    EditText chargeMsg;
+    @InjectView(R.id.chargeSubmit)
+    Button chargeSubmit;
     private int payState;
     private ArrayList<BuyLessonBean> lessonBeans;
     private ArrayList<BuyLessonBean> stateBeans;
     private ViewHolder holder;
     private BuyLessonBean bean;//当前选择的bean
-    private boolean loading=false;
+    private boolean loading = false;
     private BuyLessonAdapter adapter;
 
     public int getPayState() {
@@ -53,6 +75,14 @@ public class BuyLessonViewPagerFragment extends BaseFragment implements View.OnC
         this.payState = payState;
     }
 
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (adapter != null) adapter.notifyDataSetInvalidated();
+        }
+    };
+
     @Override
     protected LoadingPage.LoadResult load() {
         clearList();
@@ -61,7 +91,7 @@ public class BuyLessonViewPagerFragment extends BaseFragment implements View.OnC
         BuyLessonProtocol protocol = new BuyLessonProtocol(hashMap);
         lessonBeans = protocol.load(UIUtils.getString(R.string.GetAllOfMyCourse_URL), BaseProtocol.POST);
         seperateState();
-        if(adapter!=null)adapter.notifyDataSetInvalidated();
+        handler.sendEmptyMessage(0);
         return checkResult(stateBeans);
     }
 
@@ -99,6 +129,7 @@ public class BuyLessonViewPagerFragment extends BaseFragment implements View.OnC
     protected View createSuccessView() {
         View rootView = UIUtils.inflate(R.layout.fragment_common_list);
         ButterKnife.inject(this, rootView);
+        swipe.setVisibility(View.GONE);
         operateData();
         return rootView;
     }
@@ -130,22 +161,26 @@ public class BuyLessonViewPagerFragment extends BaseFragment implements View.OnC
         if (view == holder.agreeRefund) {
 
         } else if (view == holder.refund) {
-            if(!loading) new BuyLessonCommonTask().execute(UIUtils.getString(R.string.ApplyRefund_URL));
+            if (!loading)
+                new BuyLessonCommonTask().execute(UIUtils.getString(R.string.ApplyRefund_URL));
         } else if (view == holder.course) {
-            Intent intent=new Intent(getActivity(), CommentActivity.class);
-            intent.putExtra("courseID",bean.getId());
+            Intent intent = new Intent(getActivity(), CommentActivity.class);
+            intent.putExtra("courseID", bean.getId());
             startActivity(intent);
         } else if (view == holder.pay) {
-            Intent intent=new Intent(getActivity(), ConfirmOrderActivity.class);
-            FitBean bean=new FitBean();
-            bean.setJobTitle(bean.getJobTitle());
-            bean.setTreatment(bean.getTreatment());
-            intent.putExtra("bean",bean);
+            Intent intent = new Intent(getActivity(), ConfirmOrderActivity.class);
+            JobInfoBean jobInfoBean = new JobInfoBean();
+            jobInfoBean.setId(bean.getId());
+            jobInfoBean.setJobTitle(bean.getJobTitle());
+            jobInfoBean.setTreatment(0d);
+            intent.putExtra("bean", jobInfoBean);
             startActivity(intent);
         } else if (view == holder.cancel) {
-            if(!loading) new BuyLessonCommonTask().execute(UIUtils.getString(R.string.DeleteUserByCourse_URL));
+            if (!loading)
+                new BuyLessonCommonTask().execute(UIUtils.getString(R.string.DeleteUserByCourse_URL));
         } else if (view == holder.delete) {
-            if(!loading) new BuyLessonCommonTask().execute(UIUtils.getString(R.string.DeleteUserByCourse_URL));
+            if (!loading)
+                new BuyLessonCommonTask().execute(UIUtils.getString(R.string.DeleteUserByCourse_URL));
         }
     }
 
@@ -154,6 +189,9 @@ public class BuyLessonViewPagerFragment extends BaseFragment implements View.OnC
         super.onResume();
         refreshOrLoad();
     }
+
+
+
 
     class BuyLessonAdapter extends BaseAdapter {
         ArrayList<BuyLessonBean> list;
@@ -274,37 +312,37 @@ public class BuyLessonViewPagerFragment extends BaseFragment implements View.OnC
             ButterKnife.inject(this, view);
         }
     }
-    class BuyLessonCommonTask extends AsyncTask<String,String,String>{
+
+    class BuyLessonCommonTask extends AsyncTask<String, String, String> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             ProgressUtil.startProgressBar(getActivity());
-            loading=true;
+            loading = true;
         }
 
         @Override
         protected String doInBackground(String... strings) {
-            HashMap<String,String> hashMap=new HashMap<>();
-            hashMap.put("id",bean.getId()+"");
-            BuyLessonCommonProtocol protocol=new BuyLessonCommonProtocol(hashMap);
-            return protocol.load(strings[0],BaseProtocol.POST);
+            HashMap<String, String> hashMap = new HashMap<>();
+            hashMap.put("id", bean.getId() + "");
+            BuyLessonCommonProtocol protocol = new BuyLessonCommonProtocol(hashMap);
+            return protocol.load(strings[0], BaseProtocol.POST);
         }
 
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             ProgressUtil.stopProgressBar();
-            loading=false;
-            if(TextUtils.isEmpty(s)){
+            loading = false;
+            if (TextUtils.isEmpty(s)) {
                 UIUtils.showToastSafe(R.string.network_error);
-            }else{
+            } else {
                 UIUtils.showToastSafe(s);
                 refreshOrLoad();
                 adapter.notifyDataSetChanged();
             }
         }
     }
-
 
 
 }

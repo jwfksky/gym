@@ -57,7 +57,7 @@ public class EditPersonActivity extends BaseActivity implements View.OnClickList
     @InjectView(R.id.title_tb)
     TextView titleTb;
     @InjectView(R.id.back_tb)
-    TextView backTb;
+    ImageView backTb;
     @InjectView(R.id.area_tb)
     TextView areaTb;
     @InjectView(R.id.right_tv)

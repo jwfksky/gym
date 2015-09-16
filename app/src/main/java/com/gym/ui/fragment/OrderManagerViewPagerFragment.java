@@ -2,27 +2,32 @@ package com.gym.ui.fragment;
 
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.gym.R;
 import com.gym.app.Constants;
-import com.gym.bean.FitBean;
+import com.gym.bean.JobInfoBean;
 import com.gym.bean.OrderManagerBean;
 import com.gym.http.image.ImageLoader;
 import com.gym.http.protocol.BaseProtocol;
-
 import com.gym.http.protocol.BuyLessonCommonProtocol;
 import com.gym.http.protocol.OrderManagerProtocol;
 import com.gym.http.protocol.PayLessonProtocol;
 import com.gym.ui.activity.CommentActivity;
 import com.gym.ui.activity.ConfirmOrderActivity;
+import com.gym.ui.widget.LoadRefreshLayout;
 import com.gym.ui.widget.LoadingPage;
 import com.gym.utils.ProgressUtil;
 import com.gym.utils.UIUtils;
@@ -39,6 +44,20 @@ import butterknife.InjectView;
 public class OrderManagerViewPagerFragment extends BaseFragment implements View.OnClickListener {
     @InjectView(R.id.common_lv)
     ListView commonLv;
+    @InjectView(R.id.nearby)
+    TextView nearby;
+    @InjectView(R.id.category)
+    TextView category;
+    @InjectView(R.id.order)
+    TextView order;
+    @InjectView(R.id.inculdeMenu)
+    LinearLayout inculdeMenu;
+    @InjectView(R.id.swipe)
+    LoadRefreshLayout swipe;
+    @InjectView(R.id.chargeMsg)
+    EditText chargeMsg;
+    @InjectView(R.id.chargeSubmit)
+    Button chargeSubmit;
     private int payState;
     private ArrayList<OrderManagerBean> orderBeans;
     private ArrayList<OrderManagerBean> stateBeans;
@@ -101,7 +120,9 @@ public class OrderManagerViewPagerFragment extends BaseFragment implements View.
     protected View createSuccessView() {
         View rootView = UIUtils.inflate(R.layout.fragment_common_list);
         ButterKnife.inject(this, rootView);
+        swipe.setVisibility(View.GONE);
         operateData();
+
         return rootView;
     }
 
@@ -130,24 +151,28 @@ public class OrderManagerViewPagerFragment extends BaseFragment implements View.
     @Override
     public void onClick(View view) {
         if (view == holder.agreeRefund) {
-
+            if (!loading)
+                new BuyLessonDeleteTask().execute(UIUtils.getString(R.string.ConfirmRefund_URL));
         } else if (view == holder.refund) {
 
         } else if (view == holder.course) {
-            Intent intent=new Intent(getActivity(), CommentActivity.class);
-            intent.putExtra("courseID",bean.getId());
+            Intent intent = new Intent(getActivity(), CommentActivity.class);
+            intent.putExtra("courseID", bean.getId());
             startActivity(intent);
         } else if (view == holder.pay) {
             Intent intent = new Intent(getActivity(), ConfirmOrderActivity.class);
-            FitBean bean = new FitBean();
-            bean.setJobTitle(bean.getJobTitle());
-            bean.setTreatment(bean.getTreatment());
-            intent.putExtra("bean", bean);
+            JobInfoBean jobInfoBean = new JobInfoBean();
+            jobInfoBean.setId(bean.getJobId());
+            jobInfoBean.setJobTitle(bean.getJobTitle());
+            jobInfoBean.setTreatment(Double.valueOf(bean.getTreatment()));
+            intent.putExtra("bean", jobInfoBean);
             startActivity(intent);
         } else if (view == holder.cancel) {
-            if (!loading) new BuyLessonDeleteTask().execute();
+            if (!loading)
+                new BuyLessonDeleteTask().execute(UIUtils.getString(R.string.DeleteUserByCourse_URL));
         } else if (view == holder.delete) {
-            if (!loading) new BuyLessonDeleteTask().execute();
+            if (!loading)
+                new BuyLessonDeleteTask().execute(UIUtils.getString(R.string.DeleteUserByCourse_URL));
         }
     }
 
@@ -212,7 +237,7 @@ public class OrderManagerViewPagerFragment extends BaseFragment implements View.
                 viewHolder.course.setVisibility(View.GONE);
                 viewHolder.agreeRefund.setVisibility(View.VISIBLE);
                 viewHolder.refund.setVisibility(View.GONE);
-                viewHolder.agreeRefund.setVisibility(View.VISIBLE);
+
                 viewHolder.delete.setVisibility(View.GONE);
             } else if (remark.equals(Constants.UNASSESS)) {
                 viewHolder.payState.setVisibility(View.GONE);
@@ -220,8 +245,8 @@ public class OrderManagerViewPagerFragment extends BaseFragment implements View.
                 viewHolder.pay.setVisibility(View.GONE);
                 viewHolder.course.setVisibility(View.VISIBLE);
                 viewHolder.agreeRefund.setVisibility(View.GONE);
-                viewHolder.refund.setVisibility(View.VISIBLE);
-                viewHolder.agreeRefund.setVisibility(View.GONE);
+                viewHolder.refund.setVisibility(View.GONE);
+
                 viewHolder.delete.setVisibility(View.VISIBLE);
             } else if (remark.equals(Constants.REFUND)) {
                 viewHolder.payState.setVisibility(View.GONE);
@@ -230,18 +255,20 @@ public class OrderManagerViewPagerFragment extends BaseFragment implements View.
                 viewHolder.course.setVisibility(View.GONE);
                 viewHolder.agreeRefund.setVisibility(View.GONE);
                 viewHolder.refund.setVisibility(View.GONE);
-                viewHolder.agreeRefund.setVisibility(View.GONE);
+
                 viewHolder.delete.setVisibility(View.VISIBLE);
             }
         }
 
 
     }
+
     @Override
     public void onResume() {
         super.onResume();
         refreshOrLoad();
     }
+
     /**
      * This class contains all butterknife-injected Views & Layouts from layout file 'item_buy_lesson.xml'
      * for easy to all layout elements.
@@ -296,7 +323,7 @@ public class OrderManagerViewPagerFragment extends BaseFragment implements View.
             HashMap<String, String> hashMap = new HashMap<>();
             hashMap.put("id", bean.getId() + "");
             BuyLessonCommonProtocol protocol = new BuyLessonCommonProtocol(hashMap);
-            return protocol.load(UIUtils.getString(R.string.DeleteUserByCourse_URL), BaseProtocol.POST);
+            return protocol.load(strings[0], BaseProtocol.POST);
         }
 
         @Override

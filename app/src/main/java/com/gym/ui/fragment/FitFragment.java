@@ -122,8 +122,8 @@ public class FitFragment extends BaseFragment {
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
+    public void onStop() {
+        super.onStop();
         mainActivity.areaTb.setVisibility(View.VISIBLE);
         mainActivity.backTb.setVisibility(View.GONE);
     }

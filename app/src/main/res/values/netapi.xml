@@ -76,6 +76,10 @@
     <string name="GetCourseComment_URL">http://211.149.244.163:8090/JobInfo.asmx/GetCourseComment</string>
     <!-- 首页数据-->
     <string name="GetCourseInfo_URL">http://211.149.244.163:8090/Useraccount.asmx/GetCourseInfo</string>
+    <!-- 确认退款-->
+    <string name="ConfirmRefund_URL">http://211.149.244.163:8090/JobInfo.asmx/ConfirmRefund</string>
+    <!-- 添加收藏-->
+    <string name="AddCollect_URL">http://211.149.244.163:8090/UserAccount.asmx/AddCollect</string>
 
 
 </resources>

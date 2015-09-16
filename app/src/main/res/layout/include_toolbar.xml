@@ -23,7 +23,7 @@
             android:textColor="@color/bg_page"
             android:textSize="@dimen/text_20" />
 
-        <TextView
+        <ImageView
             android:id="@+id/back_tb"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -31,7 +31,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:gravity="center"
-            android:text="@string/cancel"
+            android:src="@drawable/btn_back"
             android:textColor="@color/bg_page"
             android:textSize="@dimen/text_16" />
 
@@ -59,6 +59,15 @@
             android:text="@string/submit"
             android:textColor="@color/bg_page"
             android:textSize="@dimen/text_16"
+            android:visibility="gone" />
+        <RadioButton
+            android:id="@+id/right_rb"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/margin_10"
+            android:gravity="center"
+            android:button="@drawable/selector_collect"
             android:visibility="gone" />
     </RelativeLayout>
 </android.support.v7.widget.Toolbar>

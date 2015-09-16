@@ -4,6 +4,7 @@ package com.gym.app;
 import com.gym.bean.CityBean;
 import com.gym.bean.UserBean;
 import com.gym.utils.SpeechSynthesisUtil;
+import com.tencent.mm.sdk.modelbase.BaseResp;
 
 /**
  * Author: Jwf(feijia101@gmail.com) <br\>
@@ -23,6 +24,16 @@ public class Constants {
     public static final String UNASSESS = "1";//未评价
     public static final String REFUND= "4";//已退款
     public static final String COMMENTFRAGMENT = "CommentFragment";//区别更新评论来源
+    //微博登陆
+    public static final String APP_KEY = "10645264";
+    public static final String REDIRECT_URL = "http://www.hao123.com";
+    public static final String SCOPE = "email,direct_messages_read,direct_messages_write,"
+            + "friendships_groups_read,friendships_groups_write,statuses_to_me_read,"
+            + "follow_app_official_microblog," + "invitation_write";
+    //微信登陆
+    public static final String APP_ID = "wxcde39e7190d48aaf";
+    public static BaseResp resp;
+    public static String WX_APP_SECRET="136195c3cb5a7e3d9dcd3674b525ffeb";
 
     public static String VOICER = "xiaoyan";
     public static SpeechSynthesisUtil speechUtil;

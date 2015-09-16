@@ -6,6 +6,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -31,7 +32,7 @@ public class SpaceDetailActivity extends BaseActivity {
     @InjectView(R.id.title_tb)
     TextView titleTb;
     @InjectView(R.id.back_tb)
-    TextView backTb;
+    ImageView backTb;
     @InjectView(R.id.area_tb)
     TextView areaTb;
     @InjectView(R.id.right_tv)
@@ -142,6 +143,12 @@ public class SpaceDetailActivity extends BaseActivity {
         areaTb.setVisibility(View.GONE);
         backTb.setVisibility(View.VISIBLE);
         titleTb.setText(bean.getGymName());
+        backTb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
     }
 
     class SpaceDetailTask extends AsyncTask<String, String, SpaceDetailBean> {

@@ -5,11 +5,9 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-<include layout="@layout/include_search" />
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/lighter_grey" />
+    <include layout="@layout/include_search" />
+
+
     <com.gym.ui.widget.LoadRefreshLayout
         android:id="@+id/swipe"
         android:layout_width="match_parent"

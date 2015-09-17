@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -57,6 +58,7 @@ public class MainActivity extends BaseActivity implements IFragment, View.OnClic
     @InjectView(R.id.area_tb)
     public TextView areaTb;
 
+
     private ActionBar mActionBar;
     private FragmentManager fm;
     private PopupWindow popup;
@@ -70,6 +72,8 @@ public class MainActivity extends BaseActivity implements IFragment, View.OnClic
     private TextView points;
     private LocationClient locationClient;
     private TextView comment;
+    private LinearLayout userLL;
+    private LinearLayout coachLL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -284,6 +288,8 @@ public class MainActivity extends BaseActivity implements IFragment, View.OnClic
         coachInfo = (TextView) rootView.findViewById(R.id.coachInfo_tv);
         points = (TextView) rootView.findViewById(R.id.points_tv);
         comment = (TextView) rootView.findViewById(R.id.comment_tv);
+        userLL = (LinearLayout) rootView.findViewById(R.id.userLL);
+        coachLL = (LinearLayout) rootView.findViewById(R.id.coachLL);
         showItems();//区别显示 用户和教练
         collect.setOnClickListener(this);
         course.setOnClickListener(this);
@@ -308,6 +314,8 @@ public class MainActivity extends BaseActivity implements IFragment, View.OnClic
                 coachInfo.setVisibility(View.GONE);
                 points.setVisibility(View.VISIBLE);
                 comment.setVisibility(View.VISIBLE);
+                coachLL.setVisibility(View.GONE);
+                userLL.setVisibility(View.VISIBLE);
             } else if (Constants.user.getUsr_UserType() == 2) {
                 collect.setVisibility(View.VISIBLE);
                 course.setVisibility(View.GONE);
@@ -318,6 +326,8 @@ public class MainActivity extends BaseActivity implements IFragment, View.OnClic
                 coachInfo.setVisibility(View.VISIBLE);
                 points.setVisibility(View.VISIBLE);
                 comment.setVisibility(View.GONE);
+                coachLL.setVisibility(View.VISIBLE);
+                userLL.setVisibility(View.GONE);
             }
         }
     }

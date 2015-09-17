@@ -208,15 +208,15 @@ public class CoachDetailActivity extends BaseActivity {
                         }
                     }else{
                         if(i==0){
-                            ImageLoader.load(wardImage1,bean.getPhotopath_z());
+                            ImageLoader.load(wardImage1,bean.getPhotopath_j());
                         }else if(i==1){
-                            ImageLoader.load(wardImage2,bean.getPhotopath_z());
+                            ImageLoader.load(wardImage2,bean.getPhotopath_j());
                         }
                         else if(i==2){
-                            ImageLoader.load(wardImage3,bean.getPhotopath_z());
+                            ImageLoader.load(wardImage3,bean.getPhotopath_j());
                         }
                         else if(i==3){
-                            ImageLoader.load(wardImage4,bean.getPhotopath_z());
+                            ImageLoader.load(wardImage4,bean.getPhotopath_j());
                         }
                     }
                 }

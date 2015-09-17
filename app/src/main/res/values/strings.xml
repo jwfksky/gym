@@ -62,6 +62,7 @@
     <string name="coach">教练</string>
     <string name="lesson">课程</string>
     <string name="collect">我的收藏</string>
+    <string name="err_three">最多只能选择三项</string>
 
     <string-array name="tab_names">
         <item>全部</item>

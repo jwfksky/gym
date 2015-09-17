@@ -15,7 +15,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/margin_30"
+            android:layout_marginLeft="@dimen/margin_30"
+            android:layout_marginTop="@dimen/margin_30"
+            android:layout_marginRight="@dimen/margin_30"
             android:orientation="vertical">
 
             <RelativeLayout
@@ -39,6 +41,7 @@
                     android:layout_below="@id/name_tv"
                     android:background="@drawable/shape_login"
                     android:hint="Name"
+                    android:padding="@dimen/padding_10"
                     android:textColorHint="@color/lighter_grey" />
 
                 <LinearLayout
@@ -67,6 +70,7 @@
                         android:orientation="horizontal">
 
                         <RadioButton
+                            android:id="@+id/man"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="left"
@@ -79,6 +83,7 @@
                             android:textSize="@dimen/text_18" />
 
                         <RadioButton
+                            android:id="@+id/women"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="right"
@@ -118,6 +123,7 @@
                         android:layout_height="40dp"
                         android:layout_below="@id/height_tv"
                         android:background="@drawable/shape_login"
+                        android:padding="@dimen/padding_10"
                         android:textColorHint="@color/lighter_grey" />
 
                     <TextView
@@ -147,6 +153,7 @@
                         android:id="@+id/weight"
                         android:layout_width="130dp"
                         android:layout_height="40dp"
+                        android:padding="@dimen/padding_10"
                         android:layout_below="@id/weight_tv"
                         android:background="@drawable/shape_login"
                         android:textColorHint="@color/lighter_grey" />
@@ -180,7 +187,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/margin_2"
-                    android:text="(最多选择三种)"
+                    android:text=""
                     android:textColor="@color/light_grey" />
 
             </LinearLayout>
@@ -189,65 +196,84 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/shape_login"
+                android:padding="@dimen/padding_5"
                 android:shrinkColumns="0,1,2,3">
 
-                <TableRow>
+                <TableRow android:padding="@dimen/padding_5">
 
                     <CheckBox
+                        android:id="@+id/cb5"
+                        android:button="@drawable/selector_checkbox"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="拳击" />
 
                     <CheckBox
+                        android:id="@+id/cb6"
+                        android:button="@drawable/selector_checkbox"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="格斗" />
 
                     <CheckBox
+                        android:id="@+id/cb7"
+                        android:button="@drawable/selector_checkbox"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="减脂" />
 
                     <CheckBox
+                        android:id="@+id/cb8"
+                        android:button="@drawable/selector_checkbox"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="增肌" />
                 </TableRow>
 
-                <TableRow>
+                <TableRow android:padding="@dimen/padding_5">
 
                     <CheckBox
+                        android:id="@+id/cb1"
+                        android:button="@drawable/selector_checkbox"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="形体" />
 
                     <CheckBox
+                        android:id="@+id/cb2"
+                        android:button="@drawable/selector_checkbox"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="篮球" />
 
                     <CheckBox
+                        android:id="@+id/cb3"
+                        android:button="@drawable/selector_checkbox"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="足球" />
 
                     <CheckBox
+                        android:id="@+id/cb4"
+                        android:button="@drawable/selector_checkbox"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="游泳" />
                 </TableRow>
 
-                <TableRow>
+                <TableRow android:padding="@dimen/padding_5">
 
                     <CheckBox
+                        android:id="@+id/cb9"
+                        android:button="@drawable/selector_checkbox"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -269,6 +295,7 @@
                 android:id="@+id/body"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
+                android:padding="@dimen/padding_10"
                 android:background="@drawable/shape_login"
                 android:textColorHint="@color/lighter_grey" />
 
@@ -289,6 +316,7 @@
                     android:id="@+id/teachTime"
                     android:layout_width="300dp"
                     android:layout_height="40dp"
+                    android:padding="@dimen/padding_10"
                     android:layout_below="@id/teachTime_tv"
                     android:background="@drawable/shape_login"
                     android:textColorHint="@color/lighter_grey" />
@@ -316,7 +344,7 @@
                     android:layout_marginBottom="@dimen/margin_2"
                     android:text="获得证书" />
 
-                <TextView
+               <!-- <TextView
                     style="@style/edittext"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -326,7 +354,7 @@
                     android:background="@color/lighter_grey"
                     android:id="@+id/cert_add"
                     android:text="添加照片"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/white" />-->
             </RelativeLayout>
 
             <LinearLayout
@@ -334,30 +362,34 @@
                 android:layout_height="@dimen/height_80"
                 android:layout_gravity="center_vertical"
                 android:gravity="center_vertical"
-                android:layout_margin="@dimen/margin_10"
+
                 android:orientation="horizontal">
                 <ImageView
                     android:id="@+id/cert_image1"
                     android:layout_width="0dp"
                     android:layout_weight="1"
+                    android:padding="@dimen/margin_10"
                     android:layout_height="wrap_content"
                     android:src="@drawable/btn_addimage" />
                 <ImageView
                     android:id="@+id/cert_image2"
                     android:layout_width="0dp"
                     android:layout_weight="1"
+                    android:padding="@dimen/margin_10"
                     android:layout_height="wrap_content"
                     android:src="@drawable/btn_addimage" />
                 <ImageView
                     android:id="@+id/cert_image3"
                     android:layout_width="0dp"
                     android:layout_weight="1"
+                    android:padding="@dimen/margin_10"
                     android:layout_height="wrap_content"
                     android:src="@drawable/btn_addimage" />
                 <ImageView
                     android:id="@+id/cert_image4"
                     android:layout_width="0dp"
                     android:layout_weight="1"
+                    android:padding="@dimen/margin_10"
                     android:layout_height="wrap_content"
                     android:src="@drawable/btn_addimage" />
             </LinearLayout>
@@ -374,7 +406,7 @@
                     android:layout_marginBottom="@dimen/margin_2"
                     android:text="获得奖项" />
 
-                <TextView
+                <!--<TextView
                     android:id="@+id/ward_add"
                     style="@style/edittext"
                     android:layout_width="wrap_content"
@@ -384,38 +416,43 @@
                     android:layout_toRightOf="@id/ward_tv"
                     android:background="@color/lighter_grey"
                     android:text="添加照片"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/white" />-->
             </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/height_80"
                 android:layout_gravity="center_vertical"
+                android:layout_marginBottom="@dimen/margin_30"
                 android:gravity="center_vertical"
-                android:layout_margin="@dimen/margin_10"
+
                 android:orientation="horizontal">
                 <ImageView
                     android:id="@+id/ward_image1"
                     android:layout_width="0dp"
                     android:layout_weight="1"
+                    android:padding="@dimen/margin_10"
                     android:layout_height="wrap_content"
                     android:src="@drawable/btn_addimage" />
                 <ImageView
                     android:id="@+id/ward_image2"
                     android:layout_width="0dp"
                     android:layout_weight="1"
+                    android:padding="@dimen/margin_10"
                     android:layout_height="wrap_content"
                     android:src="@drawable/btn_addimage" />
                 <ImageView
                     android:id="@+id/ward_image3"
                     android:layout_width="0dp"
                     android:layout_weight="1"
+                    android:padding="@dimen/margin_10"
                     android:layout_height="wrap_content"
                     android:src="@drawable/btn_addimage" />
                 <ImageView
                     android:id="@+id/ward_image4"
                     android:layout_width="0dp"
                     android:layout_weight="1"
+                    android:padding="@dimen/margin_10"
                     android:layout_height="wrap_content"
                     android:src="@drawable/btn_addimage" />
             </LinearLayout>

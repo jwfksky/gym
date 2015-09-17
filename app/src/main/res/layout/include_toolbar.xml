@@ -42,6 +42,8 @@
             android:layout_alignParentLeft="true"
             android:gravity="center"
             android:text="@string/defaultArea"
+            android:drawableRight="@drawable/arrow"
+            android:drawablePadding="@dimen/margin_5"
             android:textColor="@color/bg_page"
             android:maxLength="4"
             android:textSize="@dimen/text_16"

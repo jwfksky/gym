@@ -22,16 +22,25 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.gym.R;
 import com.gym.app.Constants;
+import com.gym.bean.CoachDetailBean;
+import com.gym.bean.CoachPhotoBean;
+import com.gym.bean.UserBean;
+import com.gym.http.image.ImageLoader;
 import com.gym.http.protocol.AddCoachPhotoProtocol;
+import com.gym.http.protocol.AddPublishLessonProtocol;
 import com.gym.http.protocol.BaseProtocol;
+import com.gym.http.protocol.CoachDetailProtocol;
+import com.gym.http.protocol.CoachPhotoProtocol;
 import com.gym.http.protocol.UpdateCoachProtocol;
 import com.gym.utils.ImageUtils;
 import com.gym.utils.ProgressUtil;
@@ -42,6 +51,7 @@ import com.gym.utils.UIUtils;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -86,13 +96,13 @@ public class EditCoachInfoActivity extends BaseActivity implements View.OnClickL
     EditText teachTime;
     @InjectView(R.id.cert_tv)
     TextView certTv;
-    @InjectView(R.id.cert_add)
-    TextView certAdd;
+   /* @InjectView(R.id.cert_add)
+    TextView certAdd;*/
 
     @InjectView(R.id.ward_tv)
     TextView wardTv;
-    @InjectView(R.id.ward_add)
-    TextView wardAdd;
+/*    @InjectView(R.id.ward_add)
+    TextView wardAdd;*/
     @InjectView(R.id.cert_image1)
     ImageView certImage1;
     @InjectView(R.id.cert_image2)
@@ -111,6 +121,30 @@ public class EditCoachInfoActivity extends BaseActivity implements View.OnClickL
     ImageView wardImage4;
     @InjectView(R.id.gender)
     RadioGroup gender;
+    @InjectView(R.id.right_rb)
+    RadioButton rightRb;
+    @InjectView(R.id.cb5)
+    CheckBox cb5;
+    @InjectView(R.id.cb6)
+    CheckBox cb6;
+    @InjectView(R.id.cb7)
+    CheckBox cb7;
+    @InjectView(R.id.cb8)
+    CheckBox cb8;
+    @InjectView(R.id.cb1)
+    CheckBox cb1;
+    @InjectView(R.id.cb2)
+    CheckBox cb2;
+    @InjectView(R.id.cb3)
+    CheckBox cb3;
+    @InjectView(R.id.cb4)
+    CheckBox cb4;
+    @InjectView(R.id.cb9)
+    CheckBox cb9;
+    @InjectView(R.id.man)
+    RadioButton man;
+    @InjectView(R.id.women)
+    RadioButton women;
     private ActionBar mActionBar;
     private boolean loading = false;
 
@@ -130,6 +164,9 @@ public class EditCoachInfoActivity extends BaseActivity implements View.OnClickL
     private String selectItem;
     private static final String WARD = "ward";
     private static final String CERT = "cert";
+    private String expertise;
+    private Integer a = 0;//验证多选项的个数
+    private CoachDetailBean mCoachDetailBean1;
 
     @Override
     public void init() {
@@ -141,6 +178,10 @@ public class EditCoachInfoActivity extends BaseActivity implements View.OnClickL
     @Override
     public void initData() {
         super.initData();
+        UserBean userBean=Constants.user;
+        new CoachDetailTask().execute(userBean.getUsr_UserID() + "");
+        new GetCoachCertTask().execute(userBean.getUsr_UserID() + "", UIUtils.getString(R.string.GetCoachDetail_Photh_Z_URL));
+        new GetCoachCertTask().execute(userBean.getUsr_UserID() + "", UIUtils.getString(R.string.GetCoachDetail_Photh_J_URL));
         certImage1.setOnClickListener(this);
         certImage2.setOnClickListener(this);
         certImage3.setOnClickListener(this);
@@ -150,6 +191,9 @@ public class EditCoachInfoActivity extends BaseActivity implements View.OnClickL
         wardImage2.setOnClickListener(this);
         wardImage3.setOnClickListener(this);
         wardImage4.setOnClickListener(this);
+
+
+
 
         initOperationDialog();
     }
@@ -166,11 +210,15 @@ public class EditCoachInfoActivity extends BaseActivity implements View.OnClickL
         rightTv.setText(UIUtils.getString(R.string.submit));
         titleTb.setText(UIUtils.getString(R.string.coachInfo));
         rightTv.setOnClickListener(this);
+        backTb.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         if (view == rightTv) {
+            if(dialog!=null){
+                dialog.dismiss();
+            }
             if (!loading)
                 new updateCoachInfoTask().execute();
         } else if (view == certImage1) {
@@ -213,6 +261,8 @@ public class EditCoachInfoActivity extends BaseActivity implements View.OnClickL
             dialog.dismiss();// 操作框 取消
         } else if (view == btnClose) {
             dialog.dismiss();// 操作框 取消s
+        } else if (view == backTb) {
+            onBackPressed();
         }
     }
 
@@ -224,15 +274,95 @@ public class EditCoachInfoActivity extends BaseActivity implements View.OnClickL
     public HashMap<String, String> getParams() {
         HashMap<String, String> hash = new HashMap<>();
         hash.put("userID", String.valueOf(Constants.user.getUsr_UserID()));
-        hash.put("Usr_User_ActualName", "");
-        hash.put("Usr_Sex", gender.getCheckedRadioButtonId()+"");
+        hash.put("Usr_User_ActualName", name.getText().toString());
+        hash.put("Usr_Sex", gender.getCheckedRadioButtonId() + "");
         hash.put("Usr_Height", height.getText().toString());
         hash.put("Usr_Weight", weight.getText().toString());
-        hash.put("Usr_Expertise", "");
+        hash.put("Usr_Expertise", getExpertise());
         hash.put("Usr_shape", body.getText().toString());
         hash.put("TeachingYear", teachTime.getText().toString());
         return hash;
     }
+
+    public String getExpertise() {
+        final StringBuilder sb1 = new StringBuilder();
+
+        cb1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                sb1.append(checkboxValues(cb1)).append(",");
+            }
+        });
+        cb2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                sb1.append(checkboxValues(cb2)).append(",");
+            }
+        });
+        cb3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                sb1.append(checkboxValues(cb3)).append(",");
+            }
+        });
+        cb4.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                sb1.append(checkboxValues(cb4)).append(",");
+            }
+        });
+        cb5.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                sb1.append(checkboxValues(cb5)).append(",");
+            }
+        });
+        cb6.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                sb1.append(checkboxValues(cb6)).append(",");
+            }
+        });
+        cb7.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                sb1.append(checkboxValues(cb7)).append(",");
+            }
+        });
+        cb8.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                sb1.append(checkboxValues(cb8)).append(",");
+            }
+        });
+        cb9.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                sb1.append(checkboxValues(cb9)).append(",");
+            }
+        });
+        if(sb1.length()>0)
+        sb1.deleteCharAt(sb1.length() - 1);
+        return sb1.toString();
+    }
+
+    private String checkboxValues(CheckBox cb) {
+        String sb1 = "";
+        if (cb.isChecked()) {
+            if (a > 3) {
+                UIUtils.showToastSafe(EditCoachInfoActivity.this, UIUtils.getString(R.string.err_three));
+                cb.setChecked(false);
+                return "";
+            }
+            sb1 = cb.getText().toString();
+            a++;
+        } else {
+            sb1 = "";
+            a--;
+        }
+        return sb1;
+    }
+
 
     /**
      * 提交编辑信息
@@ -258,10 +388,11 @@ public class EditCoachInfoActivity extends BaseActivity implements View.OnClickL
             super.onPostExecute(s);
             loading = false;
             ProgressUtil.stopProgressBar();
-            if(TextUtils.isEmpty(s)){
-                UIUtils.showToastSafe(EditCoachInfoActivity.this,UIUtils.getString(R.string.network_error));
-            }else{
-                UIUtils.showToastSafe(EditCoachInfoActivity.this,s);
+            if (TextUtils.isEmpty(s)) {
+                UIUtils.showToastSafe(EditCoachInfoActivity.this, UIUtils.getString(R.string.network_error));
+            } else {
+                UIUtils.showToastSafe(EditCoachInfoActivity.this, s);
+
                 finish();
             }
 
@@ -523,6 +654,95 @@ public class EditCoachInfoActivity extends BaseActivity implements View.OnClickL
                 UIUtils.showToastSafe(EditCoachInfoActivity.this, s);
             }
 
+        }
+    }
+
+    class CoachDetailTask extends AsyncTask<String, String, CoachDetailBean> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            loading = true;
+            ProgressUtil.startProgressBar(EditCoachInfoActivity.this);
+        }
+
+        @Override
+        protected CoachDetailBean doInBackground(String... strings) {
+            HashMap<String, String> hashMap = new HashMap<>();
+            hashMap.put("userID", strings[0]);
+            CoachDetailProtocol protocol = new CoachDetailProtocol(hashMap);
+            return protocol.load(UIUtils.getString(R.string.GetCoachDetail_URL), BaseProtocol.POST);
+        }
+
+        @Override
+        protected void onPostExecute(CoachDetailBean coachDetailBean) {
+            super.onPostExecute(coachDetailBean);
+            loading = false;
+            ProgressUtil.stopProgressBar();
+            if (coachDetailBean == null) {
+                UIUtils.showToastSafe(EditCoachInfoActivity.this, UIUtils.getString(R.string.network_error));
+            } else {
+                mCoachDetailBean1 = coachDetailBean;
+                name.setText(Constants.user.getUsr_UserName());
+                if("男".equals(coachDetailBean.getUsr_Sex())){
+                    man.setChecked(true);
+                    women.setChecked(false);
+                }else {
+                    man.setChecked(false);
+                    women.setChecked(true);
+                }
+                height.setText(coachDetailBean.getUsr_Height()+"");
+                weight.setText(coachDetailBean.getUsr_Weight()+"");
+                teachTime.setText(coachDetailBean.getTeachingYear()+"");
+                body.setText(coachDetailBean.getUsr_Shape() + "");
+            }
+        }
+    }
+    class GetCoachCertTask extends AsyncTask<String,String,ArrayList<CoachPhotoBean>>{
+
+        @Override
+        protected ArrayList<CoachPhotoBean> doInBackground(String... strings) {
+            HashMap<String, String> hashMap = new HashMap<>();
+            hashMap.put("userID", strings[0]);
+            CoachPhotoProtocol protocol = new CoachPhotoProtocol(hashMap);
+            return (ArrayList<CoachPhotoBean>) protocol.load(strings[1],BaseProtocol.POST);
+
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<CoachPhotoBean> coachPhotoBeans) {
+            super.onPostExecute(coachPhotoBeans);
+            if(coachPhotoBeans!=null){
+                for(int i=0;i<coachPhotoBeans.size();i++){
+                    CoachPhotoBean bean=coachPhotoBeans.get(i);
+                    if(TextUtils.isEmpty(bean.getPhotopath_j())){
+                        //证书
+                        if(i==0){
+                            ImageLoader.load(certImage1, bean.getPhotopath_z());
+                        }else if(i==1){
+                            ImageLoader.load(certImage2,bean.getPhotopath_z());
+                        }
+                        else if(i==2){
+                            ImageLoader.load(certImage3,bean.getPhotopath_z());
+                        }
+                        else if(i==3){
+                            ImageLoader.load(certImage4,bean.getPhotopath_z());
+                        }
+                    }else{
+                        if(i==0){
+                            ImageLoader.load(wardImage1,bean.getPhotopath_j());
+                        }else if(i==1){
+                            ImageLoader.load(wardImage2,bean.getPhotopath_j());
+                        }
+                        else if(i==2){
+                            ImageLoader.load(wardImage3,bean.getPhotopath_j());
+                        }
+                        else if(i==3){
+                            ImageLoader.load(wardImage4,bean.getPhotopath_j());
+                        }
+                    }
+                }
+            }
         }
     }
 }

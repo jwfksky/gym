@@ -3,6 +3,9 @@ package com.gym.ui.fragment;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,20 +47,10 @@ import butterknife.InjectView;
 public class OrderManagerViewPagerFragment extends BaseFragment implements View.OnClickListener {
     @InjectView(R.id.common_lv)
     ListView commonLv;
-    @InjectView(R.id.nearby)
-    TextView nearby;
-    @InjectView(R.id.category)
-    TextView category;
-    @InjectView(R.id.order)
-    TextView order;
-    @InjectView(R.id.inculdeMenu)
-    LinearLayout inculdeMenu;
+
     @InjectView(R.id.swipe)
     LoadRefreshLayout swipe;
-    @InjectView(R.id.chargeMsg)
-    EditText chargeMsg;
-    @InjectView(R.id.chargeSubmit)
-    Button chargeSubmit;
+
     private int payState;
     private ArrayList<OrderManagerBean> orderBeans;
     private ArrayList<OrderManagerBean> stateBeans;
@@ -65,6 +58,13 @@ public class OrderManagerViewPagerFragment extends BaseFragment implements View.
     private OrderManagerBean bean;//当前选择的bean
     private boolean loading = false;
     private OrderManagerAdapter adapter;
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (adapter != null) adapter.notifyDataSetInvalidated();
+        }
+    };
 
     public int getPayState() {
         return payState;
@@ -82,7 +82,7 @@ public class OrderManagerViewPagerFragment extends BaseFragment implements View.
         OrderManagerProtocol protocol = new OrderManagerProtocol(hashMap);
         orderBeans = protocol.load(UIUtils.getString(R.string.GetOrderByUserID_URL), BaseProtocol.POST);
         seperateState();
-        // if(adapter!=null)adapter.notifyDataSetInvalidated();
+        handler.sendEmptyMessage(0);
         return checkResult(stateBeans);
     }
 
@@ -120,14 +120,22 @@ public class OrderManagerViewPagerFragment extends BaseFragment implements View.
     protected View createSuccessView() {
         View rootView = UIUtils.inflate(R.layout.fragment_common_list);
         ButterKnife.inject(this, rootView);
-        swipe.setVisibility(View.GONE);
+        //  swipe.setVisibility(View.GONE);
+
+        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipe.setLoading(false);
+                swipe.setRefreshing(false);
+            }
+        });
         operateData();
 
         return rootView;
     }
 
     private void operateData() {
-        adapter = new OrderManagerAdapter(stateBeans);
+        adapter = new OrderManagerAdapter();
         commonLv.setAdapter(adapter);
         commonLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -177,20 +185,17 @@ public class OrderManagerViewPagerFragment extends BaseFragment implements View.
     }
 
     class OrderManagerAdapter extends BaseAdapter {
-        ArrayList<OrderManagerBean> list;
 
-        public OrderManagerAdapter(ArrayList<OrderManagerBean> list) {
-            this.list = list;
-        }
 
         @Override
         public int getCount() {
-            return list == null ? 0 : list.size();
+            int size = stateBeans == null ? 0 : stateBeans.size();
+            return size;
         }
 
         @Override
         public Object getItem(int i) {
-            return list.get(i);
+            return stateBeans.get(i);
         }
 
         @Override
@@ -207,7 +212,7 @@ public class OrderManagerViewPagerFragment extends BaseFragment implements View.
                 view.setTag(viewHolder);
             }
             viewHolder = (ViewHolder) view.getTag();
-            OrderManagerBean bean = list.get(i);
+            OrderManagerBean bean = stateBeans.get(i);
             viewHolder.lessonName.setText(bean.getJobTitle());
             ImageLoader.load(viewHolder.itemImage, bean.getJobRequirements());
             viewHolder.lessonAddr.setText(bean.getJobAddress());
@@ -237,7 +242,6 @@ public class OrderManagerViewPagerFragment extends BaseFragment implements View.
                 viewHolder.course.setVisibility(View.GONE);
                 viewHolder.agreeRefund.setVisibility(View.VISIBLE);
                 viewHolder.refund.setVisibility(View.GONE);
-
                 viewHolder.delete.setVisibility(View.GONE);
             } else if (remark.equals(Constants.UNASSESS)) {
                 viewHolder.payState.setVisibility(View.GONE);
@@ -336,7 +340,6 @@ public class OrderManagerViewPagerFragment extends BaseFragment implements View.
             } else {
                 UIUtils.showToastSafe(s);
                 refreshOrLoad();
-                adapter.notifyDataSetChanged();
             }
         }
     }

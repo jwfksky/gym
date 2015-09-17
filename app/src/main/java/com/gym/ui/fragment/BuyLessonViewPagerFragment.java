@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -129,13 +130,19 @@ public class BuyLessonViewPagerFragment extends BaseFragment implements View.OnC
     protected View createSuccessView() {
         View rootView = UIUtils.inflate(R.layout.fragment_common_list);
         ButterKnife.inject(this, rootView);
-        swipe.setVisibility(View.GONE);
+        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipe.setLoading(false);
+                swipe.setRefreshing(false);
+            }
+        });
         operateData();
         return rootView;
     }
 
     private void operateData() {
-        adapter = new BuyLessonAdapter(stateBeans);
+        adapter = new BuyLessonAdapter();
         commonLv.setAdapter(adapter);
         commonLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -194,20 +201,16 @@ public class BuyLessonViewPagerFragment extends BaseFragment implements View.OnC
 
 
     class BuyLessonAdapter extends BaseAdapter {
-        ArrayList<BuyLessonBean> list;
 
-        public BuyLessonAdapter(ArrayList<BuyLessonBean> list) {
-            this.list = list;
-        }
 
         @Override
         public int getCount() {
-            return list == null ? 0 : list.size();
+            return stateBeans == null ? 0 : stateBeans.size();
         }
 
         @Override
         public Object getItem(int i) {
-            return list.get(i);
+            return stateBeans.get(i);
         }
 
         @Override
@@ -224,7 +227,7 @@ public class BuyLessonViewPagerFragment extends BaseFragment implements View.OnC
                 view.setTag(viewHolder);
             }
             viewHolder = (ViewHolder) view.getTag();
-            BuyLessonBean bean = list.get(i);
+            BuyLessonBean bean = stateBeans.get(i);
             viewHolder.lessonName.setText(bean.getJobTitle());
             ImageLoader.load(viewHolder.itemImage, bean.getCourse_Photo());
             viewHolder.lessonAddr.setText(bean.getJobAddress());

@@ -11,18 +11,20 @@
         android:id="@+id/main_fl"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="6"
+        android:layout_weight="8"
         android:layout_marginTop="@dimen/margin_5"
          />
+    <View
+       style="@style/verticalLine"/>
     <RadioGroup
         android:id="@+id/radioGroup_menu"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:gravity="center"
-        android:background="@color/light_grey"
+        android:background="@color/white"
         android:orientation="horizontal"
-        android:padding="@dimen/padding_15"
+        android:padding="@dimen/padding_5"
         >
 
         <RadioButton
@@ -31,26 +33,27 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:drawableTop="@drawable/user_1"
-
-
+            android:drawableTop="@drawable/home"
+            android:textColor="@color/lighter_grey"
             android:text="@string/home" />
 
         <RadioButton
+            android:textColor="@color/lighter_grey"
             android:id="@+id/menu_forum"
             style="@style/radioButton_menu"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:drawableTop="@drawable/user_2"
+            android:drawableTop="@drawable/speech"
             android:text="论坛"/>
 
         <RadioButton
+            android:textColor="@color/lighter_grey"
             android:id="@+id/menu_center"
             style="@style/radioButton_menu"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
-            android:drawableTop="@drawable/user_3"
+            android:drawableTop="@drawable/user"
             android:layout_weight="1"
             android:text="我"/>
 
